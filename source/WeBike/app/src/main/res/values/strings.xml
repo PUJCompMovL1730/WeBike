@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Webike</string>
+    <string name="user">Username</string>
+    <string name="password">Password</string>
+    <string name="signup">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="register_finish_button">Sign Up</string>
+    <string name="input_username_label">Username</string>
+    <string name="input_password_label">Password</string>
+    <string name="confirm_password_label">Confirm Password</string>
+    <string name="company_checkbox_text">Corporate Account</string>
+    <string name="password_placeholder">password</string>
+    <string name="username_placeholder">Username</string>
+    <string name="novedades">Novedades</string>
+    <string name="title_activity_calcular_ruta">Map</string>
+    <string name="calcular_ruta_titulo">Planear Ruta</string>
+    <string name="panic_title">Boton de Panico</string>
+    <string name="panic_text">¿Necesitas ayuda?</string>
+    <string name="panic_msg_contacts">Enviar mensaje de panico a todos \n tus contactos</string>
+    <string name="panic_cops">Contactar a la policia</string>
+    <string name="help_title">Boton de ayuda</string>
+    <string name="help_text">¿Necesitas asistencia tecnica?</string>
+    <string name="help_bicitaller">Solicitar BiciTaller</string>
+</resources>
