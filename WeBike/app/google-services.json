@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "392642628118",
+    "firebase_url": "https://webike-187e3.firebaseio.com",
+    "project_id": "webike-187e3",
+    "storage_bucket": "webike-187e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:392642628118:android:9f79f6f6f131c729",
+        "android_client_info": {
+          "package_name": "webike.webike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "392642628118-jb5fncqfp4kshom52vor9qvit60i5gkm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "webike.webike",
+            "certificate_hash": "55daa48b21de57c268f295c0e0e109df63901074"
+          }
+        },
+        {
+          "client_id": "392642628118-3gks249uncc1lpqubqhaf70ssl66jelj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDALonBuIBqBa6sKDlcaxK2AHSSy0dbq6U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "392642628118-3gks249uncc1lpqubqhaf70ssl66jelj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
