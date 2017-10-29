@@ -7,6 +7,11 @@ package utils;
 public enum Response{
     INVALID_PASSWORD,
     INVALID_EMAIL,
+    INVALID_NAME,
+    INVALID_LAST,
+    INVALID_AGE,
+    SPECIAL_CHARACTERS_NOT_ALLOWED,
     LOGIN_ERROR,
-    LOGIN_OK;
+    EMPTY_FIELD,
+    FIELD_OK;
 }

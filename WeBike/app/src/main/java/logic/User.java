@@ -4,6 +4,7 @@ import android.location.Location;
 import android.net.Uri;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Juan on 10/28/2017.
@@ -15,14 +16,32 @@ public class User {
     private String firstName;
     private String lastName;
     private int age;
-    private char gender;
+    private String gender;
     private Uri photo;
-    private ArrayList<Message> mailbox;
-    private ArrayList<User> friends;
-    private ArrayList<Route> history;
-    private ArrayList<Group> groups;
+    private List<Message> mailbox;
+    private List<User> friends;
+    private List<Route> history;
+    private List<Group> groups;
 
     public User() {
+    }
+
+    public User(String key, String firstName, String lastName, int age, String gender ) {
+        this.key = key;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.photo = null;
+    }
+
+    public User(String key, String firstName, String lastName, int age, String gender, Uri photo) {
+        this.key = key;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+        this.photo = photo;
     }
 
     public String getKey() {
@@ -57,11 +76,11 @@ public class User {
         this.age = age;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -73,7 +92,7 @@ public class User {
         this.photo = photo;
     }
 
-    public ArrayList<Message> getMailbox() {
+    public List<Message> getMailbox() {
         return mailbox;
     }
 
@@ -81,7 +100,7 @@ public class User {
         this.mailbox = mailbox;
     }
 
-    public ArrayList<User> getFriends() {
+    public List<User> getFriends() {
         return friends;
     }
 
@@ -89,7 +108,7 @@ public class User {
         this.friends = friends;
     }
 
-    public ArrayList<Route> getHistory() {
+    public List<Route> getHistory() {
         return history;
     }
 
@@ -97,7 +116,7 @@ public class User {
         this.history = history;
     }
 
-    public ArrayList<Group> getGroups() {
+    public List<Group> getGroups() {
         return groups;
     }
 

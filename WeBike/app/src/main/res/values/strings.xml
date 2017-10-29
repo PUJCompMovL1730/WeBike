@@ -8,4 +8,23 @@
     <string name="logout_confirm_text">Si</string>
     <string name="logout_cancel_text">No</string>
 
+    <string name="reg_email_hint">john@example.com</string>
+    <string name="reg_firstName_hint">Nombre</string>
+    <string name="reg_lastName_hint">Apellido</string>
+    <string name="reg_password_hint">123456</string>
+    <string name="reg_age_hint">18</string>
+    <string name="reg_submit_button_text">Crear Cuenta</string>
+
+    <string name="error_invalid_name">Nombre no puede contener &amp; #$%/()=!¿¡\'.-\? </string>
+    <string name="error_invalid_last">Apellido no puede contener &amp; #$%/()=!¿¡\'.-\?</string>
+    <string name="error_invalid_email">El correo debe ser valido</string>
+    <string name="error_invalid_password">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="error_invalid_age">La edad debe ser un numero valido</string>
+    <string name="error_empty_field">El campo no debe estar vacio</string>
+
+    <string-array name="genders_array">
+        <item>Masculino</item>
+        <item>Femenino</item>
+        <item>Otro</item>
+    </string-array>
 </resources>

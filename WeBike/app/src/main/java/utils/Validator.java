@@ -1,5 +1,6 @@
 package utils;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -13,13 +14,22 @@ public class Validator {
     }
 
     public static boolean validateRegisterName( String s ){
-        if ( stringContainsChars( s ,  "\"\n\t#$%&/()=!¿¡'.-\\?") || s.isEmpty())
+        if ( stringContainsChars( s ,  "\"\n\t#$%&/()=!¿¡'.-\\?") )
             return false;
         return true;
     }
 
+    public static boolean validateAge( String age ){
+        try{
+            int a = Integer.parseInt(age);
+            return true;
+        }catch ( Exception e ){
+            return false;
+        }
+    }
+
     public static boolean validatePassword( String s ){
-        if ( s.length() < 6 || s.isEmpty() ){
+        if ( s.length() < 6 ){
             return false;
         }
         return true;
@@ -46,7 +56,55 @@ public class Validator {
         return errors;
     }
 
-    public static ArrayList<Response> validateRegisterFields(){
-        return new ArrayList<>();
+    public static ArrayList<Response> validateRegisterFields( ArrayList<String> fields ){
+        ArrayList<Response> res = new ArrayList<>();
+
+        for ( int i = 0 ; i < fields.size() ; i++ ){
+            String s = fields.get(i);
+            if( s.isEmpty() ){
+                res.add(Response.EMPTY_FIELD);
+            }else{
+                res.add( validateField( s , i ) );
+            }
+        }
+
+        return res;
+    }
+
+    public static Response validateField ( String field , int i ){
+        Response res = Response.FIELD_OK;
+        switch (i){
+            case 0:
+                //firstName
+                if( !validateRegisterName(field) ) {
+                    res = Response.INVALID_NAME;
+                }
+                break;
+            case 1:
+                //lastName
+                if ( ! validateRegisterName(field) ){
+                    res = Response.INVALID_LAST;
+                }
+                break;
+            case 2:
+                //email
+                if ( !validateEmail(field) ){
+                    res = Response.INVALID_EMAIL;
+                }
+                break;
+            case 3:
+                //password
+                if( !validatePassword(field) ){
+                    res = Response.INVALID_PASSWORD;
+                }
+                break;
+            case 4:
+                //age
+                if( !validateAge(field) ){
+                    res = Response.INVALID_AGE;
+                }
+                break;
+        }
+        return res;
     }
 }

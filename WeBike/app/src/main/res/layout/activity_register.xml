@@ -1,9 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="webike.webike.RegisterActivity">
+    android:orientation="vertical"
+    android:padding="25dp">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/reg_firstName_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_editText"
+        android:layout_marginTop="@dimen/margin_editText"
+        android:hint="@string/reg_firstName_hint"/>
+    <EditText
+        android:id="@+id/reg_lastName_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_editText"
+        android:layout_marginTop="@dimen/margin_editText"
+        android:hint="@string/reg_lastName_hint"/>
+    <EditText
+        android:id="@+id/reg_email_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_editText"
+        android:layout_marginTop="@dimen/margin_editText"
+        android:hint="@string/reg_email_hint"/>
+    <EditText
+        android:id="@+id/reg_password_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_editText"
+        android:layout_marginTop="@dimen/margin_editText"
+        android:inputType="textPassword"
+        android:hint="@string/reg_password_hint"/>
+    <EditText
+        android:id="@+id/reg_age_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_editText"
+        android:layout_marginTop="@dimen/margin_editText"
+        android:inputType="number"
+        android:hint="@string/reg_age_hint"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sexo: "
+            android:textSize="@dimen/textSize" />
+        <Spinner
+            android:id="@+id/reg_gender_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/genders_array"
+            >
+        </Spinner>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/reg_submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/reg_submit_button_text"
+        android:layout_marginBottom="@dimen/margin_editText"
+        android:layout_marginTop="@dimen/margin_editText"/>
+
+</LinearLayout>

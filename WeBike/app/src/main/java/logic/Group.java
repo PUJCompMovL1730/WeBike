@@ -1,6 +1,7 @@
 package logic;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Juan on 10/28/2017.
@@ -13,8 +14,8 @@ public class Group {
     private String start;
     private String finish;
     private long time;
-    private ArrayList<User> users;
-    private ArrayList<User> admins;
+    private List<User> users;
+    private List<User> admins;
 
     public Group( ) {
 
@@ -60,7 +61,7 @@ public class Group {
         this.time = time;
     }
 
-    public ArrayList<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
@@ -68,7 +69,7 @@ public class Group {
         this.users = users;
     }
 
-    public ArrayList<User> getAdmins() {
+    public List<User> getAdmins() {
         return admins;
     }
 

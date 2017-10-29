@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -84,9 +85,29 @@ public abstract class FAuth {
         return false;
     }
 
-    //--Custom necessary methods---
-    public abstract void onSignIn();
-    public abstract void onSignOut();
-    public abstract void onSignInFail( ArrayList<Response> errors );
-    //---------------------------
+    public void createUser( String email , String password ){
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if( task.isSuccessful() ){
+                    usr = task.getResult().getUser();
+                    onSuccessfulSignUp();
+                }else{
+                    Log.i("SIGNUP_FAIL", "onComplete: " + task.getException().getMessage() );
+                    onFailedSignUp();
+                }
+            }
+        });
+    }
+
+    //--Override custom sign in callbacks ---
+    public void onSignIn(){}
+    public void onSignOut(){}
+    public void onSignInFail( ArrayList<Response> errors ){}
+    //-----------------------------
+
+    //--Override custom sign up callbacks--------
+    public void onSuccessfulSignUp(){}
+    public void onFailedSignUp(){}
+    //-----------------------------
 }
