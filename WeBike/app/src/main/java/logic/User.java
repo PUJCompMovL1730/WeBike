@@ -18,7 +18,8 @@ public class User {
     private int age;
     private String gender;
     private Uri photo;
-    private List<Message> mailbox;
+    private List<Message> received;
+    private List<Message> sent;
     private List<User> friends;
     private List<Route> history;
     private List<Group> groups;
@@ -33,6 +34,11 @@ public class User {
         this.age = age;
         this.gender = gender;
         this.photo = null;
+        this.received = new ArrayList<>();
+        this.sent = new ArrayList<>();
+        this.friends = new ArrayList<>();
+        this.history = new ArrayList<>();
+        this.groups = new ArrayList<>();
     }
 
     public User(String key, String firstName, String lastName, int age, String gender, Uri photo) {
@@ -42,6 +48,11 @@ public class User {
         this.age = age;
         this.gender = gender;
         this.photo = photo;
+        this.received = new ArrayList<>();
+        this.sent = new ArrayList<>();
+        this.friends = new ArrayList<>();
+        this.history = new ArrayList<>();
+        this.groups = new ArrayList<>();
     }
 
     public String getKey() {
@@ -92,12 +103,20 @@ public class User {
         this.photo = photo;
     }
 
-    public List<Message> getMailbox() {
-        return mailbox;
+    public List<Message> getReceived() {
+        return received;
     }
 
-    public void setMailbox(ArrayList<Message> mailbox) {
-        this.mailbox = mailbox;
+    public void setReceived(List<Message> received) {
+        this.received = received;
+    }
+
+    public List<Message> getSent() {
+        return sent;
+    }
+
+    public void setSent(List<Message> sent) {
+        this.sent = sent;
     }
 
     public List<User> getFriends() {

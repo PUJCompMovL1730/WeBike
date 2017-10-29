@@ -12,17 +12,22 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import logic.Message;
+import logic.User;
 import utils.FAuth;
+import utils.FData;
 
 public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FData fData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mAuth = FirebaseAuth.getInstance();
+        fData = new FData();
     }
 
     @Override
@@ -40,6 +45,13 @@ public class HomeActivity extends AppCompatActivity {
             startActivity( intent );
         }else if( itemClicked == R.id.config_menuItem ){
             //configuaracion
+        }else if( itemClicked == R.id.send_msg_test){
+            User usr = new User();
+            usr.setKey( this.mAuth.getCurrentUser().getUid() );
+            Message msg = new Message("Hola esto es una prueba",usr , usr );
+            this.fData.postMessage(usr.getKey() , usr.getKey() , msg);
+        }else if( itemClicked == R.id.search_user_test){
+            startActivity( new Intent(HomeActivity.this, SearchUserActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
