@@ -1,4 +1,4 @@
-package webike.webike.utils;
+package webike.webike;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
