@@ -102,9 +102,9 @@ public class HomeActivity extends AppCompatActivity {
             intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
             startActivity( intent );
         }else if( itemClicked == R.id.config_menuItem ){
-            //Intent intent = new Intent(HomeActivity.this, PublicationActivity.class);
-            //intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
-            //startActivity( intent );
+            Intent intent = new Intent(HomeActivity.this, ConfigActivity.class);
+            intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+            startActivity( intent );
         }else if( itemClicked == R.id.send_msg_test){
             User usr = new User();
             usr.setKey( this.mAuth.getCurrentUser().getUid() );

@@ -34,6 +34,7 @@
         <activity android:name=".SearchUserActivity" />
         <activity android:name=".ubicacion.Map" />
         <activity android:name=".AddFriendActivity" />
+        <activity android:name=".ConfigActivity"></activity>
     </application>
 
 </manifest>
