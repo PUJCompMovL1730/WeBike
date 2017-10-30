@@ -2,6 +2,7 @@ package webike.webike.logic;
 
 import android.net.Uri;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by Juan on 10/28/2017.
  */
 
-public class User {
+public class User implements Serializable{
 
     private String key;
     private String firstName;

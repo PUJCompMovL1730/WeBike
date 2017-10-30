@@ -3,6 +3,7 @@ package webike.webike;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,12 +28,17 @@ public class AddFriendActivity extends AppCompatActivity {
         age = (TextView) findViewById(R.id.usr_age);
         addFriend = (Button) findViewById(R.id.send_inv_btn);
 
-        /*Bundle bundle = getIntent().getExtras();
+        Intent tempIntent = getIntent();
+        Bundle bundle = tempIntent.getExtras();
 
-        User new_friend;
+        User new_friend = new User();
         if(bundle != null){
             new_friend = (User) bundle.get("user");
-        }*/
+        }
+        Log.i("INFO_DATABASE", "updateView: "+ new_friend.getEmail() );
+        username.setText(new_friend.getFirstName() + " " + new_friend.getLastName());
+        email.setText(new_friend.getEmail());
+        age.setText( Integer.toString(new_friend.getAge()) + " años");
 
 
         addFriend.setOnClickListener(new View.OnClickListener() {

@@ -46,11 +46,6 @@ public class PublicationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publication);
 
-        //id_publicacion = getIntent().getStringExtra("id_publicacion");
-       // Bundle bundle = getIntent().getBundleExtra("bundle");
-        //publicacion = (Publicacion) bundle.get("publicacion");
-        ruta = new Route("camino a la u", "casa de dani", "javeriana", "12:00am", "","","","", "hgfjgh");
-
         fbDatabase = FirebaseDatabase.getInstance();
         fbAuth = FirebaseAuth.getInstance();
 
@@ -60,11 +55,21 @@ public class PublicationActivity extends AppCompatActivity {
         tv_hora_publicacion = (TextView) findViewById(R.id.tv_hora_publicacion);
         tv_descripcion_publicacion = (TextView) findViewById(R.id.tv_descripcion_publicacion);
 
-        tv_nombre_publicacion.setText(ruta.getNombre());
-        tv_inicio_publicacion.setText(ruta.getOrigen());
-        tv_fin_publicacion.setText(ruta.getDestino());
-        tv_hora_publicacion.setText(ruta.getHora());
-        tv_descripcion_publicacion.setText(ruta.getDescripcion());
+        Intent tempIntent = getIntent();
+        Bundle bundle = tempIntent.getExtras();
+
+        Publicacion publicacion = new Publicacion();
+        if(bundle != null){
+            publicacion = (Publicacion) bundle.get("pub");
+        }
+
+        tv_nombre_publicacion.setText(publicacion.getDestino());
+        tv_inicio_publicacion.setText(publicacion.getOrigen());
+        tv_fin_publicacion.setText(publicacion.getDestino());
+        tv_hora_publicacion.setText(publicacion.getHora());
+        tv_descripcion_publicacion.setText(publicacion.getDescripcion());
+
+        ruta = new Route(publicacion.getNombre(),publicacion.getOrigen(),publicacion.getDestino(),publicacion.getHora(),"","","","",publicacion.getDescripcion());
 
         b_participar_publicacion = (Button)findViewById(R.id.b_participar_publicacion);
         b_participar_publicacion.setOnClickListener(new View.OnClickListener() {

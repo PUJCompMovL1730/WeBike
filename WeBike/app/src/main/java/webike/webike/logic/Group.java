@@ -1,5 +1,6 @@
 package webike.webike.logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by Juan on 10/28/2017.
  */
 
-public class Group {
+public class Group implements Serializable{
 
     private String key;
     private String name;

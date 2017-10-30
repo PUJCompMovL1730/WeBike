@@ -1,5 +1,6 @@
 package webike.webike.logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by Juan on 10/30/2017.
  */
 
-public class Mailbox {
+public class Mailbox implements Serializable{
     private List<Message> sent;
     private List<Message> received;
 
