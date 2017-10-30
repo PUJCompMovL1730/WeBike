@@ -1,6 +1,8 @@
 package webike.webike.utils;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Juan on 10/28/2017.
@@ -9,7 +11,17 @@ import java.util.ArrayList;
 public class Validator {
 
     public static boolean validateEmail( String email ) {
-        return true;
+        boolean isValid;
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher mather = pattern.matcher(email);
+
+        if (mather.find() == true) {
+            isValid = true;
+        } else {
+            isValid = false;
+        }
+        return isValid;
     }
 
     public static boolean validateRegisterName( String s ){

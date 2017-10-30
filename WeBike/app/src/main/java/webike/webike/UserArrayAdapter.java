@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import webike.webike.logic.User;
@@ -35,7 +37,10 @@ public class UserArrayAdapter extends ArrayAdapter<User> {
         User u = getItem(position);
         if( u != null ){
             TextView text = (TextView) v.findViewById(R.id.user_name);
+            TextView email = (TextView) v.findViewById(R.id.user_email);
+
             text.setText(u.getFirstName()+" "+u.getLastName());
+            email.setText( u.getEmail() );
         }
         return v;
     }
