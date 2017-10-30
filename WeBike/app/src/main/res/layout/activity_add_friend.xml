@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+    android:layout_height="match_parent"
+tools:context="webike.webike.AddFriendActivity"
+    android:padding="20dp">
+
+<LinearLayout
+    android:id="@+id/inicio"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+    <ImageView
+        android:id="@+id/usr_icon"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/user"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+        <TextView
+            android:id="@+id/usr_name_inv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aca va el nombre"
+            android:textColor="#000000"
+            android:textSize="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/usr_name_inv"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/fin"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/email_usr_inv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Correo" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/fin" />
+
+                <TextView
+                    android:id="@+id/usr_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Edad" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#CCE5FF"
+    android:orientation="vertical"
+    android:padding="40dp"
+    android:layout_centerVertical="true"
+    android:layout_alignParentStart="true">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:text="¿Lo conoces?"
+        android:textColor="#000000" />
+
+    <Button
+        android:id="@+id/send_inv_btn"
+        style="@android:style/Widget.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#66B2FF"
+        android:padding="10dp"
+        android:text="Agregar a mi lista de amigos"
+        android:textColor="#ffffff" />
+</LinearLayout>
+</RelativeLayout>
