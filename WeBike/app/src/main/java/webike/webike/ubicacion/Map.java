@@ -105,11 +105,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, PlaceS
         mainIntent = new Intent(this, HomeActivity.class);
         mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        image = (ImageView) findViewById(R.id.home_image);
-        userName = (TextView) findViewById(R.id.home_username);
-        userEmail = (TextView) findViewById(R.id.home_useremail);
 
-        toolbar = (Toolbar) findViewById(R.id.action_bar);
 
     }
 

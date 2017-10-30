@@ -16,6 +16,7 @@ public class User {
     private String lastName;
     private int age;
     private String gender;
+    private String email;
     private Uri photo;
     private List<Message> received;
     private List<Message> sent;
@@ -26,7 +27,7 @@ public class User {
     public User() {
     }
 
-    public User(String key, String firstName, String lastName, int age, String gender ) {
+    public User(String key, String firstName, String lastName, int age, String gender,String email ) {
         this.key = key;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,6 +39,15 @@ public class User {
         this.friends = new ArrayList<>();
         this.history = new ArrayList<>();
         this.groups = new ArrayList<>();
+        this.email=email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public User(String key, String firstName, String lastName, int age, String gender, Uri photo) {

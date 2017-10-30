@@ -30,7 +30,7 @@ public class adaptador_home_notificacion extends ArrayAdapter<Publicacion>{
         View v= convertView;
         if(v == null) {
             LayoutInflater vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.adapterhomeNotificacion, null);
+            v = vi.inflate(R.layout.adapterhome_notificacion, null);
         }
 
         Publicacion r = getItem(position);

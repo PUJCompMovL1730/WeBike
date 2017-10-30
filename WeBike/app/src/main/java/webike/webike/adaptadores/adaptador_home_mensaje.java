@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import webike.webike.R;
 import webike.webike.logic.Message;
-import webike.webike.logic.Publicacion;
 
 /**
  * Created by Carlos on 29/10/2017.
@@ -30,7 +29,7 @@ public class adaptador_home_mensaje extends ArrayAdapter<Message> {
         View v= convertView;
         if(v == null) {
             LayoutInflater vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.adapterhomeNotificacion, null);
+            v = vi.inflate(R.layout.adapterhome_notificacion, null);
         }
 
         Message r = getItem(position);
