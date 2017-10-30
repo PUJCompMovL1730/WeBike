@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import webike.webike.logic.User;
+import webike.webike.utils.FData;
 
 public class SearchUserActivity extends AppCompatActivity {
 
@@ -28,9 +29,7 @@ public class SearchUserActivity extends AppCompatActivity {
     private ListView resultList;
     private String search_name;
     private ArrayList<User> results;
-    ArrayList<User> usuarios;
 
-    public static final String PATH_USERS = "users/";
     private FirebaseDatabase database;
     DatabaseReference myRef;
     @Override
@@ -38,25 +37,36 @@ public class SearchUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_user);
         database = FirebaseDatabase.getInstance();
-        loadUser("jueputa");
+        searchEditText = (EditText) findViewById(R.id.searchText_editText);
+
+        resultList = (ListView) findViewById(R.id.search_list);
+
+        searchButton  = (Button) findViewById(R.id.searchUser_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadUser( searchEditText.getText().toString() );
+            }
+        });
     }
 
    public void loadUser(final String buscar){
 
-       final DatabaseReference myRef = database.getReference(PATH_USERS);
+       final DatabaseReference myRef = database.getReference(FData.PATH_TO_USERS);
        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
            @Override
            public void onDataChange(DataSnapshot dataSnapshot) {
-               usuarios = new ArrayList<>();
+               ArrayList<User> usuarios = new ArrayList<>();
                for(DataSnapshot singleSnashot: dataSnapshot.getChildren()){
                    User myUser = singleSnashot.getValue(User.class);
-                   String nombre = myUser.getFirstName()+" "+myUser.getLastName();
-                   //String nombre = myUser.getEmail();
+                   //String nombre = myUser.getFirstName()+" "+myUser.getLastName();
+                   String nombre = myUser.getEmail();
                    if(nombre.contains(buscar)){
                        usuarios.add(myUser);
                        Log.i("TAG","CORREO:"+nombre);
                    }
                }
+               updateView( usuarios );
            }
 
            @Override
@@ -65,5 +75,11 @@ public class SearchUserActivity extends AppCompatActivity {
            }
        });
 
+   }
+
+   public void updateView( ArrayList<User> usrs) {
+       Log.i("INFO_DATABASE", "updateView: "+ usrs.toString() );
+       UserArrayAdapter adapter = new UserArrayAdapter(this, usrs);
+       this.resultList.setAdapter(adapter);
    }
 }

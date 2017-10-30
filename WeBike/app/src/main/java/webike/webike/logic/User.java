@@ -17,7 +17,6 @@ public class User {
     private int age;
     private String gender;
     private String email;
-    private Uri photo;
     private List<Message> received;
     private List<Message> sent;
     private List<User> friends;
@@ -33,7 +32,6 @@ public class User {
         this.lastName = lastName;
         this.age = age;
         this.gender = gender;
-        this.photo = null;
         this.received = new ArrayList<>();
         this.sent = new ArrayList<>();
         this.friends = new ArrayList<>();
@@ -48,20 +46,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public User(String key, String firstName, String lastName, int age, String gender, Uri photo) {
-        this.key = key;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.gender = gender;
-        this.photo = photo;
-        this.received = new ArrayList<>();
-        this.sent = new ArrayList<>();
-        this.friends = new ArrayList<>();
-        this.history = new ArrayList<>();
-        this.groups = new ArrayList<>();
     }
 
     public String getKey() {
@@ -102,14 +86,6 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public Uri getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Uri photo) {
-        this.photo = photo;
     }
 
     public List<Message> getReceived() {

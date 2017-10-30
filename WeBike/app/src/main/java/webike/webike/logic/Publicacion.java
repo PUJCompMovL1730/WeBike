@@ -9,15 +9,25 @@ public class Publicacion {
     private String destino;
     private String hora;
     private String descripcion;
+    private String nombre;
 
     public Publicacion() {
     }
 
-    public Publicacion(String origen, String destino, String hora, String descripcion) {
+    public Publicacion(String nombre ,String origen, String destino, String hora, String descripcion) {
         this.origen = origen;
         this.destino = destino;
         this.hora = hora;
         this.descripcion = descripcion;
+        this.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getOrigen() {
