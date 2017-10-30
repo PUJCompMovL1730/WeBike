@@ -3,6 +3,7 @@ package webike.webike.adaptadores;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class adaptador_home_mensaje extends ArrayAdapter<Message> {
         View v= convertView;
         if(v == null) {
             LayoutInflater vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.adapterhome_notificacion, null);
+            v = vi.inflate(R.layout.adapter_home_mensajes, null);
         }
 
         Message r = getItem(position);
@@ -37,8 +38,8 @@ public class adaptador_home_mensaje extends ArrayAdapter<Message> {
             TextView txdestino= (TextView) v.findViewById(R.id.receptor);
             TextView txorigen = (TextView) v.findViewById(R.id.remitente);
             TextView txmensaje = (TextView) v.findViewById(R.id.mensaje);
-            txdestino.setText((CharSequence) r.getSender());
-            txorigen.setText((CharSequence) r.getReceiver());
+            txdestino.setText((CharSequence) r.getSender().getEmail());
+            txorigen.setText((CharSequence) r.getReceiver().getEmail() );
             txmensaje.setText(r.getMsg());
         }
         return v;

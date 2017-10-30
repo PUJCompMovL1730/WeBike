@@ -4,8 +4,8 @@
         android:id="@+id/config_menuItem"
         android:title="@string/home_menu_config_text"/>
     <item
-        android:id="@+id/logout_menuItem"
-        android:title="@string/home_menu_logout_text"/>
+        android:id="@+id/search_user_test"
+        android:title="@string/test_search"/>
     <item
         android:id="@+id/send_msg_test"
         android:title="@string/test_msg"/>
@@ -13,6 +13,6 @@
         android:id="@+id/go_to_planroute"
         android:title="@string/menu_goto_planroute"/>
     <item
-        android:id="@+id/search_user_test"
-        android:title="@string/test_search"/>
+        android:id="@+id/logout_menuItem"
+        android:title="@string/home_menu_logout_text"/>
 </menu>

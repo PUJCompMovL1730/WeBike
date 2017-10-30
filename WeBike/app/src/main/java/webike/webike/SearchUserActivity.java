@@ -1,7 +1,5 @@
 package webike.webike;
 
-import android.nfc.Tag;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,8 +15,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
+import webike.webike.adaptadores.UserArrayAdapter;
 import webike.webike.logic.User;
 import webike.webike.utils.FAuth;
 import webike.webike.utils.FData;
@@ -60,8 +59,15 @@ public class SearchUserActivity extends AppCompatActivity {
            public void onDataChange(DataSnapshot dataSnapshot) {
                ArrayList<User> usuarios = new ArrayList<>();
                for(DataSnapshot singleSnashot: dataSnapshot.getChildren()){
-                   User myUser = singleSnashot.getValue(User.class);
-                   //String nombre = myUser.getFirstName()+" "+myUser.getLastName();
+
+                   User myUser = new User();
+                   myUser.setEmail((String)((HashMap<String, Object>)singleSnashot.getValue()).get("email"));
+                   myUser.setFirstName( (String)((HashMap<String, Object>)singleSnashot.getValue()).get("firstName") );
+                   myUser.setLastName( (String)((HashMap<String, Object>)singleSnashot.getValue()).get("lastName") );
+                   myUser.setGender( (String)((HashMap<String, Object>)singleSnashot.getValue()).get("gender") );
+                   myUser.setKey( (String)((HashMap<String, Object>)singleSnashot.getValue()).get("key") );
+                   myUser.setAge( ((Long)((HashMap<String, Object>)singleSnashot.getValue()).get("age") ).intValue() );
+
                    String nombre = myUser.getEmail();
                    nombre = nombre.substring(0 , nombre.indexOf('@'));
                    if(nombre.contains(buscar) && !myUser.getKey().equals( mAuth.getUser().getUid() ) ) {
