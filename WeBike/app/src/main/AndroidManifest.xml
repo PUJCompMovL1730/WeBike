@@ -20,6 +20,8 @@ package="webike.webike">
     </activity>
     <activity android:name=".RegisterActivity" />
     <activity android:name=".HomeActivity" />
+    <activity android:name=".PublicationActivity" />
+    <activity android:name=".InviteGroupActivity" />
     <activity android:name=".SearchUserActivity" />
     <activity android:name=".ubicacion.Map"></activity>
 </application>
