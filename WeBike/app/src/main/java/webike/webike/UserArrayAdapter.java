@@ -1,8 +1,6 @@
 package webike.webike;
 
 import android.content.Context;
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import logic.User;
+import webike.webike.logic.User;
 
 /**
  * Created by Juan on 10/29/2017.

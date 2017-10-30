@@ -1,4 +1,4 @@
-package logic;
+package webike.webike.logic;
 
 import java.util.ArrayList;
 import java.util.List;

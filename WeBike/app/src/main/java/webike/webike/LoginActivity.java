@@ -10,8 +10,8 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
-import utils.FAuth;
-import utils.Response;
+import webike.webike.utils.FAuth;
+import webike.webike.utils.Response;
 
 public class LoginActivity extends AppCompatActivity {
 

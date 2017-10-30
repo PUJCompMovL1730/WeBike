@@ -1,11 +1,11 @@
-package utils;
+package webike.webike.utils;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import logic.Message;
-import logic.Publicacion;
-import logic.User;
+import webike.webike.logic.Message;
+import webike.webike.logic.Publicacion;
+import webike.webike.logic.User;
 
 public class FData {
 

@@ -1,6 +1,5 @@
-package logic;
+package webike.webike.logic;
 
-import android.location.Location;
 import android.net.Uri;
 
 import java.util.ArrayList;

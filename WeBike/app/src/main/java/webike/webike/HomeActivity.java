@@ -1,21 +1,19 @@
 package webike.webike;
 
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import logic.Message;
-import logic.User;
-import utils.FAuth;
-import utils.FData;
+import webike.webike.logic.Message;
+import webike.webike.logic.User;
+import webike.webike.ubicacion.Map;
+import webike.webike.utils.FData;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -52,6 +50,8 @@ public class HomeActivity extends AppCompatActivity {
             this.fData.postMessage(usr.getKey() , usr.getKey() , msg);
         }else if( itemClicked == R.id.search_user_test){
             startActivity( new Intent(HomeActivity.this, SearchUserActivity.class));
+        }else if( itemClicked == R.id.go_to_planroute){
+            startActivity( new Intent(HomeActivity.this, Map.class));
         }
         return super.onOptionsItemSelected(item);
     }

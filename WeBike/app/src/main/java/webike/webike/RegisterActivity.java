@@ -3,24 +3,19 @@ package webike.webike;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuAdapter;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 
-import logic.User;
-import utils.FAuth;
-import utils.FData;
-import utils.Response;
-import utils.Utils;
-import utils.Validator;
+import webike.webike.logic.User;
+import webike.webike.utils.FAuth;
+import webike.webike.utils.FData;
+import webike.webike.utils.Response;
+import webike.webike.utils.Validator;
 
 public class RegisterActivity extends AppCompatActivity {
 

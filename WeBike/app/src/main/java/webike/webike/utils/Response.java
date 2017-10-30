@@ -1,4 +1,4 @@
-package utils;
+package webike.webike.utils;
 
 /**
  * Created by Juan on 10/28/2017.
