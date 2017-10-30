@@ -1,12 +1,15 @@
 package webike.webike;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -48,19 +51,21 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onSignInFail(ArrayList<Response> errors ) {
+                if ( errors.contains(Response.INVALID_EMAIL) ){
+                    Snackbar.make(findViewById(R.id.login_parent), "El correo es invalido.", Snackbar.LENGTH_SHORT).show();
+                }else
                 if ( errors.contains(Response.LOGIN_ERROR ) ){
                     Log.i("Fail:", "onSignInFail: Could not sign in. Check log.");
+                    Snackbar.make(findViewById(R.id.login_parent), "Usuario o contraseña invalido.", Snackbar.LENGTH_SHORT).show();
                 }
-                if ( errors.contains(Response.INVALID_PASSWORD) ){
 
-                }
             }
         };
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = emailEditText.getText().toString();
+                String email = emailEditText.getText().toString().trim();
                 String pass  = passwordEditText.getText().toString();
                 mAuth.authenticate( email , pass );
             }

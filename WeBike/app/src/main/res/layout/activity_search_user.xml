@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -7,31 +7,35 @@
 
 
     <LinearLayout
+        android:id="@+id/linear_menus_busqueda"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
         <EditText
             android:id="@+id/searchText_editText"
             android:layout_width="230dp"
             android:layout_height="47dp"
             android:inputType="textPersonName"
             android:hint="Name"
-            android:layout_weight="0.6"/>
+            android:padding="5dp"
+            />
         <Button
             android:id="@+id/searchUser_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Buscar"
-            android:layout_weight="0.4"
+            android:padding="5dp"
+
             />
     </LinearLayout>
 
 
     <LinearLayout
+        android:layout_below="@+id/linear_menus_busqueda"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="0.9"
+        android:padding="10dp"
         >
         <ListView
             android:id="@+id/search_list"
@@ -40,4 +44,4 @@
         </ListView>
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
