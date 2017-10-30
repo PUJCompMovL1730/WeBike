@@ -37,6 +37,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import webike.webike.HomeActivity;
+import webike.webike.LoginActivity;
 import webike.webike.R;
 import webike.webike.utils.FAuth;
 import webike.webike.utils.Permisos;
@@ -76,6 +77,11 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, PlaceS
             @Override
             public void onSignIn() {
                 user = this.getUser();
+            }
+
+            @Override
+            public void onSignOut() {
+                startActivity( new Intent( Map.this , LoginActivity.class ));
             }
         };
         locationController =  new LocacionController(this) {
@@ -186,7 +192,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, PlaceS
         switch (itemClicked) {
             case R.id.menu_signout:
                 firebaseAuthentication.SignOut();
-                startActivity(mainIntent);
                 break;
             case R.id.menu_style_map:
                 showMapStyleSelectorDialog(this, googleMap);
@@ -220,9 +225,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, PlaceS
         addMarker(latLng, title, snippet);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
-
-    @Override
-    public void onBackPressed() {}
 
     public static Bitmap cropImage(Bitmap image) {
         int width = Math.min(image.getWidth(), image.getHeight());
