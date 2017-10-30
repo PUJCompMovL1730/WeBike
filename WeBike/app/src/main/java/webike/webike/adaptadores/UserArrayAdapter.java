@@ -1,4 +1,4 @@
-package webike.webike;
+package webike.webike.adaptadores;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,6 +13,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import webike.webike.R;
 import webike.webike.logic.User;
 
 /**

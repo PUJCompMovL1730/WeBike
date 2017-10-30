@@ -1,7 +1,5 @@
 package webike.webike;
 
-import android.nfc.Tag;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,13 +16,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
+import webike.webike.adaptadores.UserArrayAdapter;
 import webike.webike.logic.User;
 import webike.webike.utils.FAuth;
 import webike.webike.utils.FData;
-
-import static java.lang.Math.toIntExact;
 
 public class SearchUserActivity extends AppCompatActivity {
 
@@ -63,7 +59,7 @@ public class SearchUserActivity extends AppCompatActivity {
            public void onDataChange(DataSnapshot dataSnapshot) {
                ArrayList<User> usuarios = new ArrayList<>();
                for(DataSnapshot singleSnashot: dataSnapshot.getChildren()){
-                   
+
                    User myUser = new User();
                    myUser.setEmail((String)((HashMap<String, Object>)singleSnashot.getValue()).get("email"));
                    myUser.setFirstName( (String)((HashMap<String, Object>)singleSnashot.getValue()).get("firstName") );
