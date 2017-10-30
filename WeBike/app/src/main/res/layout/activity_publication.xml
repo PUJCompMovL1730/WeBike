@@ -19,13 +19,14 @@
             android:layout_height="wrap_content"
             android:src="@drawable/text_lines"
             android:paddingLeft="10dp"/>
+
         <TextView
             android:id="@+id/tv_nombre_publicacion"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:text="Paseo a medellín"
-            android:textSize="30sp"
-            android:padding="20dp"/>
+            android:textSize="20sp"
+            android:gravity="center"/>
 
     </LinearLayout>
     <LinearLayout
@@ -115,14 +116,15 @@
             android:layout_height="100dp"
             android:scrollbars="vertical"
             android:fillViewport="true">
+
             <TextView
                 android:id="@+id/tv_descripcion_publicacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
                 android:maxLines="6"
                 android:paddingRight="20dp"
-                android:text="esto es hiper coolgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggxxxx"
-                android:layout_gravity="center"/>
+                android:text="esto es hiper coolgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggxxxx" />
         </ScrollView>
 
     </LinearLayout>

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -37,11 +38,14 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FData fData;
     private FirebaseDatabase database;
+    private boolean type = false;
 
     private ListView homeList;
 
     private Button msgButton;
     private Button pubButton;
+    private ArrayList<Message> current_msg;
+    private ArrayList<Publicacion> current_pub;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadMsg( mAuth.getCurrentUser().getUid() );
+                type = false;
             }
         });
 
@@ -65,6 +70,20 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadPubs();
+                type = true;
+            }
+        });
+
+        homeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(type)
+                {
+                    Intent myIntent = new Intent(HomeActivity.this, PublicationActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("pub",current_pub.get(position));
+                    myIntent.putExtras(bundle);
+                    startActivity(myIntent);
+                }
             }
         });
     }
@@ -83,9 +102,9 @@ public class HomeActivity extends AppCompatActivity {
             intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
             startActivity( intent );
         }else if( itemClicked == R.id.config_menuItem ){
-            //Intent intent = new Intent(HomeActivity.this, PublicationActivity.class);
-            //intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
-            //startActivity( intent );
+            Intent intent = new Intent(HomeActivity.this, ConfigActivity.class);
+            intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+            startActivity( intent );
         }else if( itemClicked == R.id.send_msg_test){
             User usr = new User();
             usr.setKey( this.mAuth.getCurrentUser().getUid() );
@@ -144,6 +163,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     msgs.add(msg);
                 }
+                current_msg = msgs;
                 inflateListWithMsgs( msgs );
             }
 
@@ -164,6 +184,7 @@ public class HomeActivity extends AppCompatActivity {
                     Publicacion p = ds.getValue(Publicacion.class);
                     pubs.add(p);
                 }
+                current_pub = pubs;
                 infalteListWithPubs( pubs );
             }
 

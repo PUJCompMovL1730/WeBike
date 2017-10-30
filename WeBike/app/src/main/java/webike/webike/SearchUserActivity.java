@@ -1,9 +1,11 @@
 package webike.webike;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -49,6 +51,18 @@ public class SearchUserActivity extends AppCompatActivity {
                 loadUser( searchEditText.getText().toString().trim() );
             }
         });
+
+
+        resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent myIntent = new Intent(SearchUserActivity.this, AddFriendActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user",results.get(i));
+                myIntent.putExtras(bundle);
+                Log.i("INFO_DATABASE", "updateView: "+ results.get(i).getEmail() );
+                startActivity(myIntent);
+            }
+        });
     }
 
    public void loadUser(final String buscar){
@@ -74,6 +88,7 @@ public class SearchUserActivity extends AppCompatActivity {
                        usuarios.add(myUser);
                    }
                }
+               results = usuarios;
                updateView( usuarios );
            }
 

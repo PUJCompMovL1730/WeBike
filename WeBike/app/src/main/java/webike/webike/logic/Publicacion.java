@@ -1,10 +1,12 @@
 package webike.webike.logic;
 
+import java.io.Serializable;
+
 /**
  * Created by Juan on 10/28/2017.
  */
 
-public class Publicacion {
+public class Publicacion implements Serializable{
     private String origen;
     private String destino;
     private String hora;
