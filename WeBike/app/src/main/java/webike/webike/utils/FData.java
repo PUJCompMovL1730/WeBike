@@ -13,6 +13,7 @@ import webike.webike.logic.Group;
 import webike.webike.logic.Message;
 import webike.webike.logic.Publicacion;
 import webike.webike.logic.Route;
+import webike.webike.logic.SpecialPublication;
 import webike.webike.logic.User;
 
 public class FData {
@@ -118,6 +119,10 @@ public class FData {
                 actions.onCancel(databaseError);
             }
         });
+    }
+
+    public static void getSpecialPublications( FirebaseDatabase database , final ListActions<SpecialPublication> actions ){
+
     }
 
     public static void getPublications( FirebaseDatabase database , final ListActions<Publicacion> actions ){

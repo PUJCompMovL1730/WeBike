@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,13 +41,15 @@ public class HomeActivity extends AppCompatActivity {
     private FData fData;
     private FirebaseDatabase database;
     private boolean type = false;
-
     private ListView homeList;
 
     private Button msgButton;
     private Button pubButton;
     private ArrayList<Message> current_msg;
     private ArrayList<Publicacion> current_pub;
+    private Button b_panic;
+    private ImageView b_help;
+    private ImageView b_manual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,51 @@ public class HomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         fData = new FData();
         database = FirebaseDatabase.getInstance();
-        homeList = (ListView) findViewById(R.id.home_listView);
+
+        b_panic = (Button) findViewById(R.id.panic);
+        b_help = (ImageView) findViewById(R.id.help);
+        b_manual = (ImageView) findViewById(R.id.manual);
+
+        b_panic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, PanicButtonActivity.class);
+                startActivity(intent);
+            }
+        });
+        b_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, HelpButtonActivity.class);
+                startActivity(intent);
+            }
+        });
+        b_manual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, ManualActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        homeList = (ListView) findViewById(R.id.home_list);
+
+        homeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(type)
+                {
+                    Intent myIntent = new Intent(HomeActivity.this, PublicationActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("pub",current_pub.get(position));
+                    myIntent.putExtras(bundle);
+                    startActivity(myIntent);
+                }
+            }
+        });
+
+        loadPubs();
+
+        /*
         msgButton = (Button) findViewById(R.id.load_msg_button);
         pubButton = (Button) findViewById(R.id.load_pubs_button);
 
@@ -86,7 +133,7 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(myIntent);
                 }
             }
-        });
+        });*/
     }
 
     @Override
@@ -97,6 +144,45 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemClicked = item.getItemId();
+        Intent intent;
+        switch(itemClicked) {
+            case R.id.publicaciones_menuItem:
+                intent = new Intent(HomeActivity.this, PublicationsActivity.class);
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity( intent );
+                break;
+            case R.id.publicaciones_especiales_menuItem:
+                intent = new Intent(HomeActivity.this, SpecialPublicationsActivity.class);
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity( intent );
+                break;
+            case R.id.logout_menuItem:
+                mAuth.signOut();
+                intent = new Intent(HomeActivity.this, LoginActivity.class);
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity( intent );
+                break;
+            case R.id.config_menuItem:
+                intent = new Intent(HomeActivity.this, ConfigActivity.class);
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity( intent );
+                break;
+            case R.id.send_msg_test:
+                User usr = new User();
+                usr.setKey( this.mAuth.getCurrentUser().getUid() );
+                usr.setEmail("juanmig8@hotmail.com");
+                Message msg = new Message("Hola esto es una prueba",usr , usr );
+                this.fData.postMessage(usr.getKey() , usr.getKey() , msg);
+                break;
+            case R.id.search_user_test:
+                startActivity( new Intent(HomeActivity.this, SearchUserActivity.class));
+                break;
+            case R.id.go_to_planroute:
+                startActivity( new Intent(HomeActivity.this, Map.class));
+            default : // Optional
+                // Statements
+        }
+        /*
         if( itemClicked == R.id.logout_menuItem ){
             mAuth.signOut();
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
@@ -117,6 +203,7 @@ public class HomeActivity extends AppCompatActivity {
         }else if( itemClicked == R.id.go_to_planroute){
             startActivity( new Intent(HomeActivity.this, Map.class));
         }
+        */
         return super.onOptionsItemSelected(item);
     }
 
@@ -183,7 +270,6 @@ public class HomeActivity extends AppCompatActivity {
             adaptador_home_mensaje adapter = new adaptador_home_mensaje(this, msgs);
             this.homeList.setAdapter(adapter);
         }
-
     }
 
     public void infalteListWithPubs( ArrayList<Publicacion> pubs ){
