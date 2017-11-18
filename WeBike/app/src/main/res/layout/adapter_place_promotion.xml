@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/bell_24"/>
         <TextView
-            android:id="@+id/nombre_publicacion"
+            android:id="@+id/tv_nombre"
             android:paddingStart="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:layout_height="24dp"
             android:src="@drawable/place_small"/>
         <TextView
-            android:id="@+id/lugar_publicacion"
+            android:id="@+id/tv_lugar"
             android:paddingStart="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
@@ -76,14 +77,12 @@ public class PublicationsActivity extends AppCompatActivity {
 
         publications_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(type)
-                {
-                    Intent myIntent = new Intent(PublicationsActivity.this, PublicationActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("pub",current_pub.get(position));
-                    myIntent.putExtras(bundle);
-                    startActivity(myIntent);
-                }
+                Intent myIntent = new Intent(PublicationsActivity.this, PublicationActivity.class);
+                Bundle bundle = new Bundle();
+                Publicacion publicacion = (Publicacion) current_pub.get(position);
+                bundle.putSerializable("pub",publicacion);
+                myIntent.putExtras(bundle);
+                startActivity(myIntent);
             }
         });
 

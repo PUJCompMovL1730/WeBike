@@ -70,14 +70,13 @@ public class PublicationActivity extends AppCompatActivity {
         tv_hora_publicacion.setText(publicacion.getHora());
         tv_descripcion_publicacion.setText(publicacion.getDescripcion());
 
-        ruta = new Route(publicacion.getNombre(),publicacion.getOrigen(),publicacion.getDestino(),publicacion.getHora(),"","","","",publicacion.getDescripcion());
+        //ruta = new Route(publicacion.getNombre(),publicacion.getOrigen(),publicacion.getDestino(),publicacion.getHora(),"","","","",publicacion.getDescripcion());
 
         b_participar_publicacion = (Button)findViewById(R.id.b_participar_publicacion);
         b_participar_publicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    //Toast.makeText(getBaseContext(),"YAAAAAAS",Toast.LENGTH_SHORT).show();
                     writeDatabase();
                     Toast.makeText(getBaseContext(),"Se ha añadido el recorrido exitosamente",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(PublicationActivity.this, HomeActivity.class);

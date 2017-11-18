@@ -3,11 +3,13 @@ package webike.webike;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +28,7 @@ import webike.webike.utils.ListFilteredActions;
 public class SearchUserActivity extends AppCompatActivity {
 
     private EditText searchEditText;
-    private Button searchButton;
+    private ImageButton searchButton;
     private ListView resultList;
     private String search_name;
     private ArrayList<User> results;
@@ -43,7 +45,7 @@ public class SearchUserActivity extends AppCompatActivity {
         };
         resultList = (ListView) findViewById(R.id.search_list);
 
-        searchButton  = (Button) findViewById(R.id.searchUser_button);
+        searchButton  = (ImageButton) findViewById(R.id.searchUser_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

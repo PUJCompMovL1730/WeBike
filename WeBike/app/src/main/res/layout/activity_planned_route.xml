@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
             >
 
             <ImageView
@@ -67,8 +67,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -88,8 +87,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -108,8 +106,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -128,24 +125,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
                 android:src="@drawable/signal_24"/>
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:layout_marginStart="10dp"
                 android:scrollbars="vertical"
                 android:fillViewport="true">
                 <TextView
                     android:id="@+id/tv_descripcion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:maxLines="6"
                     android:background="@color/WeBikeWhite"
                     android:padding="20dp"
@@ -156,9 +153,11 @@
 
         <Button
             android:id="@+id/b_participar"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/WeBikeWhite"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
             android:text="Participar"

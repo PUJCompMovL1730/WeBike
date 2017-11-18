@@ -75,4 +75,15 @@ public class PlannedRoute extends  SpecialPublication implements Serializable{
         this.descripcion = descripcion;
     }
 
+    @Override
+    public String toString() {
+        return "PlannedRoute{" +
+                "nombre='" + nombre + '\'' +
+                ", organiza='" + organiza + '\'' +
+                ", origen='" + origen + '\'' +
+                ", destino='" + destino + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                '}';
+    }
 }

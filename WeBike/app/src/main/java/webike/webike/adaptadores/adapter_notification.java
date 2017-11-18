@@ -33,9 +33,9 @@ public class adapter_notification extends ArrayAdapter<Publicacion> {
 
         Publicacion r = getItem(position);
         if (r!= null){
-            TextView tv_nombre = (TextView) v.findViewById(R.id.nombre_publicacion);
-            TextView tv_inicio = (TextView) v.findViewById(R.id.inicio_publicacion);
-            TextView tv_fin = (TextView) v.findViewById(R.id.fin_publicacion);
+            TextView tv_nombre = (TextView) v.findViewById(R.id.tv_nombre);
+            TextView tv_inicio = (TextView) v.findViewById(R.id.tv_inicio);
+            TextView tv_fin = (TextView) v.findViewById(R.id.tv_fin);
 
             tv_nombre.setText(r.getNombre());
             tv_inicio.setText(r.getOrigen());

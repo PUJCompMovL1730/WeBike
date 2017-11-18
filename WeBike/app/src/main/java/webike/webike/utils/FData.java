@@ -1,5 +1,7 @@
 package webike.webike.utils;
 
+import android.util.Log;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -8,9 +10,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
+import webike.webike.logic.AbstractPublication;
 import webike.webike.logic.Group;
 import webike.webike.logic.Message;
+import webike.webike.logic.PlacePromotion;
+import webike.webike.logic.PlannedRoute;
 import webike.webike.logic.Publicacion;
 import webike.webike.logic.Route;
 import webike.webike.logic.SpecialPublication;
@@ -22,6 +28,9 @@ public class FData {
     public final static String PATH_TO_USERS = "/users";
     public final static String PATH_TO_PUBS  = "/publications";
     public final static String PATH_TO_GROUPS = "/groups";
+    public final static String PATH_TO_SPECIAL_PUBS = "/special_publications";
+    public final static String PATH_TO_PLANNED_ROUTES = "/special_publications/planned_routes";
+    public final static String PATH_TO_PLACE_PROMOTIONS = "/special_publications/place_promotions";
 
     public FData(){
         this.database = FirebaseDatabase.getInstance();
@@ -121,8 +130,74 @@ public class FData {
         });
     }
 
-    public static void getSpecialPublications( FirebaseDatabase database , final ListActions<SpecialPublication> actions ){
+    public static void getAllPublications(final FirebaseDatabase database , final ListActions<AbstractPublication> actions){
+        final DatabaseReference ref = database.getReference(FData.PATH_TO_SPECIAL_PUBS);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final ArrayList<AbstractPublication> pubs = new ArrayList<AbstractPublication>();
 
+                HashMap<String,Object> spubs  = (HashMap<String, Object>) dataSnapshot.getValue();
+                HashMap<String,Object> routes = (HashMap<String, Object>) spubs.get("planned_routes");
+                ArrayList<String> keys = new ArrayList<String>( routes.keySet() );
+                for ( String key : keys ){
+                    pubs.add( FData.createPlannedRoute( (HashMap<String, Object>) routes.get(key) ));
+                }
+                HashMap<String,Object> places = (HashMap<String, Object>) spubs.get("place_promotions");
+                keys = new ArrayList<String>(places.keySet());
+                for ( String key : keys ){
+                    pubs.add( FData.createPlacePromotion( (HashMap<String,Object>)places.get(key) ) );
+                }
+                DatabaseReference refPubs = database.getReference(FData.PATH_TO_PUBS);
+                refPubs.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for ( DataSnapshot snapshot : dataSnapshot.getChildren() ){
+                            AbstractPublication pub = snapshot.getValue(Publicacion.class);
+                            pubs.add(pub);
+                        }
+                        actions.onReceiveList( pubs , null );
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        actions.onCancel(databaseError);
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                actions.onCancel(databaseError);
+            }
+        });
+    }
+
+    public static void getSpecialPublications( FirebaseDatabase database , final ListActions<SpecialPublication> actions ){
+        final DatabaseReference ref = database.getReference(FData.PATH_TO_SPECIAL_PUBS);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final ArrayList<SpecialPublication> pubs = new ArrayList<SpecialPublication>();
+                HashMap<String,Object> spubs  = (HashMap<String, Object>) dataSnapshot.getValue();
+                HashMap<String,Object> routes = (HashMap<String, Object>) spubs.get("planned_routes");
+                ArrayList<String> keys = new ArrayList<String>( routes.keySet() );
+                for ( String key : keys ){
+                    pubs.add( FData.createPlannedRoute( (HashMap<String, Object>) routes.get(key) ));
+                }
+                HashMap<String,Object> places = (HashMap<String, Object>) spubs.get("place_promotions");
+                keys = new ArrayList<String>(places.keySet());
+                for ( String key : keys ){
+                    pubs.add( FData.createPlacePromotion( (HashMap<String,Object>)places.get(key) ) );
+                }
+                actions.onReceiveList( pubs , ref );
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                actions.onCancel(databaseError);
+            }
+        });
     }
 
     public static void getPublications( FirebaseDatabase database , final ListActions<Publicacion> actions ){
@@ -312,5 +387,25 @@ public class FData {
         return myUser;
     }
 
+    public static PlannedRoute createPlannedRoute( HashMap<String,Object> data ){
+        PlannedRoute plannedRoute = new PlannedRoute();
+        plannedRoute.setDescripcion( (String)data.get("descripcion") );
+        plannedRoute.setDestino( (String)data.get("destino") );
+        plannedRoute.setFecha( (String)data.get("fecha") );
+        plannedRoute.setNombre( (String)data.get("nombre") );
+        plannedRoute.setOrganiza( (String)data.get("organiza") );
+        plannedRoute.setOrigen( (String)data.get("origen") );
+        Log.i("PLANNED ROUTE", "Route: " + plannedRoute);
+        return plannedRoute;
+    }
 
+    public static PlacePromotion createPlacePromotion( HashMap<String,Object> data ){
+        PlacePromotion place = new PlacePromotion();
+        place.setOrganiza( (String)data.get("organiza") );
+        place.setNombre( (String)data.get("nombre") );
+        place.setDescripcion( (String)data.get("descripcion") );
+        place.setLugar( (String)data.get("lugar") );
+        Log.i("PLACE PROMOTION", "Place: "+place);
+        return place;
+    }
 }

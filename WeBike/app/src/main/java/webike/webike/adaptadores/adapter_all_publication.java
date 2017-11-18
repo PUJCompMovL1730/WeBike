@@ -12,13 +12,19 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import webike.webike.R;
+import webike.webike.logic.AbstractPublication;
 import webike.webike.logic.PlacePromotion;
 import webike.webike.logic.PlannedRoute;
+import webike.webike.logic.Publicacion;
 import webike.webike.logic.SpecialPublication;
 
-public class adapter_special_publication extends ArrayAdapter<SpecialPublication> {
+/**
+ * Created by Camila on 18/11/2017.
+ */
 
-    public adapter_special_publication(Context context , ArrayList<SpecialPublication> resource){
+public class adapter_all_publication extends ArrayAdapter<AbstractPublication> {
+
+    public adapter_all_publication(Context context , ArrayList<AbstractPublication> resource){
         super(context , 0 , resource);
     }
 
@@ -26,7 +32,7 @@ public class adapter_special_publication extends ArrayAdapter<SpecialPublication
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        SpecialPublication r = getItem(position);
+        AbstractPublication r = getItem(position);
         View v = convertView;
         LayoutInflater vi = LayoutInflater.from(getContext());;
 
@@ -51,8 +57,20 @@ public class adapter_special_publication extends ArrayAdapter<SpecialPublication
                     tv_fin.setText(((PlannedRoute) r).getDestino());
                 }
             }
+            if(r instanceof Publicacion){
+                if(v == null) {
+                    v = vi.inflate(R.layout.adapter_notification, null);
+                    TextView tv_nombre = (TextView) v.findViewById(R.id.tv_nombre);
+                    TextView tv_inicio = (TextView) v.findViewById(R.id.tv_inicio);
+                    TextView tv_fin = (TextView) v.findViewById(R.id.tv_fin);
+                    tv_nombre.setText(((Publicacion) r).getNombre());
+                    tv_inicio.setText(((Publicacion) r).getOrigen());
+                    tv_fin.setText(((Publicacion) r).getDestino());
+                }
+            }
         }
         return v;
 
     }
+
 }
