@@ -36,11 +36,11 @@ public class adaptador_home_mensaje extends ArrayAdapter<Message> {
         Message r = getItem(position);
         if (r!= null){
             TextView txdestino= (TextView) v.findViewById(R.id.receptor);
-            TextView txorigen = (TextView) v.findViewById(R.id.remitente);
-            TextView txmensaje = (TextView) v.findViewById(R.id.mensaje);
-            txdestino.setText((CharSequence) r.getSender().getEmail());
-            txorigen.setText((CharSequence) r.getReceiver().getEmail() );
-            txmensaje.setText(r.getMsg());
+            TextView txorigen = (TextView) v.findViewById(R.id.emisor);
+            TextView txasunto = (TextView) v.findViewById(R.id.asunto);
+            txdestino.setText( r.getSender() );
+            txorigen.setText( r.getReceiver() );
+            txasunto.setText( r.getSubject() );
         }
         return v;
 

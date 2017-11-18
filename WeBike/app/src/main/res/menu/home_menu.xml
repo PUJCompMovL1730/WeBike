@@ -13,7 +13,7 @@
         android:id="@+id/search_user_test"
         android:title="@string/test_search"/>
     <item
-        android:id="@+id/send_msg_test"
+        android:id="@+id/create_msg"
         android:title="@string/test_msg"/>
     <item
         android:id="@+id/go_to_planroute"

@@ -39,7 +39,10 @@ public class FData {
         ref.setValue( p );
     }
 
-    public void postMessage(String src , String dst , Message msg ){
+    public void postMessage( Message msg ){
+        String src = msg.getSender();
+        String dst = msg.getReceiver();
+
         DatabaseReference sRef = database.getReference(PATH_TO_USERS + "/" + src + "/mailbox/sent" );
         String srcKey = sRef.push().getKey();
 
@@ -173,20 +176,7 @@ public class FData {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<Message> msgs = new ArrayList<Message>();
                 for( DataSnapshot ds : dataSnapshot.getChildren() ){
-                    HashMap<String,Object> mbox = (HashMap<String,Object>) ds.getValue();
-                    Message msg = new Message();
-                    msg.setMsg( (String) mbox.get("msg") );
-
-                    User receiver = new User();
-                    HashMap<String, Object> hr = (HashMap<String, Object>) mbox.get("receiver");
-                    receiver.setEmail( (String) hr.get("email") );
-                    msg.setReceiver( receiver );
-
-                    User sender = new User();
-                    HashMap<String, Object> hs = (HashMap<String, Object>) mbox.get("sender");
-                    sender.setEmail( (String) hs.get("email") );
-                    msg.setSender( sender );
-
+                    Message msg = FData.createMessage(ds);
                     msgs.add(msg);
                 }
                 actions.onReceiveList( msgs , ref );
@@ -206,19 +196,7 @@ public class FData {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<Message> msgs = new ArrayList<Message>();
                 for( DataSnapshot ds : dataSnapshot.getChildren() ){
-                    HashMap<String,Object> mbox = (HashMap<String,Object>) ds.getValue();
-                    Message msg = new Message();
-                    msg.setMsg( (String) mbox.get("msg") );
-
-                    User receiver = new User();
-                    HashMap<String, Object> hr = (HashMap<String, Object>) mbox.get("receiver");
-                    receiver.setEmail( (String) hr.get("email") );
-                    msg.setReceiver( receiver );
-
-                    User sender = new User();
-                    HashMap<String, Object> hs = (HashMap<String, Object>) mbox.get("sender");
-                    sender.setEmail( (String) hs.get("email") );
-                    msg.setSender( sender );
+                    Message msg = FData.createMessage(ds);
                     if( actions.searchCriteria( msg , filter ) )
                         msgs.add(msg);
                 }
@@ -239,20 +217,7 @@ public class FData {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<Message> msgs = new ArrayList<Message>();
                 for( DataSnapshot ds : dataSnapshot.getChildren() ){
-                    HashMap<String,Object> mbox = (HashMap<String,Object>) ds.getValue();
-                    Message msg = new Message();
-                    msg.setMsg( (String) mbox.get("msg") );
-
-                    User receiver = new User();
-                    HashMap<String, Object> hr = (HashMap<String, Object>) mbox.get("receiver");
-                    receiver.setEmail( (String) hr.get("email") );
-                    msg.setReceiver( receiver );
-
-                    User sender = new User();
-                    HashMap<String, Object> hs = (HashMap<String, Object>) mbox.get("sender");
-                    sender.setEmail( (String) hs.get("email") );
-                    msg.setSender( sender );
-
+                    Message msg = FData.createMessage(ds);
                     msgs.add(msg);
                 }
                 actions.onReceiveList( msgs , ref );
@@ -272,19 +237,7 @@ public class FData {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<Message> msgs = new ArrayList<Message>();
                 for( DataSnapshot ds : dataSnapshot.getChildren() ){
-                    HashMap<String,Object> mbox = (HashMap<String,Object>) ds.getValue();
-                    Message msg = new Message();
-                    msg.setMsg( (String) mbox.get("msg") );
-
-                    User receiver = new User();
-                    HashMap<String, Object> hr = (HashMap<String, Object>) mbox.get("receiver");
-                    receiver.setEmail( (String) hr.get("email") );
-                    msg.setReceiver( receiver );
-
-                    User sender = new User();
-                    HashMap<String, Object> hs = (HashMap<String, Object>) mbox.get("sender");
-                    sender.setEmail( (String) hs.get("email") );
-                    msg.setSender( sender );
+                    Message msg = FData.createMessage(ds);
                     if( actions.searchCriteria( msg , filter ) )
                         msgs.add(msg);
                 }
@@ -312,5 +265,13 @@ public class FData {
         return myUser;
     }
 
-
+    public static Message createMessage( DataSnapshot singlesnapshot ){
+        Message msg = new Message();
+        HashMap<String,Object> box = (HashMap<String,Object>) singlesnapshot.getValue();
+        msg.setMsg( (String) box.get("msg"));
+        msg.setSubject( (String) box.get("subject") );
+        msg.setReceiver( (String) box.get("receiver") );
+        msg.setSender( (String) box.get("sender") );
+        return msg;
+    }
 }

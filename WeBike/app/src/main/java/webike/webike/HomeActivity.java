@@ -166,11 +166,9 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity( intent );
                 break;
             case R.id.send_msg_test:
-                User usr = new User();
-                usr.setKey( this.mAuth.getCurrentUser().getUid() );
-                usr.setEmail("juanmig8@hotmail.com");
-                Message msg = new Message("Hola esto es una prueba",usr , usr );
-                this.fData.postMessage(usr.getKey() , usr.getKey() , msg);
+                String key = this.mAuth.getCurrentUser().getUid();
+                Message msg = new Message("Hola esto es una prueba", "Test" , key , key );
+                this.fData.postMessage( msg );
                 break;
             case R.id.search_user_test:
                 startActivity( new Intent(HomeActivity.this, SearchUserActivity.class));
@@ -180,28 +178,6 @@ public class HomeActivity extends AppCompatActivity {
             default : // Optional
                 // Statements
         }
-        /*
-        if( itemClicked == R.id.logout_menuItem ){
-            mAuth.signOut();
-            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-            intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
-            startActivity( intent );
-        }else if( itemClicked == R.id.config_menuItem ){
-            Intent intent = new Intent(HomeActivity.this, ConfigActivity.class);
-            intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
-            startActivity( intent );
-        }else if( itemClicked == R.id.send_msg_test){
-            User usr = new User();
-            usr.setKey( this.mAuth.getCurrentUser().getUid() );
-            usr.setEmail("juanmig8@hotmail.com");
-            Message msg = new Message("Hola esto es una prueba",usr , usr );
-            this.fData.postMessage(usr.getKey() , usr.getKey() , msg);
-        }else if( itemClicked == R.id.search_user_test){
-            startActivity( new Intent(HomeActivity.this, SearchUserActivity.class));
-        }else if( itemClicked == R.id.go_to_planroute){
-            startActivity( new Intent(HomeActivity.this, Map.class));
-        }
-        */
         return super.onOptionsItemSelected(item);
     }
 
