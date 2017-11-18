@@ -165,10 +165,9 @@ public class HomeActivity extends AppCompatActivity {
                 intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
                 startActivity( intent );
                 break;
-            case R.id.send_msg_test:
-                String key = this.mAuth.getCurrentUser().getUid();
-                Message msg = new Message("Hola esto es una prueba", "Test" , key , key );
-                this.fData.postMessage( msg );
+            case R.id.create_msg:
+                intent = new Intent(this,WriteMessageActivity.class);
+                startActivity(intent);
                 break;
             case R.id.search_user_test:
                 startActivity( new Intent(HomeActivity.this, SearchUserActivity.class));

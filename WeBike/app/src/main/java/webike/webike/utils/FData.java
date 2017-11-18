@@ -56,6 +56,23 @@ public class FData {
         dRef.setValue(msg);
     }
 
+    public static void postMessage( FirebaseDatabase database , Message msg ){
+        String src = msg.getSender();
+        String dst = msg.getReceiver();
+
+        DatabaseReference sRef = database.getReference(PATH_TO_USERS + "/" + src + "/mailbox/sent" );
+        String srcKey = sRef.push().getKey();
+
+        DatabaseReference dRef = database.getReference(PATH_TO_USERS + "/" + dst + "/mailbox/received" );
+        String dstKey = dRef.push().getKey();
+
+        sRef = database.getReference( PATH_TO_USERS + "/" + src + "/mailbox/sent/" + srcKey );
+        dRef = database.getReference( PATH_TO_USERS + "/" + dst + "/mailbox/received/" + dstKey );
+
+        sRef.setValue(msg);
+        dRef.setValue(msg);
+    }
+
     public void postGroup( Group g ){
         DatabaseReference sRef = database.getReference(PATH_TO_GROUPS );
         String srcKey = sRef.push().getKey();
