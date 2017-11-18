@@ -86,8 +86,8 @@
 
             <Button
                 android:id="@+id/panic"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:background="@drawable/red_circle_small"
                 android:text="!"
                 android:textColor="@color/WeBikeWhite"
@@ -103,8 +103,8 @@
             android:layout_weight="0.5">
             <ImageButton
                 android:id="@+id/help"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:src="@drawable/wrench_32"
                 android:background="@drawable/yellow_circle_small"/>
         </LinearLayout>
@@ -118,7 +118,7 @@
             <ImageButton
                 android:id="@+id/manual"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="55dp"
                 android:layout_weight="0.5"
                 android:src="@drawable/notebook_64"
                 android:background="@android:color/transparent"/>

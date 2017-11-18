@@ -117,8 +117,8 @@ public class SpecialPublicationsActivity extends AppCompatActivity {
         });
     }
 
-    public void infalteListWithSpecialPublication( ArrayList<SpecialPublication> spubs ){
-        adapter_special_publication adapter = new adapter_special_publication(this,spubs);
+    public void infalteListWithSpecialPublication( ArrayList<SpecialPublication> pubs ){
+        adapter_special_publication adapter = new adapter_special_publication(this,pubs);
         this.specialPublication_list.setAdapter(adapter);
     }
 }

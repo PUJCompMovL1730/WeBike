@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -89,14 +90,11 @@ public class HomeActivity extends AppCompatActivity {
 
         homeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(type)
-                {
-                    Intent myIntent = new Intent(HomeActivity.this, PublicationActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("pub",current_pub.get(position));
-                    myIntent.putExtras(bundle);
-                    startActivity(myIntent);
-                }
+                Intent myIntent = new Intent(HomeActivity.this, PublicationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("pub",current_pub.get(position));
+                myIntent.putExtras(bundle);
+                startActivity(myIntent);
             }
         });
 

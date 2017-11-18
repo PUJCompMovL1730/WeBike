@@ -21,6 +21,7 @@ public class User implements Serializable{
     private Mailbox mailbox;
     private List<String> friends;
     private List<Route> history;
+    private List<SpecialPublication> historyPublications;
     private List<String> groups;
 
     public User() {
@@ -35,6 +36,7 @@ public class User implements Serializable{
         this.mailbox = new Mailbox();
         this.friends = new ArrayList<>();
         this.history = new ArrayList<>();
+        this.historyPublications = new ArrayList<>();
         this.groups = new ArrayList<>();
         this.email=email;
     }
@@ -102,6 +104,12 @@ public class User implements Serializable{
     public void setFriends(ArrayList<String> friends) {
         this.friends = friends;
     }
+
+    public List<SpecialPublication> getHistoryPublications() {
+        return historyPublications;
+    }
+
+    public void setHistoryPublications(ArrayList<SpecialPublication> historyPublications) {this.historyPublications = historyPublications;}
 
     public List<Route> getHistory() {
         return history;
