@@ -3,24 +3,18 @@ package webike.webike;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-import webike.webike.R;
 import webike.webike.logic.Publicacion;
 import webike.webike.logic.Route;
 import webike.webike.logic.User;
@@ -40,7 +34,6 @@ public class PublicationActivity extends AppCompatActivity {
     FirebaseAuth fbAuth;
     DatabaseReference dbReference;
     FirebaseDatabase fbDatabase;
-    //String id_publicacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +88,8 @@ public class PublicationActivity extends AppCompatActivity {
         FData.getUserFromId(fbDatabase, fbAuth.getCurrentUser().getUid(), new SingleValueActions<User>() {
             @Override
             public void onReceiveSingleValue(User data, DatabaseReference reference) {
-                if( data.getHistory() == null ){
-                    data.setHistory(new ArrayList<Route>());
+                if( data.getHistoryPublications() == null ){
+                    data.setHistoryPublications( new ArrayList<String>() );
                 }
                 data.getHistory().add(ruta);
                 reference.setValue(data);

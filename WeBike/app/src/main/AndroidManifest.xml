@@ -44,6 +44,8 @@
         <activity android:name=".AddFriendActivity" />
         <activity android:name=".ConfigActivity" />
         <activity android:name=".ManualActivity" />
+        <activity android:name=".RouteActivity" />
+        <activity android:name=".RoutesActivity" />
     </application>
 
 </manifest>

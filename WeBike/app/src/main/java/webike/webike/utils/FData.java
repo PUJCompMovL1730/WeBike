@@ -41,6 +41,11 @@ public class FData {
         ref.setValue(user);
     }
 
+    public static void postUser( FirebaseDatabase database , User user ){
+        DatabaseReference ref = database.getReference(PATH_TO_USERS + "/" + user.getKey() );
+        ref.setValue(user);
+    }
+
     public void postPub( Publicacion p ){
         DatabaseReference ref = database.getReference(PATH_TO_PUBS);
         String auxKey = ref.push().getKey();
@@ -164,6 +169,31 @@ public class FData {
                         actions.onCancel(databaseError);
                     }
                 });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                actions.onCancel(databaseError);
+            }
+        });
+    }
+
+    public static void getPlannedRoutes( FirebaseDatabase database , final PlannedRoute filter  ,final ListFilteredActions<PlannedRoute,PlannedRoute> actions ){
+        final DatabaseReference ref = database.getReference(FData.PATH_TO_SPECIAL_PUBS);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final ArrayList<PlannedRoute> pubs = new ArrayList<PlannedRoute>();
+                HashMap<String,Object> spubs  = (HashMap<String, Object>) dataSnapshot.getValue();
+                HashMap<String,Object> routes = (HashMap<String, Object>) spubs.get("planned_routes");
+                ArrayList<String> keys = new ArrayList<String>( routes.keySet() );
+                for ( String key : keys ){
+                    PlannedRoute plan = FData.createPlannedRoute( (HashMap<String, Object>) routes.get(key) );
+                    if( actions.searchCriteria( plan , filter ) ){
+                        pubs.add( plan );
+                    }
+                }
+                actions.onReceiveList( pubs , ref );
             }
 
             @Override
@@ -373,6 +403,25 @@ public class FData {
         });
     }
 
+    public static void getRoutes( FirebaseDatabase database , String userId , final ListActions<Route> actions ){
+        final DatabaseReference ref = database.getReference(FData.PATH_TO_USERS + "/" + userId + "/history" );
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Route> routes = new ArrayList<Route>();
+                for ( DataSnapshot singleDatasnapshot : dataSnapshot.getChildren() ){
+                    routes.add( FData.createRoute(singleDatasnapshot) );
+                }
+                actions.onReceiveList( routes , ref );
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                actions.onCancel( databaseError );
+            }
+        });
+    }
+
     public static User createUser( DataSnapshot singleSnapshot ){
         User myUser = new User();
         myUser.setEmail((String)((HashMap<String, Object>)singleSnapshot.getValue()).get("email"));
@@ -395,6 +444,7 @@ public class FData {
         plannedRoute.setNombre( (String)data.get("nombre") );
         plannedRoute.setOrganiza( (String)data.get("organiza") );
         plannedRoute.setOrigen( (String)data.get("origen") );
+        plannedRoute.setKey( (String)data.get("key") );
         Log.i("PLANNED ROUTE", "Route: " + plannedRoute);
         return plannedRoute;
     }
@@ -407,5 +457,17 @@ public class FData {
         place.setLugar( (String)data.get("lugar") );
         Log.i("PLACE PROMOTION", "Place: "+place);
         return place;
+    }
+
+    public static Route createRoute( DataSnapshot snapshot ){
+        HashMap<String,Object> hash = (HashMap<String, Object>) snapshot.getValue();
+        Route route = new Route();
+        route.setClima( (String) hash.get("clima") );
+        route.setDistancia( (String) hash.get("distancia") );
+        route.setDuracion( (String) hash.get("duracion") );
+        route.setDestino( (String) hash.get("destino") );
+        route.setOrigen( (String) hash.get("origen") );
+        route.setFecha( (String) hash.get("fecha") );
+        return route;
     }
 }

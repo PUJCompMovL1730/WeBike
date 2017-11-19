@@ -67,7 +67,7 @@ public class PlaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    writeDatabase();
+                    //writeDatabase();
                     Toast.makeText(getBaseContext(),"Se ha añadido la publicación exitosamente",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(PlaceActivity.this, HomeActivity.class);
                     intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
@@ -79,7 +79,7 @@ public class PlaceActivity extends AppCompatActivity {
             }
         });
     }
-
+/*
     public void writeDatabase(){
 
         FData.getUserFromId(fbDatabase, fbAuth.getCurrentUser().getUid(), new SingleValueActions<User>() {
@@ -97,6 +97,6 @@ public class PlaceActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
 }

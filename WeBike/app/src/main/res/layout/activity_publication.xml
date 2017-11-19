@@ -16,9 +16,9 @@
         android:orientation="horizontal"
         >
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/text_lines_32"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/text_lines_512"
             />
         <TextView
             android:id="@+id/tv_nombre_publicacion"
@@ -103,11 +103,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@color/backgroundGray"
-            android:padding="10dp">
+            android:paddingTop="20dp">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/signal"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/signal_512"
+                android:layout_marginEnd="10dp"
                 />
             <ScrollView
                 android:layout_width="match_parent"
