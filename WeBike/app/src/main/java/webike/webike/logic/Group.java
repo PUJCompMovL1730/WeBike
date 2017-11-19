@@ -15,11 +15,15 @@ public class Group implements Serializable{
     private String start;
     private String finish;
     private long time;
-    private List<User> users;
-    private List<User> admins;
+    private List<String> users;
+    private List<String> admins;
+    private String route;
 
-    public Group( ) {
-
+    public Group(String name, String start, String finish, String route) {
+        this.name = name;
+        this.start = start;
+        this.finish = finish;
+        this.route = route;
     }
 
     public String getKey() {
@@ -62,19 +66,19 @@ public class Group implements Serializable{
         this.time = time;
     }
 
-    public List<User> getUsers() {
+    public List<String> getUsers() {
         return users;
     }
 
-    public void setUsers(ArrayList<User> users) {
+    public void setUsers(ArrayList<String> users) {
         this.users = users;
     }
 
-    public List<User> getAdmins() {
+    public List<String> getAdmins() {
         return admins;
     }
 
-    public void setAdmins(ArrayList<User> admins) {
+    public void setAdmins(ArrayList<String> admins) {
         this.admins = admins;
     }
 }

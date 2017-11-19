@@ -18,9 +18,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import webike.webike.adaptadores.adapter_notification;
+import webike.webike.logic.AbstractPublication;
+import webike.webike.logic.PlannedRoute;
 import webike.webike.logic.Publicacion;
 import webike.webike.utils.FData;
 import webike.webike.utils.ListActions;
+import webike.webike.utils.ListFilteredActions;
 
 import static android.R.attr.type;
 
@@ -90,7 +93,6 @@ public class PublicationsActivity extends AppCompatActivity {
     }
 
     public void loadPubs(){
-
         FData.getPublications(database, new ListActions<Publicacion>() {
             @Override
             public void onReceiveList(ArrayList<Publicacion> data, DatabaseReference reference) {

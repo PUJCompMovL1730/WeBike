@@ -126,4 +126,21 @@ public class User implements Serializable{
     public void setGroups(ArrayList<String> groups) {
         this.groups = groups;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "key='" + key + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", gender='" + gender + '\'' +
+                ", email='" + email + '\'' +
+                ", mailbox=" + mailbox +
+                ", friends=" + friends +
+                ", history=" + history +
+                ", historyPublications=" + historyPublications +
+                ", groups=" + groups +
+                '}';
+    }
 }

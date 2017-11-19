@@ -53,11 +53,14 @@
         <activity
             android:name=".WriteMessageActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".OrgProfileActivity" />
+        <activity android:name=".ubicacion.MapCreateRoute" />
         <activity android:name=".RouteActivity" />
         <activity android:name=".RoutesActivity" />
-        <activity android:name=".OrgProfileActivity" />
+        <activity android:name=".AddFriendToGroup"></activity>
         <activity android:name=".CreatePlacePromotionActivity" />
         <activity android:name=".CreatePlannedRouteActivity"></activity>
+        <activity android:name=".MailboxActivity" android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

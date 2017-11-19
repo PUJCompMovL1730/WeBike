@@ -60,7 +60,7 @@ public class PlaceActivity extends AppCompatActivity {
         tv_nombre.setText(placePromotion.getNombre());
         tv_organiza.setText(placePromotion.getOrganiza());
         tv_lugar.setText(placePromotion.getLugar());
-        tv_descripcion.setText(placePromotion.getDescripcion());
+        tv_descripcion.setText(placePromotion.getDescription());
 
         b_participar = (Button)findViewById(R.id.b_participar);
         b_participar.setOnClickListener(new View.OnClickListener() {

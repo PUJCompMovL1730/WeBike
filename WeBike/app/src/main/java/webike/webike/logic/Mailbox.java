@@ -30,4 +30,12 @@ public class Mailbox implements Serializable{
     public void setReceived(List<Message> received) {
         this.received = received;
     }
+
+    @Override
+    public String toString() {
+        return "Mailbox{" +
+                "sent=" + sent +
+                ", received=" + received +
+                '}';
+    }
 }
