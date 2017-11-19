@@ -122,7 +122,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, PlaceS
             googleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(lugar.getLatitud(),lugar.getLongitud()))
                     .title(lugar.getNombre())
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.images))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.guia))
                     .snippet(lugar.getDescripcion()));
         }
         this.googleMap = googleMap;
