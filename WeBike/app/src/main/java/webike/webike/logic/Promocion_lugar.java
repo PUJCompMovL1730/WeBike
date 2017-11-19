@@ -1,6 +1,6 @@
 package webike.webike.logic;
 
-import android.location.Location;
+
 
 /**
  * Created by Carlos on 18/11/2017.
