@@ -149,7 +149,7 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.config_menuItem:
                 //TODO: cambiar
                 //intent = new Intent(HomeActivity.this, ConfigActivity.class);
-                intent = new Intent(HomeActivity.this, RoutesActivity.class);
+                intent = new Intent(HomeActivity.this, OrgProfileActivity.class);
                 intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
                 startActivity( intent );
                 break;

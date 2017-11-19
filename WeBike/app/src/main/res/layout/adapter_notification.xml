@@ -15,9 +15,9 @@
         android:orientation="horizontal"
         android:paddingBottom="5dp">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/text_lines_24"/>
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/text_lines_512"/>
         <TextView
             android:id="@+id/tv_nombre"
             android:paddingStart="8dp"
@@ -31,9 +31,9 @@
         android:orientation="horizontal"
         android:paddingBottom="5dp">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/start_24"/>
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/start_512"/>
         <TextView
             android:id="@+id/tv_inicio"
             android:paddingStart="8dp"
@@ -46,9 +46,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/finish_24"/>
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/finish_512"/>
         <TextView
             android:id="@+id/tv_fin"
             android:paddingStart="8dp"

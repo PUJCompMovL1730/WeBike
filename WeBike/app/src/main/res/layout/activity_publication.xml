@@ -48,9 +48,9 @@
             android:paddingTop="10dp"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/inicio"/>
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/start_512"/>
             <TextView
                 android:id="@+id/tv_inicio_publicacion"
                 android:layout_width="match_parent"
@@ -67,9 +67,9 @@
             android:background="@color/backgroundGray"
             android:paddingTop="10dp">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/fin"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/finish_512"
                 />
             <TextView
                 android:id="@+id/tv_fin_publicacion"
@@ -86,9 +86,9 @@
             android:background="@color/backgroundGray"
             android:paddingTop="10dp">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/wall_calendar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/wall_calendar_512"
                 />
             <TextView
                 android:id="@+id/tv_hora_publicacion"

@@ -14,9 +14,9 @@
         android:orientation="horizontal"
         android:paddingBottom="5dp">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bell_24"/>
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/notification_512"/>
         <TextView
             android:id="@+id/tv_nombre"
             android:paddingStart="8dp"
