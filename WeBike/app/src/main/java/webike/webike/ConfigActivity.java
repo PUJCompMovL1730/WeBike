@@ -19,7 +19,7 @@ public class ConfigActivity extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent( ConfigActivity.this , ViewProfileActivity.class);
+                Intent intent = new Intent( ConfigActivity.this , ConfigProfileActivity.class);
                 startActivity(intent);
             }
         });

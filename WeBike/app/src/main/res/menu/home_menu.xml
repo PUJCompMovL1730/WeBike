@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/config_menuItem"
-        android:title="@string/home_menu_config_text"/>
+        android:id="@+id/profile_menuItem"
+        android:title="@string/view_profile_text"/>
     <item
         android:id="@+id/search_user_test"
         android:title="@string/test_search"/>

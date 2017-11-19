@@ -65,7 +65,6 @@
         android:paddingRight="20dp">
 
 
-
     </ListView>
 
 </RelativeLayout>

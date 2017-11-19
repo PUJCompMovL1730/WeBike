@@ -3,6 +3,7 @@
     <string name="register_button_text">Registrar</string>
     <string name="login_button_text">Iniciar Sesion</string>
     <string name="home_menu_config_text">Configuracion</string>
+    <string name="view_profile_text">Ver perfil</string>
     <string name="home_menu_logout_text">Cerrar Sesion</string>
     <string name="logout_dialog_text">¿Deseas cerrar sesión?</string>
     <string name="logout_confirm_text">Si</string>

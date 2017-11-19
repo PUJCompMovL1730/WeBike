@@ -1,9 +1,12 @@
 package webike.webike;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +35,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     private FirebaseDatabase mData;
     private FirebaseDatabase database;
     private TextView username;
+    private Button config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,37 +45,19 @@ public class ViewProfileActivity extends AppCompatActivity {
         friendList = (ListView)findViewById(R.id.list_amigos);
         groupList = (ListView)findViewById(R.id.list_grupos);
         username = (TextView)findViewById(R.id.user_name);
-  //      showFriends();
+        config = (Button)findViewById(R.id.user_config);
 
-
-    }
-
-   /* public void showFriends(){
-
-        DatabaseReference ref = mData.getReference(FData.PATH_TO_USERS + "/" + mAuth.getCurrentUser().getUid() );
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        config.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User myUser= new User();
-                ArrayList<User> friends = (ArrayList<User>) ((HashMap<String, Object>)dataSnapshot.getValue()).get("friends");
-
-                updateAd(friends);
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewProfileActivity.this, ConfigActivity.class);
+                startActivity(intent);
             }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getBaseContext(),"Error mostrando amigos",Toast.LENGTH_SHORT).show();
-            }
-
         });
 
+
     }
 
-    public void updateAd(ArrayList<User> usrs) {
-        Log.i("INFO_DATABASE", "updateView: "+ usrs.toString() );
-        UserArrayAdapter adapter = new UserArrayAdapter(this, usrs);
-        this.friendList.setAdapter(adapter);
-    }
-*/
+
 
 }

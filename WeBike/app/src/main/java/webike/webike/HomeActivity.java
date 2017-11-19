@@ -103,8 +103,8 @@ public class HomeActivity extends AppCompatActivity {
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
             startActivity( intent );
-        }else if( itemClicked == R.id.config_menuItem ){
-            Intent intent = new Intent(HomeActivity.this, ConfigActivity.class);
+        }else if( itemClicked == R.id.profile_menuItem ){
+            Intent intent = new Intent(HomeActivity.this, ViewProfileActivity.class);
             intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
             startActivity( intent );
         }else if( itemClicked == R.id.send_msg_test){

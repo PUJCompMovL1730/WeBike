@@ -35,7 +35,8 @@
         <activity android:name=".ubicacion.Map" />
         <activity android:name=".AddFriendActivity" />
         <activity android:name=".ConfigActivity" />
-        <activity android:name=".ViewProfileActivity"></activity>
+        <activity android:name=".ViewProfileActivity" />
+        <activity android:name=".ConfigProfileActivity"></activity>
     </application>
 
 </manifest>
