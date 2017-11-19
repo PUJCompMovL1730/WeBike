@@ -35,6 +35,7 @@ public class SearchUserActivity extends AppCompatActivity {
     private FAuth mAuth;
     private FirebaseDatabase database;
     DatabaseReference myRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,11 +46,11 @@ public class SearchUserActivity extends AppCompatActivity {
         };
         resultList = (ListView) findViewById(R.id.search_list);
 
-        searchButton  = (ImageButton) findViewById(R.id.searchUser_button);
+        searchButton = (ImageButton) findViewById(R.id.searchUser_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadUser( searchEditText.getText().toString().trim() );
+                loadUser(searchEditText.getText().toString().trim());
             }
         });
 
@@ -59,39 +60,44 @@ public class SearchUserActivity extends AppCompatActivity {
                 /*if()//TODO check if its friend)
                 {
                     Intent myIntent = new Intent(SearchUserActivity.this, InviteGroupActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user",results.get(i));
+                    bundle.putSerializable("current_user",current_user);
+                    myIntent.putExtras(bundle);
+                    startActivity(myIntent);
                 }
                 else
                 {*/
-                    Intent myIntent = new Intent(SearchUserActivity.this, AddFriendActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("user",results.get(i));
-                    myIntent.putExtras(bundle);
-                    Log.i("INFO_DATABASE", "updateView: "+ results.get(i).getEmail() );
-                    startActivity(myIntent);
+                Intent myIntent = new Intent(SearchUserActivity.this, AddFriendActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user", results.get(i));
+                myIntent.putExtras(bundle);
+                Log.i("INFO_DATABASE", "updateView: " + results.get(i).getEmail());
+                startActivity(myIntent);
                 //}
             }
         });
     }
 
-   public void loadUser(final String buscar){
-       FData.getUsers(this.database, buscar, new ListFilteredActions<User,String>(){
+    public void loadUser(final String buscar) {
+        FData.getUsers(this.database, buscar, new ListFilteredActions<User, String>() {
 
-           public void onReceiveList(ArrayList<User> data, DatabaseReference reference ){
-               results = data;
-               updateView( data );
-           }
+            public void onReceiveList(ArrayList<User> data, DatabaseReference reference) {
+                results = data;
+                updateView(data);
+            }
 
-           public boolean searchCriteria(User data, String value) {
-               return data.getFirstName().contains(buscar) && !data.getKey().equals( mAuth.getUser().getUid() );
-           }
+            public boolean searchCriteria(User data, String value) {
+                return data.getFirstName().contains(buscar) && !data.getKey().equals(mAuth.getUser().getUid());
+            }
 
-           @Override
-           public void onCancel(DatabaseError databaseError ){
+            @Override
+            public void onCancel(DatabaseError databaseError) {
 
-           }
-       });
+            }
+        });
 
-   }
+    }
 
     @Override
     protected void onStart() {
@@ -106,8 +112,8 @@ public class SearchUserActivity extends AppCompatActivity {
     }
 
     public void updateView(ArrayList<User> usrs) {
-       Log.i("INFO_DATABASE", "updateView: "+ usrs.toString() );
-       UserArrayAdapter adapter = new UserArrayAdapter(this, usrs);
-       this.resultList.setAdapter(adapter);
-   }
+        Log.i("INFO_DATABASE", "updateView: " + usrs.toString());
+        UserArrayAdapter adapter = new UserArrayAdapter(this, usrs);
+        this.resultList.setAdapter(adapter);
+    }
 }

@@ -66,8 +66,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, PlaceS
     public static final int ZOOM_CITY = 10;
     public static final int ZOOM_PATH = 13;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

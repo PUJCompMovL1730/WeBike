@@ -88,9 +88,9 @@ public class MapCreateRoute extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng sydney = new LatLng(4.65, -74.05);
+        LatLng bogota = new LatLng(4.65, -74.05);
         //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bogota, 16));
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -154,6 +154,7 @@ public class MapCreateRoute extends AppCompatActivity implements OnMapReadyCallb
             options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         }
         mMap.addMarker(options);
+
 
     }
 
