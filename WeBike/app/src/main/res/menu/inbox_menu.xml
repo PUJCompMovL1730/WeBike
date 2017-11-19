@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/inbox_menu_create_msg"
+        android:title="@string/inbox_menu_compose_message" />
+    <item
+        android:id="@+id/inbox_menu_inbox"
+        android:title="@string/inbox_menu_inbox" />
+    <item
+        android:id="@+id/inbox_menu_outbox"
+        android:title="@string/inbox_menu_outbox" />
+</menu>
