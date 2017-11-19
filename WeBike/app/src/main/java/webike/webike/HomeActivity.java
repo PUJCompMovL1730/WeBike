@@ -5,13 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,9 +25,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import webike.webike.adaptadores.adaptador_home_mensaje;
-import webike.webike.adaptadores.adaptador_home_notificacion;
+import webike.webike.adaptadores.adapter_all_publication;
+import webike.webike.logic.AbstractPublication;
 import webike.webike.logic.Mailbox;
 import webike.webike.logic.Message;
+import webike.webike.logic.PlacePromotion;
+import webike.webike.logic.PlannedRoute;
 import webike.webike.logic.Publicacion;
 import webike.webike.logic.User;
 import webike.webike.ubicacion.Map;
@@ -40,13 +43,15 @@ public class HomeActivity extends AppCompatActivity {
     private FData fData;
     private FirebaseDatabase database;
     private boolean type = false;
-
     private ListView homeList;
 
     private Button msgButton;
     private Button pubButton;
     private ArrayList<Message> current_msg;
-    private ArrayList<Publicacion> current_pub;
+    private ArrayList<AbstractPublication> current_pub;
+    private Button b_panic;
+    private ImageView b_help;
+    private ImageView b_manual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,38 +60,64 @@ public class HomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         fData = new FData();
         database = FirebaseDatabase.getInstance();
-        homeList = (ListView) findViewById(R.id.home_listView);
-        msgButton = (Button) findViewById(R.id.load_msg_button);
-        pubButton = (Button) findViewById(R.id.load_pubs_button);
 
-        msgButton.setOnClickListener(new View.OnClickListener() {
+        b_panic = (Button) findViewById(R.id.panic);
+        b_help = (ImageView) findViewById(R.id.help);
+        b_manual = (ImageView) findViewById(R.id.manual);
+
+        b_panic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadMsg( mAuth.getCurrentUser().getUid() );
-                type = false;
+                Intent intent = new Intent(HomeActivity.this, PanicButtonActivity.class);
+                startActivity(intent);
+            }
+        });
+        b_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, HelpButtonActivity.class);
+                startActivity(intent);
+            }
+        });
+        b_manual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, ManualActivity.class);
+                startActivity(intent);
             }
         });
 
-        pubButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadPubs();
-                type = true;
-            }
-        });
+        homeList = (ListView) findViewById(R.id.home_list);
 
         homeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(type)
-                {
-                    Intent myIntent = new Intent(HomeActivity.this, PublicationActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("pub",current_pub.get(position));
+
+                Intent myIntent;
+                Bundle bundle = new Bundle();
+                if(current_pub.get(position) instanceof Publicacion){
+                    myIntent = new Intent(HomeActivity.this, PublicationActivity.class);
+                    Publicacion publicacion = (Publicacion) current_pub.get(position);
+                    bundle.putSerializable("pub",publicacion);
+                    myIntent.putExtras(bundle);
+                    startActivity(myIntent);
+                }
+                if(current_pub.get(position) instanceof PlacePromotion){
+                    myIntent = new Intent(HomeActivity.this, PlaceActivity.class);
+                    PlacePromotion placePromotion = (PlacePromotion) current_pub.get(position);
+                    bundle.putSerializable("pub",placePromotion);
+                    myIntent.putExtras(bundle);
+                    startActivity(myIntent);
+                }
+                if(current_pub.get(position) instanceof PlannedRoute){
+                    myIntent = new Intent(HomeActivity.this, PlannedRouteActivity.class);
+                    PlannedRoute plannedRoute = (PlannedRoute) current_pub.get(position);
+                    bundle.putSerializable("pub",plannedRoute);
                     myIntent.putExtras(bundle);
                     startActivity(myIntent);
                 }
             }
         });
+        loadPubs();
     }
 
     @Override
@@ -97,25 +128,42 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemClicked = item.getItemId();
-        if( itemClicked == R.id.logout_menuItem ){
-            mAuth.signOut();
-            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-            intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
-            startActivity( intent );
-        }else if( itemClicked == R.id.config_menuItem ){
-            Intent intent = new Intent(HomeActivity.this, ConfigActivity.class);
-            intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
-            startActivity( intent );
-        }else if( itemClicked == R.id.send_msg_test){
-            User usr = new User();
-            usr.setKey( this.mAuth.getCurrentUser().getUid() );
-            usr.setEmail("juanmig8@hotmail.com");
-            Message msg = new Message("Hola esto es una prueba",usr , usr );
-            this.fData.postMessage(usr.getKey() , usr.getKey() , msg);
-        }else if( itemClicked == R.id.search_user_test){
-            startActivity( new Intent(HomeActivity.this, SearchUserActivity.class));
-        }else if( itemClicked == R.id.go_to_planroute){
-            startActivity( new Intent(HomeActivity.this, Map.class));
+        Intent intent;
+        switch(itemClicked) {
+            case R.id.publicaciones_menuItem:
+                intent = new Intent(HomeActivity.this, PublicationsActivity.class);
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity( intent );
+                break;
+            case R.id.publicaciones_especiales_menuItem:
+                intent = new Intent(HomeActivity.this, SpecialPublicationsActivity.class);
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity( intent );
+                break;
+            case R.id.logout_menuItem:
+                mAuth.signOut();
+                intent = new Intent(HomeActivity.this, LoginActivity.class);
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity( intent );
+                break;
+            case R.id.config_menuItem:
+                //TODO: cambiar
+                //intent = new Intent(HomeActivity.this, ConfigActivity.class);
+                intent = new Intent(HomeActivity.this, RoutesActivity.class);
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity( intent );
+                break;
+            case R.id.create_msg:
+                intent = new Intent(this,WriteMessageActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.search_user_test:
+                startActivity( new Intent(HomeActivity.this, SearchUserActivity.class));
+                break;
+            case R.id.go_to_planroute:
+                startActivity( new Intent(HomeActivity.this, Map.class));
+            default : // Optional
+                // Statements
         }
         return super.onOptionsItemSelected(item);
     }
@@ -158,12 +206,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void loadPubs(){
-
-        FData.getPublications(database, new ListActions<Publicacion>() {
+        FData.getAllPublications(database, new ListActions<AbstractPublication>() {
             @Override
-            public void onReceiveList(ArrayList<Publicacion> data, DatabaseReference reference) {
+            public void onReceiveList(ArrayList<AbstractPublication> data, DatabaseReference reference) {
                 current_pub = data;
-                infalteListWithPubs( data );
+                inflateListWithPubs( data );
             }
 
             @Override
@@ -183,11 +230,10 @@ public class HomeActivity extends AppCompatActivity {
             adaptador_home_mensaje adapter = new adaptador_home_mensaje(this, msgs);
             this.homeList.setAdapter(adapter);
         }
-
     }
 
-    public void infalteListWithPubs( ArrayList<Publicacion> pubs ){
-        adaptador_home_notificacion adapter = new adaptador_home_notificacion(this,pubs);
+    public void inflateListWithPubs( ArrayList<AbstractPublication> pubs ){
+        adapter_all_publication adapter = new adapter_all_publication(this,pubs);
         this.homeList.setAdapter(adapter);
     }
 }
