@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,25 +13,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import webike.webike.adaptadores.adaptador_home_mensaje;
 import webike.webike.adaptadores.adaptador_home_notificacion;
-import webike.webike.logic.Mailbox;
 import webike.webike.logic.Message;
 import webike.webike.logic.Publicacion;
-import webike.webike.logic.User;
 import webike.webike.ubicacion.Map;
+import webike.webike.ubicacion.MapCreateRoute;
 import webike.webike.utils.FData;
 import webike.webike.utils.ListActions;
 
@@ -174,6 +168,10 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.go_to_planroute:
                 startActivity( new Intent(HomeActivity.this, Map.class));
+                break;
+            case R.id.create_group:
+                startActivity( new Intent(HomeActivity.this, CreateGroupActivity.class));
+                break;
             default : // Optional
                 // Statements
         }

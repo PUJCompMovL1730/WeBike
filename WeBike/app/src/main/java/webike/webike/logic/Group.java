@@ -17,9 +17,13 @@ public class Group implements Serializable{
     private long time;
     private List<User> users;
     private List<User> admins;
+    private String route;
 
-    public Group( ) {
-
+    public Group(String name, String start, String finish, String route) {
+        this.name = name;
+        this.start = start;
+        this.finish = finish;
+        this.route = route;
     }
 
     public String getKey() {

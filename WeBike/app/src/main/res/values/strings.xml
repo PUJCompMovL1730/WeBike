@@ -37,6 +37,7 @@
     <string name="subject">Asunto:</string>
     <string name="message_content_title">Mensaje:</string>
     <string name="send_message_button_text">Enviar</string>
+    <string name="create_group">Crear grupo</string>
 
     <string-array name="genders_array">
         <item>Masculino</item>

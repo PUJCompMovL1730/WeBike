@@ -17,6 +17,7 @@ public class Route implements Serializable{
     private String clima;
     private String distancia;
     private String descripcion;
+    private String url;
 
     public Route(String nombre, String origen, String destino, String hora, String fecha, String duracion, String clima, String distancia, String descripcion) {
         this.nombre = nombre;

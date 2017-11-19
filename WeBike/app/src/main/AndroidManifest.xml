@@ -45,6 +45,7 @@
         <activity android:name=".ConfigActivity" />
         <activity android:name=".ManualActivity" />
         <activity android:name=".WriteMessageActivity" android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".ubicacion.MapCreateRoute"/>
     </application>
 
 </manifest>

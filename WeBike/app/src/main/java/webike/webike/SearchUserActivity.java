@@ -55,12 +55,19 @@ public class SearchUserActivity extends AppCompatActivity {
 
         resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent myIntent = new Intent(SearchUserActivity.this, AddFriendActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user",results.get(i));
-                myIntent.putExtras(bundle);
-                Log.i("INFO_DATABASE", "updateView: "+ results.get(i).getEmail() );
-                startActivity(myIntent);
+                /*if()//TODO check if its friend)
+                {
+                    Intent myIntent = new Intent(SearchUserActivity.this, InviteGroupActivity.class);
+                }
+                else
+                {*/
+                    Intent myIntent = new Intent(SearchUserActivity.this, AddFriendActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user",results.get(i));
+                    myIntent.putExtras(bundle);
+                    Log.i("INFO_DATABASE", "updateView: "+ results.get(i).getEmail() );
+                    startActivity(myIntent);
+                //}
             }
         });
     }
