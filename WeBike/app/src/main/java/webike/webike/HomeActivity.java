@@ -1,3 +1,4 @@
+
 package webike.webike;
 
 import android.app.AlertDialog;
@@ -32,6 +33,7 @@ import webike.webike.logic.Publicacion;
 import webike.webike.logic.User;
 import webike.webike.ubicacion.Map;
 import webike.webike.utils.FData;
+import webike.webike.utils.ListActions;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -141,55 +143,32 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void loadMsg( String key ){
-        DatabaseReference ref = database.getReference(FData.PATH_TO_USERS + "/" + key + "/mailbox/received" );
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        FData.getReceivedMessages(database, key, new ListActions<Message>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Message> msgs = new ArrayList<Message>();
-                for( DataSnapshot ds : dataSnapshot.getChildren() ){
-                    HashMap<String,Object> mbox = (HashMap<String,Object>) ds.getValue();
-                    Message msg = new Message();
-                    msg.setMsg( (String) mbox.get("msg") );
-
-                    User receiver = new User();
-                    HashMap<String, Object> hr = (HashMap<String, Object>) mbox.get("receiver");
-                    receiver.setEmail( (String) hr.get("email") );
-                    msg.setReceiver( receiver );
-
-                    User sender = new User();
-                    HashMap<String, Object> hs = (HashMap<String, Object>) mbox.get("sender");
-                    sender.setEmail( (String) hs.get("email") );
-                    msg.setSender( sender );
-
-                    msgs.add(msg);
-                }
-                current_msg = msgs;
-                inflateListWithMsgs( msgs );
+            public void onReceiveList(ArrayList<Message> data, DatabaseReference reference) {
+                current_msg = data;
+                inflateListWithMsgs( data );
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancel( DatabaseError databaseError ) {
 
             }
         });
     }
 
     public void loadPubs(){
-        DatabaseReference ref = database.getReference(FData.PATH_TO_PUBS);
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        FData.getPublications(database, new ListActions<Publicacion>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Publicacion> pubs = new ArrayList<Publicacion>();
-                for ( DataSnapshot ds : dataSnapshot.getChildren() ){
-                    Publicacion p = ds.getValue(Publicacion.class);
-                    pubs.add(p);
-                }
-                current_pub = pubs;
-                infalteListWithPubs( pubs );
+            public void onReceiveList(ArrayList<Publicacion> data, DatabaseReference reference) {
+                current_pub = data;
+                infalteListWithPubs( data );
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancel( DatabaseError databaseError ) {
 
             }
         });

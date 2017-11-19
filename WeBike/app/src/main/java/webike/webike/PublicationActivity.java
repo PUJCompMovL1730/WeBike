@@ -25,6 +25,7 @@ import webike.webike.logic.Publicacion;
 import webike.webike.logic.Route;
 import webike.webike.logic.User;
 import webike.webike.utils.FData;
+import webike.webike.utils.SingleValueActions;
 
 public class PublicationActivity extends AppCompatActivity {
 
@@ -91,20 +92,19 @@ public class PublicationActivity extends AppCompatActivity {
     }
 
     public void writeDatabase(){
-        dbReference = fbDatabase.getReference(FData.PATH_TO_USERS + "/" + fbAuth.getCurrentUser().getUid());
-        dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        FData.getUserFromId(fbDatabase, fbAuth.getCurrentUser().getUid(), new SingleValueActions<User>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User aux = dataSnapshot.getValue(User.class);
-                if( aux.getHistory() == null ){
-                    aux.setHistory(new ArrayList<Route>());
+            public void onReceiveSingleValue(User data, DatabaseReference reference) {
+                if( data.getHistory() == null ){
+                    data.setHistory(new ArrayList<Route>());
                 }
-                aux.getHistory().add(ruta);
-                dbReference.setValue(aux);
+                data.getHistory().add(ruta);
+                reference.setValue(data);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancel( DatabaseError databaseError ) {
 
             }
         });
@@ -118,15 +118,11 @@ public class PublicationActivity extends AppCompatActivity {
                 publicacion = dataSnapshot.getValue(Publicacion.class);
                 actualizar(publicacion);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
-
     public void actualizar(){
-
     }*/
 }

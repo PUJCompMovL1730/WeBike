@@ -18,10 +18,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-import webike.webike.R;
 import webike.webike.logic.User;
 import webike.webike.utils.FData;
+import webike.webike.utils.SingleValueActions;
 
 public class AddFriendActivity extends AppCompatActivity {
 
@@ -59,47 +60,37 @@ public class AddFriendActivity extends AppCompatActivity {
 
         this.friend = new_friend;
         addFriend.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 addFriendToCurrentUser( );
-                 startActivity(new Intent(AddFriendActivity.this, HomeActivity.class));
-             }
+            @Override
+            public void onClick(View view) {
+                addFriendToCurrentUser( );
+                startActivity(new Intent(AddFriendActivity.this, HomeActivity.class));
+            }
         });
     }
 
     public void addFriendToCurrentUser(){
-        DatabaseReference ref = mData.getReference(FData.PATH_TO_USERS + "/" + mAuth.getCurrentUser().getUid() );
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i("FRIEND", "onDataChange: "+ dataSnapshot.getValue() );
 
+        FData.getUserFromId(mData, mAuth.getCurrentUser().getUid(), new SingleValueActions<User>() {
 
-                User myUser = new User();
-                myUser.setEmail((String)((HashMap<String, Object>)dataSnapshot.getValue()).get("email"));
-                myUser.setFirstName( (String)((HashMap<String, Object>)dataSnapshot.getValue()).get("firstName") );
-                myUser.setLastName( (String)((HashMap<String, Object>)dataSnapshot.getValue()).get("lastName") );
-                myUser.setGender( (String)((HashMap<String, Object>)dataSnapshot.getValue()).get("gender") );
-                myUser.setKey( (String)((HashMap<String, Object>)dataSnapshot.getValue()).get("key") );
-                myUser.setAge( ((Long)((HashMap<String, Object>)dataSnapshot.getValue()).get("age") ).intValue() );
-
-
-                ArrayList<String> friends = (ArrayList<String>) ((HashMap<String, Object>)dataSnapshot.getValue()).get("friends");
+            public void onReceiveSingleValue(User data , DatabaseReference reference) {
+                List<String> friends = data.getFriends();
                 if( friends == null )
-                    friends = new ArrayList<String>();
+                    friends = new ArrayList<>();
                 friends.add( AddFriendActivity.this.friend.getKey() );
 
-                myUser.setFriends(friends);
+                data.setFriends(new ArrayList<>(friends));
 
-                DatabaseReference ref2 = mData.getReference(FData.PATH_TO_USERS + "/" + myUser.getKey() );
-                ref2.setValue(myUser);
+                //DatabaseReference ref2 = mData.getReference(FData.PATH_TO_USERS + "/" + myUser.getKey() );
+                //ref2.setValue(myUser);
+                reference.setValue(data);
                 Toast.makeText(getBaseContext(),"Se ha añadido a sus amigos",Toast.LENGTH_SHORT).show();
             }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+
+            public void onCancel( DatabaseError databaseError ) {
                 Toast.makeText(getBaseContext(),"Error en el proceso",Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 }

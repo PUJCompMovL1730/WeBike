@@ -10,19 +10,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import webike.webike.adaptadores.UserArrayAdapter;
 import webike.webike.logic.User;
 import webike.webike.utils.FAuth;
 import webike.webike.utils.FData;
+import webike.webike.utils.ListActions;
+import webike.webike.utils.ListFilteredActions;
 
 public class SearchUserActivity extends AppCompatActivity {
 
@@ -65,40 +64,25 @@ public class SearchUserActivity extends AppCompatActivity {
         });
     }
 
-   public void loadUser(final String buscar){
+    public void loadUser(final String buscar){
+        FData.getUsers(this.database, buscar, new ListFilteredActions<User,String>(){
 
-       final DatabaseReference myRef = database.getReference(FData.PATH_TO_USERS);
-       myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-           @Override
-           public void onDataChange(DataSnapshot dataSnapshot) {
-               ArrayList<User> usuarios = new ArrayList<>();
-               for(DataSnapshot singleSnashot: dataSnapshot.getChildren()){
+            public void onReceiveList(ArrayList<User> data, DatabaseReference reference ){
+                results = data;
+                updateView( data );
+            }
 
-                   User myUser = new User();
-                   myUser.setEmail((String)((HashMap<String, Object>)singleSnashot.getValue()).get("email"));
-                   myUser.setFirstName( (String)((HashMap<String, Object>)singleSnashot.getValue()).get("firstName") );
-                   myUser.setLastName( (String)((HashMap<String, Object>)singleSnashot.getValue()).get("lastName") );
-                   myUser.setGender( (String)((HashMap<String, Object>)singleSnashot.getValue()).get("gender") );
-                   myUser.setKey( (String)((HashMap<String, Object>)singleSnashot.getValue()).get("key") );
-                   myUser.setAge( ((Long)((HashMap<String, Object>)singleSnashot.getValue()).get("age") ).intValue() );
+            public boolean searchCriteria(User data, String value) {
+                return data.getFirstName().contains(buscar) && !data.getKey().equals( mAuth.getUser().getUid() );
+            }
 
-                   String nombre = myUser.getEmail();
-                   nombre = nombre.substring(0 , nombre.indexOf('@'));
-                   if(nombre.contains(buscar) && !myUser.getKey().equals( mAuth.getUser().getUid() ) ) {
-                       usuarios.add(myUser);
-                   }
-               }
-               results = usuarios;
-               updateView( usuarios );
-           }
+            @Override
+            public void onCancel(DatabaseError databaseError ){
 
-           @Override
-           public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
-           }
-       });
-
-   }
+    }
 
     @Override
     protected void onStart() {
@@ -113,8 +97,8 @@ public class SearchUserActivity extends AppCompatActivity {
     }
 
     public void updateView(ArrayList<User> usrs) {
-       Log.i("INFO_DATABASE", "updateView: "+ usrs.toString() );
-       UserArrayAdapter adapter = new UserArrayAdapter(this, usrs);
-       this.resultList.setAdapter(adapter);
-   }
+        Log.i("INFO_DATABASE", "updateView: "+ usrs.toString() );
+        UserArrayAdapter adapter = new UserArrayAdapter(this, usrs);
+        this.resultList.setAdapter(adapter);
+    }
 }
