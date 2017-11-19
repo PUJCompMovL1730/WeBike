@@ -25,6 +25,7 @@ import webike.webike.logic.Message;
 import webike.webike.logic.User;
 import webike.webike.utils.FAuth;
 import webike.webike.utils.FData;
+import webike.webike.utils.ListActions;
 import webike.webike.utils.ListFilteredActions;
 import webike.webike.utils.SingleValueActions;
 
@@ -74,34 +75,13 @@ public class WriteMessageActivity extends AppCompatActivity {
 
     public void getFriends(){
         FirebaseUser user = fAuth.getCurrentUser();
-        FData.getUserFromId(database, user.getUid(), new SingleValueActions<User>() {
+        FData.getFriends(database, user.getUid(), new ListActions<User>() {
             @Override
-            public void onReceiveSingleValue(User data, DatabaseReference reference) {
-                if( data.getFriends() != null ){
-                    final List<String> fIds = data.getFriends();
-
-                    FData.getUsers(database, null, new ListFilteredActions<User, String>() {
-
-                        @Override
-                        public void onReceiveList(ArrayList<User> data, DatabaseReference reference) {
-                            for ( User user : data ){
-                                friends.add( new Friend( user.getKey() , user.getFirstName() + " " + user.getLastName() , user.getEmail() ) );
-                            }
-                            fillSpinner();
-                        }
-
-                        @Override
-                        public void onCancel(DatabaseError error) {
-
-                        }
-
-                        @Override
-                        public boolean searchCriteria(User data, String filter) {
-                            return fIds.contains( data.getKey() );
-                        }
-                    });
-
+            public void onReceiveList(ArrayList<User> data, DatabaseReference reference) {
+                for ( User user : data ) {
+                    friends.add( new Friend( user.getKey() , user.getFirstName() + " " + user.getLastName() , user.getEmail() ) );
                 }
+                fillSpinner();
             }
 
             @Override

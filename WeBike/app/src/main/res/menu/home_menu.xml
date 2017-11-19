@@ -10,11 +10,11 @@
         android:id="@+id/config_menuItem"
         android:title="@string/home_menu_config_text"/>
     <item
-        android:id="@+id/search_user_test"
-        android:title="@string/test_search"/>
+        android:id="@+id/search_user_home_menu"
+        android:title="@string/home_menu_search_user"/>
     <item
-        android:id="@+id/create_msg"
-        android:title="@string/test_msg"/>
+        android:id="@+id/inbox_home_menu"
+        android:title="@string/home_menu_inbox"/>
     <item
         android:id="@+id/go_to_planroute"
         android:title="@string/menu_goto_planroute"/>
