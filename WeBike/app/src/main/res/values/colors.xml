@@ -8,4 +8,5 @@
     <color name="hint">#808080</color>
     <color name="backgroundGray">#EEEBFF</color>
     <color name="borderGray">#909090</color>
+    <color name="burnRed">#990000</color>
 </resources>

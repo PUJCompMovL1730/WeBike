@@ -14,17 +14,19 @@ public class PlannedRoute extends  SpecialPublication implements Serializable{
     private String destino;
     private String fecha;
     private String descripcion;
+    private String key;
 
     public PlannedRoute(){
     }
 
-    public PlannedRoute(String nombre, String organiza,String origen, String destino, String fecha, String descripcion) {
+    public PlannedRoute(String nombre, String organiza,String origen, String destino, String fecha, String descripcion, String key) {
         this.organiza = organiza;
         this.origen = origen;
         this.destino = destino;
         this.fecha = fecha;
         this.descripcion = descripcion;
         this.nombre = nombre;
+        this.key = key;
     }
 
     public String getNombre() {
@@ -75,4 +77,23 @@ public class PlannedRoute extends  SpecialPublication implements Serializable{
         this.descripcion = descripcion;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    @Override
+    public String toString() {
+        return "PlannedRoute{" +
+                "nombre='" + nombre + '\'' +
+                ", organiza='" + organiza + '\'' +
+                ", origen='" + origen + '\'' +
+                ", destino='" + destino + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                '}';
+    }
 }

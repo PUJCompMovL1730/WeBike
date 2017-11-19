@@ -87,7 +87,7 @@ tools:context="webike.webike.AddFriendActivity"
     android:layout_alignParentStart="true">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/know_him"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -104,6 +104,7 @@ tools:context="webike.webike.AddFriendActivity"
         android:background="#66B2FF"
         android:padding="10dp"
         android:text="Agregar a mi lista de amigos"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        />
 </LinearLayout>
 </RelativeLayout>

@@ -53,4 +53,13 @@ public class PlacePromotion extends SpecialPublication implements Serializable{
 
     public void setLugar(String lugar) { this.lugar = lugar; }
 
+    @Override
+    public String toString() {
+        return "PlacePromotion{" +
+                "nombre='" + nombre + '\'' +
+                ", organiza='" + organiza + '\'' +
+                ", lugar='" + lugar + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                '}';
+    }
 }

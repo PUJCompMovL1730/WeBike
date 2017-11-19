@@ -19,6 +19,7 @@ import webike.webike.logic.PlannedRoute;
 import webike.webike.logic.SpecialPublication;
 import webike.webike.logic.User;
 import webike.webike.utils.FData;
+import webike.webike.utils.ListFilteredActions;
 import webike.webike.utils.SingleValueActions;
 
 public class PlannedRouteActivity extends AppCompatActivity {
@@ -71,16 +72,11 @@ public class PlannedRouteActivity extends AppCompatActivity {
         b_participar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    writeDatabase();
-                    Toast.makeText(getBaseContext(),"Se ha añadido la publicación exitosamente",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(PlannedRouteActivity.this, HomeActivity.class);
-                    intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
-                    startActivity( intent );
-                } catch (Exception e){
-                    e.printStackTrace();
-                    Toast.makeText(getBaseContext(),"Error al añadir publiación",Toast.LENGTH_SHORT).show();
-                }
+            writeDatabase();
+            Toast.makeText(getBaseContext(),"Se ha añadido la publicación exitosamente",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(PlannedRouteActivity.this, HomeActivity.class);
+            intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+            startActivity( intent );
             }
         });
     }
@@ -90,16 +86,34 @@ public class PlannedRouteActivity extends AppCompatActivity {
         FData.getUserFromId(fbDatabase, fbAuth.getCurrentUser().getUid(), new SingleValueActions<User>() {
             @Override
             public void onReceiveSingleValue(User data, DatabaseReference reference) {
-                if( data.getHistoryPublications() == null ){
-                    data.setHistoryPublications(new ArrayList<SpecialPublication>());
+                final User user = data;
+                if( user.getHistoryPublications() == null ){
+                    user.setHistoryPublications(new ArrayList<String>());
                 }
-                data.getHistoryPublications().add(plannedRoute);
-                reference.setValue(data);
+                FData.getPlannedRoutes(fbDatabase, plannedRoute, new ListFilteredActions<PlannedRoute, PlannedRoute>() {
+                    @Override
+                    public boolean searchCriteria(PlannedRoute data, PlannedRoute filter) {
+                        return data.getKey().equals( filter.getKey() );
+                    }
+
+                    @Override
+                    public void onReceiveList(ArrayList<PlannedRoute> data, DatabaseReference reference) {
+                        if( data.size() == 1 ){
+                            user.getHistoryPublications().add(data.get(0).getKey());
+                            FData.postUser( fbDatabase , user );
+                        }
+                    }
+
+                    @Override
+                    public void onCancel(DatabaseError error) {
+                        Toast.makeText(getBaseContext(),"Error al añadir publiación",Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
             public void onCancel( DatabaseError databaseError ) {
-
+                Toast.makeText(getBaseContext(),"Error al añadir publiación",Toast.LENGTH_SHORT).show();
             }
         });
     }

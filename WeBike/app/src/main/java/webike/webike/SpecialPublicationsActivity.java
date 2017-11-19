@@ -76,24 +76,21 @@ public class SpecialPublicationsActivity extends AppCompatActivity {
 
         specialPublication_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(type)
-                {
-                    Intent myIntent;
-                    Bundle bundle = new Bundle();
-                    if(current_specialPublication.get(position) instanceof PlacePromotion){
-                        myIntent = new Intent(SpecialPublicationsActivity.this, PlaceActivity.class);
-                        PlacePromotion placePromotion = (PlacePromotion) current_specialPublication.get(position);
-                        bundle.putSerializable("pub",placePromotion);
-                        myIntent.putExtras(bundle);
-                        startActivity(myIntent);
-                    }
-                    if(current_specialPublication.get(position) instanceof PlannedRoute){
-                        myIntent = new Intent(SpecialPublicationsActivity.this, PlannedRouteActivity.class);
-                        PlannedRoute plannedRoute = (PlannedRoute) current_specialPublication.get(position);
-                        bundle.putSerializable("pub",plannedRoute);
-                        myIntent.putExtras(bundle);
-                        startActivity(myIntent);
-                    }
+                Intent myIntent;
+                Bundle bundle = new Bundle();
+                if(current_specialPublication.get(position) instanceof PlacePromotion){
+                    myIntent = new Intent(SpecialPublicationsActivity.this, PlaceActivity.class);
+                    PlacePromotion placePromotion = (PlacePromotion) current_specialPublication.get(position);
+                    bundle.putSerializable("pub",placePromotion);
+                    myIntent.putExtras(bundle);
+                    startActivity(myIntent);
+                }
+                if(current_specialPublication.get(position) instanceof PlannedRoute){
+                    myIntent = new Intent(SpecialPublicationsActivity.this, PlannedRouteActivity.class);
+                    PlannedRoute plannedRoute = (PlannedRoute) current_specialPublication.get(position);
+                    bundle.putSerializable("pub",plannedRoute);
+                    myIntent.putExtras(bundle);
+                    startActivity(myIntent);
                 }
             }
         });
@@ -107,7 +104,7 @@ public class SpecialPublicationsActivity extends AppCompatActivity {
             @Override
             public void onReceiveList(ArrayList<SpecialPublication> data, DatabaseReference reference) {
                 current_specialPublication = data;
-                infalteListWithSpecialPublication( data );
+                inflateListWithSpecialPublication( data );
             }
 
             @Override
@@ -117,7 +114,7 @@ public class SpecialPublicationsActivity extends AppCompatActivity {
         });
     }
 
-    public void infalteListWithSpecialPublication( ArrayList<SpecialPublication> pubs ){
+    public void inflateListWithSpecialPublication( ArrayList<SpecialPublication> pubs ){
         adapter_special_publication adapter = new adapter_special_publication(this,pubs);
         this.specialPublication_list.setAdapter(adapter);
     }
