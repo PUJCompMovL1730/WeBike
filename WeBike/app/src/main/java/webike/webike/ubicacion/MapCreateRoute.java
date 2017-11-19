@@ -63,7 +63,7 @@ public class MapCreateRoute extends AppCompatActivity implements OnMapReadyCallb
             @Override
             public void onClick(View view) {
                 String rn = route_name.getText().toString().trim();
-                if(!TextUtils.isEmpty(rn))
+                if(TextUtils.isEmpty(rn))
                 {
                     Toast.makeText(MapCreateRoute.this, "Faltan datos", Toast.LENGTH_LONG).show();
                 }
