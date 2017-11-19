@@ -10,10 +10,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
+import java.util.logging.Filter;
 
 import webike.webike.logic.AbstractPublication;
 import webike.webike.logic.Group;
+import webike.webike.logic.Mailbox;
 import webike.webike.logic.Message;
 import webike.webike.logic.PlacePromotion;
 import webike.webike.logic.PlannedRoute;
@@ -95,6 +98,10 @@ public class FData {
         ref.setValue(g);
     }
 
+    public static void postPlacePromotion( FirebaseDatabase database , PlacePromotion p ){
+        DatabaseReference ref = database.getReference(FData.PATH_TO_PLACE_PROMOTIONS);
+
+    }
 
     public static void getUsers( FirebaseDatabase database , final ListActions<User> actions ){
         final DatabaseReference myRef = database.getReference(FData.PATH_TO_USERS);
@@ -374,6 +381,59 @@ public class FData {
         });
     }
 
+    public static <FilterType> void getAllGroups(FirebaseDatabase database , final FilterType filter , final ListFilteredActions<Group,FilterType> actions){
+        final DatabaseReference ref = database.getReference(FData.PATH_TO_GROUPS);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Group> groups = new ArrayList<Group>();
+                for( DataSnapshot snapshot : dataSnapshot.getChildren() ){
+                    Group gr = createGroup(snapshot);
+                    if( actions.searchCriteria( gr , filter ) ){
+                        groups.add(gr);
+                    }
+                }
+                actions.onReceiveList( groups , ref );
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public static void getUserGroups(final FirebaseDatabase database , final String userId , final ListActions<Group> actions ){
+        getUserFromId(database, userId, new SingleValueActions<User>() {
+            @Override
+            public void onReceiveSingleValue(User data, DatabaseReference reference) {
+                User user = data;
+                List<String> groupIds = data.getGroups();
+                getAllGroups(database, user, new ListFilteredActions<Group, User>() {
+                    @Override
+                    public boolean searchCriteria(Group data, User filter) {
+                        return filter.getGroups().contains( data.getKey() );
+                    }
+
+                    @Override
+                    public void onReceiveList(ArrayList<Group> data, DatabaseReference reference) {
+                        actions.onReceiveList( data , reference);
+                    }
+
+                    @Override
+                    public void onCancel(DatabaseError error) {
+                        actions.onCancel( error );
+                    }
+                });
+            }
+
+            @Override
+            public void onCancel(DatabaseError error) {
+                actions.onCancel(error);
+            }
+        });
+    }
+
     public static void getRoutes( FirebaseDatabase database , String userId , final ListActions<Route> actions ){
         final DatabaseReference ref = database.getReference(FData.PATH_TO_USERS + "/" + userId + "/history" );
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -393,6 +453,55 @@ public class FData {
         });
     }
 
+    public static void getPlacePromotions(FirebaseDatabase database , final ListActions<PlacePromotion> actions){
+        final DatabaseReference ref = database.getReference(FData.PATH_TO_PLACE_PROMOTIONS);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<PlacePromotion> proms = new ArrayList<PlacePromotion>();
+                for( DataSnapshot snap : dataSnapshot.getChildren() ){
+                    proms.add( createPlacePromotion(snap) );
+                }
+                actions.onReceiveList( proms , ref );
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                actions.onCancel(databaseError);
+            }
+        });
+    }
+
+    public static void getFriends(final FirebaseDatabase database , String userId , final ListActions<User> actions){
+        getUserFromId(database, userId, new SingleValueActions<User>() {
+            @Override
+            public void onReceiveSingleValue(User data, DatabaseReference reference) {
+                final User user = data;
+                getUsers(database, user, new ListFilteredActions<User, User>() {
+                    @Override
+                    public boolean searchCriteria(User data, User filter) {
+                        return filter.getFriends().contains(data.getKey());
+                    }
+
+                    @Override
+                    public void onReceiveList(ArrayList<User> data, DatabaseReference reference) {
+                        actions.onReceiveList( data , reference );
+                    }
+
+                    @Override
+                    public void onCancel(DatabaseError error) {
+                        actions.onCancel(error);
+                    }
+                });
+            }
+
+            @Override
+            public void onCancel(DatabaseError error) {
+                actions.onCancel(error);
+	        }
+    	});
+    }
+
     public static User createUser( DataSnapshot singleSnapshot ){
         User myUser = new User();
         myUser.setEmail((String)((HashMap<String, Object>)singleSnapshot.getValue()).get("email"));
@@ -404,17 +513,48 @@ public class FData {
         myUser.setFriends( (ArrayList<String>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("friends") );
         myUser.setHistory( (ArrayList<Route>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("history") );
         myUser.setGroups( (ArrayList<String>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("groups") );
+        Mailbox box = new Mailbox();
+        if (  ((HashMap<String, Object>) singleSnapshot.getValue()).get("mailbox") != null ) {
+            HashMap<String,Object> mailShot = (HashMap<String, Object>) ((HashMap<String, Object>) singleSnapshot.getValue()).get("mailbox");
+            if ( mailShot.get("received") != null ) {
+                box.setReceived(createMessageList((HashMap<String, Object>) mailShot.get("received")));
+            }else{
+                box.setReceived( new ArrayList<Message>() );
+            }
+            if ( mailShot.get("sent") != null ) {
+                box.setSent(createMessageList((HashMap<String, Object>) mailShot.get("sent")));
+            }else{
+                box.setSent( new ArrayList<Message>() );
+            }
+        }
+        myUser.setMailbox(box);
         return myUser;
     }
 
     public static Message createMessage( DataSnapshot singlesnapshot ){
-        Message msg = new Message();
         HashMap<String,Object> box = (HashMap<String,Object>) singlesnapshot.getValue();
+        return createMessage( box );
+    }
+
+    public static Message createMessage( HashMap<String,Object> box ){
+        Message msg = new Message();
         msg.setMsg( (String) box.get("msg"));
         msg.setSubject( (String) box.get("subject") );
         msg.setReceiver( (String) box.get("receiver") );
         msg.setSender( (String) box.get("sender") );
-        return msg;}
+        return msg;
+    }
+
+    public static ArrayList<Message> createMessageList( HashMap<String,Object> box ){
+        ArrayList<Message> msgs = new ArrayList<Message>();
+        ArrayList<String> keys = new ArrayList<>( box.keySet() );
+        for( String key : keys ){
+            HashMap<String,Object> boxy = (HashMap<String, Object>) box.get(key);
+            Message msg = FData.createMessage(boxy);
+            msgs.add(msg);
+        }
+        return msgs;
+    }
 
 
     public static PlannedRoute createPlannedRoute( HashMap<String,Object> data ){
@@ -430,12 +570,18 @@ public class FData {
         return plannedRoute;
     }
 
+    public static PlacePromotion createPlacePromotion( DataSnapshot snapshot ){
+        HashMap<String,Object> hash = (HashMap<String,Object>) snapshot.getValue();
+        return createPlacePromotion( hash );
+    }
+
     public static PlacePromotion createPlacePromotion( HashMap<String,Object> data ){
         PlacePromotion place = new PlacePromotion();
         place.setOrganiza( (String)data.get("organiza") );
         place.setNombre( (String)data.get("nombre") );
         place.setDescripcion( (String)data.get("descripcion") );
-        place.setLugar( (String)data.get("lugar") );
+        place.setLatitud((Double)data.get("latitud") );
+        place.setLongitud((Double)data.get("longitud") );
         Log.i("PLACE PROMOTION", "Place: "+place);
         return place;
     }
@@ -454,5 +600,22 @@ public class FData {
         route.setOrigen( (String) hash.get("origen") );
         route.setFecha( (String) hash.get("fecha") );
         return route;
+    }
+
+    public static Group createGroup( DataSnapshot snapshot ){
+        HashMap<String,Object> hash = (HashMap<String, Object>) snapshot.getValue();
+        return  createGroup( hash );
+    }
+
+    public static Group createGroup( HashMap<String,Object> hash ){
+        Group g = new Group();
+        g.setUsers( (ArrayList<String>) hash.get("users") );
+        g.setAdmins( (ArrayList<String>) hash.get("admins") );
+        g.setFinish( (String) hash.get("finish") );
+        g.setKey( (String) hash.get("key") );
+        g.setName( (String) hash.get("name") );
+        g.setStart( (String) hash.get("start") );
+        g.setTime( (Long) hash.get("time") );
+        return g;
     }
 }

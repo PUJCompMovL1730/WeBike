@@ -21,11 +21,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-import webike.webike.adaptadores.adaptador_home_mensaje;
+
+import webike.webike.adaptadores.MessageAdapter;
 import webike.webike.adaptadores.adaptador_home_notificacion;
 import webike.webike.adaptadores.adapter_all_publication;
 import webike.webike.logic.AbstractPublication;
-import webike.webike.logic.Mailbox;
 import webike.webike.logic.Message;
 import webike.webike.logic.PlacePromotion;
 import webike.webike.logic.PlannedRoute;
@@ -151,11 +151,11 @@ public class HomeActivity extends AppCompatActivity {
                 intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
                 startActivity( intent );
                 break;
-            case R.id.create_msg:
-                intent = new Intent(this,WriteMessageActivity.class);
+            case R.id.inbox_home_menu:
+                intent = new Intent(this,MailboxActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.search_user_test:
+            case R.id.search_user_home_menu:
                 startActivity( new Intent(HomeActivity.this, SearchUserActivity.class));
                 break;
             case R.id.go_to_planroute:
@@ -229,7 +229,7 @@ public class HomeActivity extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_list_item_1 ,info);
             this.homeList.setAdapter(adapter);
         }else {
-            adaptador_home_mensaje adapter = new adaptador_home_mensaje(this, msgs);
+            MessageAdapter adapter = new MessageAdapter(this, msgs);
             this.homeList.setAdapter(adapter);
         }
     }
