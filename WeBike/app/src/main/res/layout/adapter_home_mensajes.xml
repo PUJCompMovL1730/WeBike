@@ -1,79 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="75dp"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_weight="0.3"
         android:layout_gravity="center"
-        android:src="@drawable/user" />
+        android:src="@drawable/mail_512"
+        android:foregroundGravity="center_vertical"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_weight="0.7"
         android:orientation="vertical"
-        android:gravity="center|left">
+        android:layout_gravity="center_vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:src="@drawable/user"
-                android:id="@+id/Imagen"
-                />
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"
+            android:layout_gravity="center_vertical">
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Remitente"
-                android:layout_gravity="center"
-                android:id="@+id/remitente"/>
-
+                android:layout_height="wrap_content"
+                android:text="Asunto"
+                android:id="@+id/asunto"
+                android:textSize="@dimen/textSize"
+                android:gravity="center_vertical"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
             android:orientation="horizontal"
-
-            >
-
+            android:layout_gravity="center_vertical">
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:src="@drawable/user"
-                />
-            <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:src="@drawable/outgoing_512"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:text="Emisor"
+                android:id="@+id/emisor"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:src="@drawable/incoming_512"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
                 android:text="Receptor"
-                android:layout_gravity="center"
-                android:id="@+id/receptor"/>
-
+                android:id="@+id/receptor"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:src="@drawable/user"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Mensaje"
-                android:layout_gravity="center"
-                android:id="@+id/mensaje"/>
-
-        </LinearLayout>
-
     </LinearLayout>
 </LinearLayout>

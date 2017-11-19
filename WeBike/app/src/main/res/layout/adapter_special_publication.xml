@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context="webike.webike.adaptadores.adapter_special_publication">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bell_24"/>
+        <TextView
+            android:id="@+id/nombre_publicacion"
+            android:paddingStart="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre publicación"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/tipo_imagen"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/place_small"/>
+        <TextView
+            android:id="@+id/lugar"
+            android:paddingStart="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Punto de inicio"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_adicional"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+</LinearLayout>

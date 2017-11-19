@@ -27,8 +27,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddUserActivity" />
+        <activity android:name=".CreateGroupActivity" />
+        <activity android:name=".HelpButtonActivity" />
+        <activity android:name=".PanicButtonActivity" />
+        <activity android:name=".PlaceActivity" />
+        <activity android:name=".PlannedRouteActivity" />
+        <activity
+            android:name=".PublicationsActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".SpecialPublicationsActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".HomeActivity" />
+        <activity
+            android:name=".HomeActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".PublicationActivity" />
         <activity android:name=".InviteGroupActivity" />
         <activity android:name=".SearchUserActivity" />
@@ -37,6 +51,13 @@
         <activity android:name=".ConfigActivity" />
         <activity android:name=".ViewProfileActivity" />
         <activity android:name=".ConfigProfileActivity"></activity>
+        <activity android:name=".ManualActivity" />
+        <activity
+            android:name=".WriteMessageActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".RouteActivity" />
+        <activity android:name=".RoutesActivity" />
+        <activity android:name=".MailboxActivity" android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

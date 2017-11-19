@@ -10,23 +10,32 @@
         android:id="@+id/linear_menus_busqueda"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:padding="10dp">
         <EditText
             android:id="@+id/searchText_editText"
-            android:layout_width="230dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="47dp"
             android:inputType="textPersonName"
             android:hint="Name"
             android:padding="5dp"
             />
-        <Button
+        <ImageButton
+            android:id="@+id/searchUser_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/lupa_24"
+            android:padding="5dp"
+            android:background="@android:color/transparent"/>
+        <!--<Button
             android:id="@+id/searchUser_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Buscar"
             android:padding="5dp"
 
-            />
+            />-->
     </LinearLayout>
 
 
@@ -35,6 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:background="@color/backgroundGray"
         android:padding="10dp"
         >
         <ListView

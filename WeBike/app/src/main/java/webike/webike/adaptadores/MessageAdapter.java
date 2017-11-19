@@ -19,8 +19,8 @@ import webike.webike.logic.Message;
  * Created by Carlos on 29/10/2017.
  */
 
-public class adaptador_home_mensaje extends ArrayAdapter<Message> {
-    public adaptador_home_mensaje(Context context , ArrayList<Message> resource){
+public class MessageAdapter extends ArrayAdapter<Message> {
+    public MessageAdapter(Context context , ArrayList<Message> resource){
         super(context , 0 , resource);
     }
 
@@ -36,11 +36,11 @@ public class adaptador_home_mensaje extends ArrayAdapter<Message> {
         Message r = getItem(position);
         if (r!= null){
             TextView txdestino= (TextView) v.findViewById(R.id.receptor);
-            TextView txorigen = (TextView) v.findViewById(R.id.remitente);
-            TextView txmensaje = (TextView) v.findViewById(R.id.mensaje);
-            txdestino.setText((CharSequence) r.getSender().getEmail());
-            txorigen.setText((CharSequence) r.getReceiver().getEmail() );
-            txmensaje.setText(r.getMsg());
+            TextView txorigen = (TextView) v.findViewById(R.id.emisor);
+            TextView txasunto = (TextView) v.findViewById(R.id.asunto);
+            txorigen.setText( r.getSender() );
+            txdestino.setText( r.getReceiver() );
+            txasunto.setText( r.getSubject() );
         }
         return v;
 

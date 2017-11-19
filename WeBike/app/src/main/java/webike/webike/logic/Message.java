@@ -9,16 +9,18 @@ import java.io.Serializable;
 public class Message implements Serializable{
 
     private String msg;
-    private User sender;
-    private User receiver;
+    private String subject;
+    private String sender;
+    private String receiver;
 
     public Message() {
     }
 
-    public Message(String msg, User sender, User receiver) {
+    public Message(String msg, String subject, String sender, String receiver) {
         this.msg = msg;
         this.sender = sender;
         this.receiver = receiver;
+        this.subject = subject;
     }
 
     public String getMsg() {
@@ -29,19 +31,27 @@ public class Message implements Serializable{
         this.msg = msg;
     }
 
-    public User getSender() {
+    public String getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
 
-    public User getReceiver() {
+    public String getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(User receiver) {
+    public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }

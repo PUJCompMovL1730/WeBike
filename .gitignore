@@ -20,9 +20,9 @@ gen/
 out/
 
 # Gradle files
-.gradle
-.gradle/
-build/
+WeBike/.gradle
+WeBike/.gradle/
+WeBike/build/
 
 # Signing files
 .signing/
@@ -63,22 +63,22 @@ obj/
 /out/
 
 # User-specific configurations
-.idea/libraries/
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/.name
-.idea/compiler.xml
-.idea/copyright/profiles_settings.xml
-.idea/encodings.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/scopes/scope_settings.xml
-.idea/dictionaries
-.idea/vcs.xml
-.idea/jsLibraryMappings.xml
-.idea/datasources.xml
-.idea/dataSources.ids
-.idea/sqlDataSources.xml
+WeBike/.idea/libraries/
+WeBike/.idea/workspace.xml
+WeBike/.idea/tasks.xml
+WeBike/.idea/.name
+WeBike/.idea/compiler.xml
+WeBike/.idea/copyright/profiles_settings.xml
+WeBike/.idea/encodings.xml
+WeBike/.idea/misc.xml
+WeBike/.idea/modules.xml
+WeBike/.idea/scopes/scope_settings.xml
+WeBike/.idea/dictionaries
+WeBike/.idea/vcs.xml
+WeBike/.idea/jsLibraryMappings.xml
+WeBike/.idea/datasources.xml
+WeBike/.idea/dataSources.ids
+WeBike/.idea/sqlDataSources.xml
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 
@@ -108,13 +108,13 @@ hs_err_pid*
 ## Plugin-specific files:
 
 # mpeltonen/sbt-idea plugin
-.idea_modules/
+WeBike/.idea_modules/
 
 # JIRA plugin
 atlassian-ide-plugin.xml
 
 # Mongo Explorer plugin
-.idea/mongoSettings.xml
+WeBike/.idea/mongoSettings.xml
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml

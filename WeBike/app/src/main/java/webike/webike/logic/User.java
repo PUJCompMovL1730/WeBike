@@ -21,6 +21,7 @@ public class User implements Serializable{
     private Mailbox mailbox;
     private List<String> friends;
     private List<Route> history;
+    private List<String> historyPublications;
     private List<String> groups;
 
     public User() {
@@ -35,6 +36,7 @@ public class User implements Serializable{
         this.mailbox = new Mailbox();
         this.friends = new ArrayList<>();
         this.history = new ArrayList<>();
+        this.historyPublications = new ArrayList<>();
         this.groups = new ArrayList<>();
         this.email=email;
     }
@@ -103,6 +105,12 @@ public class User implements Serializable{
         this.friends = friends;
     }
 
+    public List<String> getHistoryPublications() {
+        return historyPublications;
+    }
+
+    public void setHistoryPublications(ArrayList<String> historyPublications) {this.historyPublications = historyPublications;}
+
     public List<Route> getHistory() {
         return history;
     }
@@ -118,4 +126,25 @@ public class User implements Serializable{
     public void setGroups(ArrayList<String> groups) {
         this.groups = groups;
     }
+<<<<<<< HEAD
 }
+=======
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "key='" + key + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", gender='" + gender + '\'' +
+                ", email='" + email + '\'' +
+                ", mailbox=" + mailbox +
+                ", friends=" + friends +
+                ", history=" + history +
+                ", historyPublications=" + historyPublications +
+                ", groups=" + groups +
+                '}';
+    }
+}
+>>>>>>> origin/juan

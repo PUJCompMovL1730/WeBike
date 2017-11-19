@@ -41,7 +41,6 @@ public class ViewProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
-       // mAuth = new FAuth(this){};
         friendList = (ListView)findViewById(R.id.list_amigos);
         groupList = (ListView)findViewById(R.id.list_grupos);
         username = (TextView)findViewById(R.id.user_name);

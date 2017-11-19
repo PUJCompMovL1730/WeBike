@@ -3,11 +3,13 @@ package webike.webike;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +28,7 @@ import webike.webike.utils.ListFilteredActions;
 public class SearchUserActivity extends AppCompatActivity {
 
     private EditText searchEditText;
-    private Button searchButton;
+    private ImageButton searchButton;
     private ListView resultList;
     private String search_name;
     private ArrayList<User> results;
@@ -43,7 +45,7 @@ public class SearchUserActivity extends AppCompatActivity {
         };
         resultList = (ListView) findViewById(R.id.search_list);
 
-        searchButton  = (Button) findViewById(R.id.searchUser_button);
+        searchButton  = (ImageButton) findViewById(R.id.searchUser_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,25 +66,25 @@ public class SearchUserActivity extends AppCompatActivity {
         });
     }
 
-    public void loadUser(final String buscar){
-        FData.getUsers(this.database, buscar, new ListFilteredActions<User,String>(){
+   public void loadUser(final String buscar){
+       FData.getUsers(this.database, buscar, new ListFilteredActions<User,String>(){
 
-            public void onReceiveList(ArrayList<User> data, DatabaseReference reference ){
-                results = data;
-                updateView( data );
-            }
+           public void onReceiveList(ArrayList<User> data, DatabaseReference reference ){
+               results = data;
+               updateView( data );
+           }
 
-            public boolean searchCriteria(User data, String value) {
-                return data.getFirstName().contains(buscar) && !data.getKey().equals( mAuth.getUser().getUid() );
-            }
+           public boolean searchCriteria(User data, String value) {
+               return data.getFirstName().contains(buscar) && !data.getKey().equals( mAuth.getUser().getUid() );
+           }
 
-            @Override
-            public void onCancel(DatabaseError databaseError ){
+           @Override
+           public void onCancel(DatabaseError databaseError ){
 
-            }
-        });
+           }
+       });
 
-    }
+   }
 
     @Override
     protected void onStart() {

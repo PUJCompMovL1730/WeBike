@@ -3,24 +3,18 @@ package webike.webike;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-import webike.webike.R;
 import webike.webike.logic.Publicacion;
 import webike.webike.logic.Route;
 import webike.webike.logic.User;
@@ -40,7 +34,6 @@ public class PublicationActivity extends AppCompatActivity {
     FirebaseAuth fbAuth;
     DatabaseReference dbReference;
     FirebaseDatabase fbDatabase;
-    //String id_publicacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,14 +63,13 @@ public class PublicationActivity extends AppCompatActivity {
         tv_hora_publicacion.setText(publicacion.getHora());
         tv_descripcion_publicacion.setText(publicacion.getDescripcion());
 
-        ruta = new Route(publicacion.getNombre(),publicacion.getOrigen(),publicacion.getDestino(),publicacion.getHora(),"","","","",publicacion.getDescripcion());
+        //ruta = new Route(publicacion.getNombre(),publicacion.getOrigen(),publicacion.getDestino(),publicacion.getHora(),"","","","",publicacion.getDescripcion());
 
         b_participar_publicacion = (Button)findViewById(R.id.b_participar_publicacion);
         b_participar_publicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    //Toast.makeText(getBaseContext(),"YAAAAAAS",Toast.LENGTH_SHORT).show();
                     writeDatabase();
                     Toast.makeText(getBaseContext(),"Se ha añadido el recorrido exitosamente",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(PublicationActivity.this, HomeActivity.class);
@@ -96,8 +88,8 @@ public class PublicationActivity extends AppCompatActivity {
         FData.getUserFromId(fbDatabase, fbAuth.getCurrentUser().getUid(), new SingleValueActions<User>() {
             @Override
             public void onReceiveSingleValue(User data, DatabaseReference reference) {
-                if( data.getHistory() == null ){
-                    data.setHistory(new ArrayList<Route>());
+                if( data.getHistoryPublications() == null ){
+                    data.setHistoryPublications( new ArrayList<String>() );
                 }
                 data.getHistory().add(ruta);
                 reference.setValue(data);
@@ -111,6 +103,7 @@ public class PublicationActivity extends AppCompatActivity {
     }
 /*
     public void readDatabase(){
+
         dbReference = fbDatabase.getReference(FData.PATH_TO_PUBS + "/" + id_publicacion);
         dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
