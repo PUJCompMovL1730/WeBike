@@ -33,10 +33,16 @@
         <activity android:name=".PanicButtonActivity" />
         <activity android:name=".PlaceActivity" />
         <activity android:name=".PlannedRouteActivity" />
-        <activity android:name=".PublicationsActivity" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".SpecialPublicationsActivity" android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".PublicationsActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".SpecialPublicationsActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".HomeActivity" android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".HomeActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".PublicationActivity" />
         <activity android:name=".InviteGroupActivity" />
         <activity android:name=".SearchUserActivity" />
@@ -44,10 +50,13 @@
         <activity android:name=".AddFriendActivity" />
         <activity android:name=".ConfigActivity" />
         <activity android:name=".ManualActivity" />
-        <activity android:name=".WriteMessageActivity" android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".ubicacion.MapCreateRoute"/>
+        <activity
+            android:name=".WriteMessageActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".ubicacion.MapCreateRoute" />
         <activity android:name=".RouteActivity" />
         <activity android:name=".RoutesActivity" />
+        <activity android:name=".AddFriendToGroup"></activity>
     </application>
 
 </manifest>
