@@ -13,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
@@ -35,10 +37,13 @@ import com.google.firebase.auth.FirebaseUser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import webike.webike.HomeActivity;
 import webike.webike.LoginActivity;
 import webike.webike.R;
+import webike.webike.logic.Promocion_lugar;
 import webike.webike.utils.FAuth;
 import webike.webike.utils.Permisos;
 
@@ -50,7 +55,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, PlaceS
     private Intent mainIntent;
     private FirebaseUser user;
     private Place place;
-
+    private List<Promocion_lugar> promocionesLugares= new ArrayList<Promocion_lugar>();
     private Toolbar toolbar;
     private ImageView image;
     private TextView userName;
@@ -112,6 +117,14 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, PlaceS
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        crearPromocion();
+        for(Promocion_lugar lugar:promocionesLugares) {
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lugar.getLatitud(),lugar.getLongitud()))
+                    .title(lugar.getNombre())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.guia))
+                    .snippet(lugar.getDescripcion()));
+        }
         this.googleMap = googleMap;
         this.googleMap.setPadding(0, 150, 0, 0);
 
@@ -132,6 +145,20 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, PlaceS
             locationAction();
         }
     }
+
+    public void crearPromocion(){
+        Promocion_lugar lugarP1 = new Promocion_lugar("casita",3,4.6582522,-74.1279583,"cosa linda, cosa hermosa, cosa bien hecha");
+        Promocion_lugar lugarP2 = new Promocion_lugar("cochinilla",3,4.6476647212219975,-74.10066318538156,"Dispuesto a perder tu salario ven aquì");
+        promocionesLugares.add(lugarP1);
+        promocionesLugares.add(lugarP2);
+
+
+    }
+
+
+
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
