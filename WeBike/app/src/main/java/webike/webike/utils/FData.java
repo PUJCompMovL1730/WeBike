@@ -100,7 +100,9 @@ public class FData {
 
     public static void postPlacePromotion( FirebaseDatabase database , PlacePromotion p ){
         DatabaseReference ref = database.getReference(FData.PATH_TO_PLACE_PROMOTIONS);
-
+        String key = ref.push().getKey();
+        ref = database.getReference( FData.PATH_TO_PLACE_PROMOTIONS + "/" + key);
+        ref.setValue( p );
     }
 
     public static void getUsers( FirebaseDatabase database , final ListActions<User> actions ){
