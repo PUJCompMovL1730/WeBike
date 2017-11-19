@@ -392,6 +392,25 @@ public class FData {
         });
     }
 
+    public static void getPlacePromotions(FirebaseDatabase database , final ListActions<PlacePromotion> actions){
+        final DatabaseReference ref = database.getReference(FData.PATH_TO_PLACE_PROMOTIONS);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<PlacePromotion> proms = new ArrayList<PlacePromotion>();
+                for( DataSnapshot snap : dataSnapshot.getChildren() ){
+                    proms.add( createPlacePromotion(snap) );
+                }
+                actions.onReceiveList( proms , ref );
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                actions.onCancel(databaseError);
+            }
+        });
+    }
+
     public static User createUser( DataSnapshot singleSnapshot ){
         User myUser = new User();
         myUser.setEmail((String)((HashMap<String, Object>)singleSnapshot.getValue()).get("email"));
@@ -429,12 +448,18 @@ public class FData {
         return plannedRoute;
     }
 
+    public static PlacePromotion createPlacePromotion( DataSnapshot snapshot ){
+        HashMap<String,Object> hash = (HashMap<String,Object>) snapshot.getValue();
+        return createPlacePromotion( hash );
+    }
+
     public static PlacePromotion createPlacePromotion( HashMap<String,Object> data ){
         PlacePromotion place = new PlacePromotion();
         place.setOrganiza( (String)data.get("organiza") );
         place.setNombre( (String)data.get("nombre") );
         place.setDescripcion( (String)data.get("descripcion") );
-        place.setLugar( (String)data.get("lugar") );
+        place.setLatitud((Double)data.get("latitud") );
+        place.setLongitud((Double)data.get("longitud") );
         Log.i("PLACE PROMOTION", "Place: "+place);
         return place;
     }
