@@ -7,38 +7,24 @@ import java.io.Serializable;
  */
 
 public class Route implements Serializable{
-    private String nombre;
+
     private String origen;
     private String destino;
-    private String hora;
-
     private String fecha;
     private String duracion;
     private String clima;
     private String distancia;
-    private String descripcion;
 
-    public Route(String nombre, String origen, String destino, String hora, String fecha, String duracion, String clima, String distancia, String descripcion) {
-        this.nombre = nombre;
+    public Route(String origen, String destino, String fecha, String duracion, String clima, String distancia) {
         this.origen = origen;
         this.destino = destino;
-        this.hora = hora;
         this.fecha = fecha;
         this.duracion = duracion;
         this.clima = clima;
         this.distancia = distancia;
-        this.descripcion = descripcion;
     }
 
     public Route(){}
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 
     public String getOrigen() {
         return origen;
@@ -54,14 +40,6 @@ public class Route implements Serializable{
 
     public void setDestino(String destino) {
         this.destino = destino;
-    }
-
-    public String getHora() {
-        return hora;
-    }
-
-    public void setHora(String hora) {
-        this.hora = hora;
     }
 
     public String getFecha() {
@@ -96,11 +74,4 @@ public class Route implements Serializable{
         this.distancia = distancia;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 }
