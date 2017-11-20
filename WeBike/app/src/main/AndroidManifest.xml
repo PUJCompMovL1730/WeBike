@@ -66,14 +66,15 @@
         <activity
             android:name=".MailboxActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".TipActivity"></activity>
-        <activity android:name=".logic.weather"></activity>
+        <activity android:name=".TipActivity" />
+        <activity android:name=".logic.weather" />
         <activity android:name=".SelectUserTypeActivity" />
         <activity android:name=".OrgRegisterActivity" />
-        <activity android:name=".OrgEditInfoActivity"></activity>
-        <activity android:name=".AccountDeleteConfirmation"></activity>
+        <activity android:name=".OrgEditInfoActivity" />
+        <activity android:name=".AccountDeleteConfirmation" />
         <activity android:name=".MyGroupsActivity" />
-        <activity android:name=".ubicacion.DisplayRoute"></activity>
+        <activity android:name=".ubicacion.DisplayRoute" />
+        <activity android:name=".ReadMessageActivity"></activity>
     </application>
 
 </manifest>

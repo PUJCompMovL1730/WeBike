@@ -45,12 +45,14 @@ public class HelpButtonActivity extends AppCompatActivity {
             public void onReceiveList(ArrayList<User> data, DatabaseReference reference) {
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 for ( User user : data ){
-                    Message msg = new Message();
-                    msg.setMsg("Solicitud de ayuda por "+currentUser.getEmail()+":" + "Hola solicito el servicio de bicitaller");
-                    msg.setSender( currentUser.getUid() );
-                    msg.setReceiver( user.getKey() );
-                    msg.setSubject("Solicitud de Bicitaller");
-                    FData.postMessage( database , msg);
+                    if( !user.getKey().equals(currentUser.getUid()) ) {
+                        Message msg = new Message();
+                        msg.setMsg("Solicitud de ayuda por " + currentUser.getEmail() + ":" + "Hola solicito el servicio de bicitaller");
+                        msg.setSender(currentUser.getUid());
+                        msg.setReceiver(user.getKey());
+                        msg.setSubject("Solicitud de Bicitaller");
+                        FData.postMessage(database, msg);
+                    }
                 }
                 Utils.shortToast(HelpButtonActivity.this,"Se mando mensaje a los bicitalleres");
             }

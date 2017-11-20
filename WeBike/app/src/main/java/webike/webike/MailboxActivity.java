@@ -3,9 +3,12 @@ package webike.webike;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.ExpandedMenuView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -36,11 +39,13 @@ public class MailboxActivity extends AppCompatActivity {
     private FirebaseAuth fAuth;
     private FirebaseDatabase fData;
 
+    private boolean inbox;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mailbox);
-
+        inbox = true;
         messageList = (ListView) findViewById(R.id.mailbox_list);
         titleTextView = (TextView) findViewById(R.id.mailbox_title);
         searchButton = (ImageButton) findViewById(R.id.search_message_button);
@@ -48,7 +53,29 @@ public class MailboxActivity extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
         fData = FirebaseDatabase.getInstance();
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String buscar = searchText.getText().toString();
+                if( inbox ){
+                    searchInInbox(buscar);
+                }else{
+                    searchInOutbox(buscar);
+                }
+            }
+        });
 
+        messageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MailboxActivity.this,ReadMessageActivity.class);
+                Bundle bundle = new Bundle();
+                Message msg = (Message) parent.getItemAtPosition(position);
+                bundle.putSerializable("msg",msg);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         loadInbox();
     }
 
@@ -71,9 +98,11 @@ public class MailboxActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.inbox_menu_inbox:
+                inbox = true;
                 loadInbox();
                 break;
             case R.id.inbox_menu_outbox:
+                inbox = false;
                 loadOutbox();
                 break;
             default:
@@ -87,7 +116,6 @@ public class MailboxActivity extends AppCompatActivity {
         this.titleTextView.setText("Inbox");
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Log.i("CADSJBVANK", "loadInbox: "+"DLVJHBAKDSNVUHAKJDSBVAKNDBVIANBM");
         FData.getUsers(database, new ListActions<User>() {
             @Override
             public void onReceiveList(ArrayList<User> data, DatabaseReference reference) {
@@ -105,8 +133,15 @@ public class MailboxActivity extends AppCompatActivity {
                                 }
                             }
                         }
-                        MessageAdapter adapter = new MessageAdapter(MailboxActivity.this, data);
-                        messageList.setAdapter(adapter);
+                        if( data.size() == 0){
+                            String[] arr =new String[1];
+                            arr[0] = "<-------No tiene mensajes------->";
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MailboxActivity.this, R.layout.simple_list_item_1, arr);
+                            messageList.setAdapter(adapter);
+                        }else {
+                            MessageAdapter adapter = new MessageAdapter(MailboxActivity.this, data);
+                            messageList.setAdapter(adapter);
+                        }
                     }
 
                     @Override
@@ -144,8 +179,113 @@ public class MailboxActivity extends AppCompatActivity {
                                 }
                             }
                         }
-                        MessageAdapter adapter = new MessageAdapter(MailboxActivity.this, data);
-                        messageList.setAdapter(adapter);
+                        if( data.size() == 0){
+                            String[] arr =new String[1];
+                            arr[0] = "<-------No tiene mensajes------->";
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MailboxActivity.this, R.layout.simple_list_item_1, arr);
+                            messageList.setAdapter(adapter);
+                        }else {
+                            MessageAdapter adapter = new MessageAdapter(MailboxActivity.this, data);
+                            messageList.setAdapter(adapter);
+                        }
+                    }
+
+                    @Override
+                    public void onCancel(DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancel(DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void searchInInbox( final String buscar ){
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FData.getUsers(database, new ListActions<User>() {
+            @Override
+            public void onReceiveList(ArrayList<User> data, DatabaseReference reference) {
+                final ArrayList<User> users = data;
+                FData.getReceivedMessages(database, userID,  new ListActions<Message>() {
+                    @Override
+                    public void onReceiveList(ArrayList<Message> data, DatabaseReference reference) {
+                        ArrayList<Message> filteredMsg = new ArrayList<Message>();
+                        for ( Message msg : data ){
+                            for ( User user : users ){
+                                if( user.getKey().equals( msg.getReceiver() )){
+                                    msg.setReceiver( user.getFirstName() + " <" + user.getEmail()+">" );
+                                }
+                                if( user.getKey().equals( msg.getSender() )){
+                                    msg.setSender( user.getFirstName() + " <" + user.getEmail()+">");
+                                }
+                            }
+                            if( msg.getSender().contains(buscar) || msg.getSubject().contains(buscar) ){
+                                filteredMsg.add(msg);
+                            }
+                        }
+                        if( filteredMsg.size() == 0){
+                            String[] arr =new String[1];
+                            arr[0] = "<-------No tiene mensajes------->";
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MailboxActivity.this, R.layout.simple_list_item_1, arr);
+                            messageList.setAdapter(adapter);
+                        }else {
+                            MessageAdapter adapter = new MessageAdapter(MailboxActivity.this, filteredMsg);
+                            messageList.setAdapter(adapter);
+                        }
+                    }
+
+                    @Override
+                    public void onCancel(DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancel(DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void searchInOutbox( final String buscar ){
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FData.getUsers(database, new ListActions<User>() {
+            @Override
+            public void onReceiveList(ArrayList<User> data, DatabaseReference reference) {
+                final ArrayList<User> users = data;
+                FData.getSentMessages(database, userID,  new ListActions<Message>() {
+                    @Override
+                    public void onReceiveList(ArrayList<Message> data, DatabaseReference reference) {
+                        ArrayList<Message> filteredMsg = new ArrayList<Message>();
+                        for ( Message msg : data ){
+                            for ( User user : users ){
+                                if( user.getKey().equals( msg.getReceiver() )){
+                                    msg.setReceiver( user.getFirstName() + " <" + user.getEmail()+">" );
+                                }
+                                if( user.getKey().equals( msg.getSender() )){
+                                    msg.setSender( user.getFirstName() + " <" + user.getEmail()+">");
+                                }
+                            }
+                            if( msg.getReceiver().contains(buscar) || msg.getSubject().contains(buscar) ){
+                                filteredMsg.add(msg);
+                            }
+                        }
+                        if( filteredMsg.size() == 0){
+                            String[] arr =new String[1];
+                            arr[0] = "<-------No tiene mensajes------->";
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MailboxActivity.this, R.layout.simple_list_item_1, arr);
+                            messageList.setAdapter(adapter);
+                        }else {
+                            MessageAdapter adapter = new MessageAdapter(MailboxActivity.this, filteredMsg);
+                            messageList.setAdapter(adapter);
+                        }
                     }
 
                     @Override
