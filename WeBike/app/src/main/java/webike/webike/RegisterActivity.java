@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -29,6 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     Button submitButton;
 
+    CheckBox bicitallerCheck;
+
     FAuth mAuth;
     FData mData;
 
@@ -44,6 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
         ageEditText = (EditText) findViewById(R.id.reg_age_editText);
 
         genderSpinner = (Spinner) findViewById(R.id.reg_gender_spinner);
+
+        bicitallerCheck = (CheckBox) findViewById(R.id.bicitaller_checkbox);
 
         submitButton = (Button) findViewById(R.id.reg_submit_button);
 
@@ -63,8 +68,8 @@ public class RegisterActivity extends AppCompatActivity {
                 int age = Integer.parseInt(ageEditText.getText().toString());
                 String gender = genderSpinner.getSelectedItem().toString().trim();
                 String email = emailEditText.getText().toString().trim();
-
-                User user = new User( mAuth.getUser().getUid()  ,firstName , lastName , age , gender,email);
+                boolean bicitaller = bicitallerCheck.isChecked();
+                User user = new User( mAuth.getUser().getUid()  ,firstName , lastName , age , gender,email, bicitaller);
 
                 mData.postUser(user);
 

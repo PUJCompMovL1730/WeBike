@@ -496,6 +496,7 @@ public class FData {
         myUser.setFriends( (ArrayList<String>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("friends") );
         myUser.setHistory( (ArrayList<Route>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("history") );
         myUser.setGroups( (ArrayList<String>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("groups") );
+        myUser.setBicitaller( (Boolean) ((HashMap<String, Object>)singleSnapshot.getValue()).get("bicitaller"));
         Mailbox box = new Mailbox();
         if (  ((HashMap<String, Object>) singleSnapshot.getValue()).get("mailbox") != null ) {
             HashMap<String,Object> mailShot = (HashMap<String, Object>) ((HashMap<String, Object>) singleSnapshot.getValue()).get("mailbox");
@@ -511,6 +512,7 @@ public class FData {
             }
         }
         myUser.setMailbox(box);
+        Log.i("CREATE USER", "createUser: "+myUser);
         return myUser;
     }
 

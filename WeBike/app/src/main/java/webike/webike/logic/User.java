@@ -23,11 +23,12 @@ public class User implements Serializable{
     private List<Route> history;
     private List<String> historyPublications;
     private List<String> groups;
+    private boolean bicitaller;
 
     public User() {
     }
 
-    public User(String key, String firstName, String lastName, int age, String gender,String email ) {
+    public User(String key, String firstName, String lastName, int age, String gender,String email , boolean bicitaller) {
         this.key = key;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,6 +40,7 @@ public class User implements Serializable{
         this.historyPublications = new ArrayList<>();
         this.groups = new ArrayList<>();
         this.email=email;
+        this.bicitaller = bicitaller;
     }
 
     public String getEmail() {
@@ -127,6 +129,30 @@ public class User implements Serializable{
         this.groups = groups;
     }
 
+    public void setFriends(List<String> friends) {
+        this.friends = friends;
+    }
+
+    public void setHistory(List<Route> history) {
+        this.history = history;
+    }
+
+    public void setHistoryPublications(List<String> historyPublications) {
+        this.historyPublications = historyPublications;
+    }
+
+    public void setGroups(List<String> groups) {
+        this.groups = groups;
+    }
+
+    public boolean isBicitaller() {
+        return bicitaller;
+    }
+
+    public void setBicitaller(boolean bicitaller) {
+        this.bicitaller = bicitaller;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -141,6 +167,7 @@ public class User implements Serializable{
                 ", history=" + history +
                 ", historyPublications=" + historyPublications +
                 ", groups=" + groups +
+                ", bicitaller=" + bicitaller +
                 '}';
     }
 }

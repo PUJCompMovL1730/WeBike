@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@color/backgroundGray"
     android:layout_margin="20dp"
-    android:padding="25dp">
+    android:padding="15dp">
 
     <EditText
         android:id="@+id/reg_firstName_editText"
@@ -65,7 +65,12 @@
         </Spinner>
     </LinearLayout>
 
-
+    <CheckBox
+        android:id="@+id/bicitaller_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Quieres ser un bicitaller?"
+        android:layout_gravity="center" />
     <Button
         android:id="@+id/reg_submit_button"
         android:layout_width="wrap_content"
