@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context="webike.webike.adaptadores.adapter_special_publication">
+    tools:context="webike.webike.adaptadores.SpecialPublicationAdapter">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,9 +15,9 @@
         android:orientation="horizontal"
         android:paddingBottom="5dp">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bell_24"/>
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/notification_512"/>
         <TextView
             android:id="@+id/nombre_publicacion"
             android:paddingStart="8dp"

@@ -11,14 +11,14 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="30dp">
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/wrench_32"
+            android:src="@drawable/wrench_512"
             android:padding="20dp"
             android:background="@drawable/yellow_circle"
             />
@@ -47,6 +47,7 @@
             android:paddingBottom="20dp"
             android:textSize="20sp"/>
         <Button
+            android:id="@+id/ayuda_button"
             android:layout_width="250dp"
             android:layout_gravity="center"
             android:layout_height="wrap_content"

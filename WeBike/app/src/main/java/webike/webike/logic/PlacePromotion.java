@@ -12,19 +12,21 @@ public class PlacePromotion extends SpecialPublication implements Serializable{
     private String organiza;
     private String lugar;
     private String description;
+    private String key;
     private Double longitud;
     private Double latitud;
 
     public PlacePromotion() {
     }
 
-    public PlacePromotion(String nombre, String organiza, String lugar, Double longitud, Double latitud, String descripcion) {
+    public PlacePromotion(String nombre, String organiza, String lugar, Double longitud, Double latitud, String descripcion, String key) {
         this.nombre = nombre;
         this.organiza = organiza;
         this.lugar = lugar;
         this.longitud = longitud;
         this.latitud = latitud;
         this.description = descripcion;
+        this.key = key;
     }
 
     public String getNombre() {
@@ -63,7 +65,7 @@ public class PlacePromotion extends SpecialPublication implements Serializable{
         return description;
     }
 
-    public void setDescripcion(String descripcion) {
+    public void setDescription(String descripcion) {
         this.description = descripcion;
     }
 
@@ -73,15 +75,24 @@ public class PlacePromotion extends SpecialPublication implements Serializable{
 
     public void setLugar(String lugar) { this.lugar = lugar; }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     @Override
     public String toString() {
         return "PlacePromotion{" +
                 "nombre='" + nombre + '\'' +
                 ", organiza='" + organiza + '\'' +
                 ", lugar='" + lugar + '\'' +
-                ", descripcion='" + description + '\'' +
-                ", latitud='" + latitud + '\'' +
-                ", longitud='" + longitud + '\'' +
+                ", description='" + description + '\'' +
+                ", key='" + key + '\'' +
+                ", longitud=" + longitud +
+                ", latitud=" + latitud +
                 '}';
     }
 }

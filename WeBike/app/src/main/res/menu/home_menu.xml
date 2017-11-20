@@ -19,6 +19,9 @@
         android:id="@+id/go_to_planroute"
         android:title="@string/menu_goto_planroute"/>
     <item
+        android:id="@+id/create_group"
+        android:title="@string/create_group"/>
+    <item
         android:id="@+id/logout_menuItem"
         android:title="@string/home_menu_logout_text"/>
 </menu>

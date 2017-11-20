@@ -3,11 +3,9 @@ package webike.webike;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
@@ -19,78 +17,54 @@ import java.util.ArrayList;
 import webike.webike.logic.Message;
 import webike.webike.logic.User;
 import webike.webike.utils.FData;
-import webike.webike.utils.ListActions;
 import webike.webike.utils.ListFilteredActions;
-import webike.webike.utils.Permisos;
-
-import static android.R.attr.data;
+import webike.webike.utils.Utils;
 
 public class HelpButtonActivity extends AppCompatActivity {
 
-    private class Friend{
-        public String id;
-        public String name;
-        public String email;
-        Friend( String id , String name, String email){
-            this.id = id;
-            this.name = name;
-            this.email = email;
-        }
-    }
-    Button b_panic;
-    FirebaseAuth fAuth;
-    FirebaseDatabase database;
-    ArrayList<Friend> friends;
+    private Button ayudaButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_button);
-    }
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (Permisos.permissionGranted(requestCode, permissions, grantResults)) {
-            locationAction();
-        }
-    }
-
-    private void locationAction() {
-        if (Permisos.checkSelfPermission(this, Permisos.FINE_LOCATION)) {
-            getFriends();
-
-        }
-    }
-    public void getFriends(){
-        FirebaseUser user = fAuth.getCurrentUser();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        FData.getUsers(database, 5, new ListFilteredActions<User, Integer>() {
+        ayudaButton = (Button)findViewById(R.id.ayuda_button);
+        ayudaButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean searchCriteria(User data, Integer filter) {
-                return data.isBicitaller();
+            public void onClick(View v) {
+                sendMessageToTalleres();
             }
+        });
+    }
+
+    public void sendMessageToTalleres(){
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FData.getUsers(database, true , new ListFilteredActions<User, Boolean>() {
 
             @Override
             public void onReceiveList(ArrayList<User> data, DatabaseReference reference) {
-                for ( User user : data ) {
-                    friends.add( new Friend( user.getKey() , user.getFirstName() + " " + user.getLastName() , user.getEmail() ) );
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                for ( User user : data ){
+                    Message msg = new Message();
+                    msg.setMsg("Solicitud de ayuda por "+currentUser.getEmail()+":" + "Hola solicito el servicio de bicitaller");
+                    msg.setSender( currentUser.getUid() );
+                    msg.setReceiver( user.getKey() );
+                    msg.setSubject("Solicitud de Bicitaller");
+                    FData.postMessage( database , msg);
                 }
-                sendMessage();
-                Toast.makeText(getBaseContext(),"Mensaje para bicitalleres enviados enviado.",Toast.LENGTH_SHORT).show();
+                Utils.shortToast(HelpButtonActivity.this,"Se mando mensaje a los bicitalleres");
             }
 
             @Override
             public void onCancel(DatabaseError error) {
+                Utils.shortToast(HelpButtonActivity.this,"Error pidiendo ayuda D:");
+            }
 
+            @Override
+            public boolean searchCriteria(User data, Boolean filter) {
+                return data.isBicitaller();
             }
         });
-    }
-    public void sendMessage(){
-        for (Friend amigo:friends) {
-            String src = this.fAuth.getCurrentUser().getUid();
-            String dst = amigo.id;
-            String subject = "Solicitud bicitaller";
-            String message = "Hola solicito el servicio de bicitaller";
-            Message msg = new Message(message, subject, src, dst);
-            FData.postMessage(database, msg);
-        }
     }
 
 }

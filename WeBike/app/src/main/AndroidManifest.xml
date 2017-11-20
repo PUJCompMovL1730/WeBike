@@ -54,12 +54,21 @@
         <activity
             android:name=".WriteMessageActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".OrgProfileActivity" />
+        <activity android:name=".ubicacion.MapCreateRoute" />
         <activity android:name=".RouteActivity" />
         <activity android:name=".RoutesActivity" />
+        <activity android:name=".AddFriendToGroup" />
+        <activity android:name=".CreatePlacePromotionActivity" />
+        <activity android:name=".CreatePlannedRouteActivity" />
         <activity
             android:name=".MailboxActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".TipActivity"></activity>
         <activity android:name=".logic.weather"></activity>
+        <activity android:name=".SelectUserTypeActivity" />
+        <activity android:name=".OrgRegisterActivity" />
+        <activity android:name=".OrgEditInfoActivity"></activity>
     </application>
 
 </manifest>

@@ -42,9 +42,9 @@ tools:context="webike.webike.AddFriendActivity"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/fin"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/mail_512"
                     android:padding="5dp"/>
 
                 <TextView
@@ -54,24 +54,11 @@ tools:context="webike.webike.AddFriendActivity"
                     android:padding="5dp"
                     android:text="Correo" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/fin" />
-
-                <TextView
-                    android:id="@+id/usr_age"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="Edad" />
-            </LinearLayout>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/wrench_512"
+                />
         </LinearLayout>
     </RelativeLayout>
 
@@ -80,7 +67,7 @@ tools:context="webike.webike.AddFriendActivity"
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#CCE5FF"
+    android:background="@color/backgroundGray"
     android:orientation="vertical"
     android:padding="40dp"
     android:layout_centerVertical="true"
@@ -101,7 +88,7 @@ tools:context="webike.webike.AddFriendActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="#66B2FF"
+        android:background="@color/WeBikeBlue"
         android:padding="10dp"
         android:text="Agregar a mi lista de amigos"
         android:textColor="#ffffff"

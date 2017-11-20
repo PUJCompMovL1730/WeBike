@@ -32,7 +32,6 @@ public class AddFriendActivity extends AppCompatActivity {
 
     private TextView username;
     private TextView email;
-    private TextView age;
     private TextView knowHim;
     private Button addFriend;
     private User friend;
@@ -45,7 +44,6 @@ public class AddFriendActivity extends AppCompatActivity {
 
         username = (TextView) findViewById(R.id.usr_name_inv);
         email = (TextView) findViewById(R.id.email_usr_inv);
-        age = (TextView) findViewById(R.id.usr_age);
         knowHim = (TextView) findViewById(R.id.know_him);
         addFriend = (Button) findViewById(R.id.send_inv_btn);
         addFriend.setVisibility(View.GONE);
@@ -62,7 +60,6 @@ public class AddFriendActivity extends AppCompatActivity {
         Log.i("INFO_DATABASE", "updateView: "+ new_friend.getEmail() );
         username.setText(new_friend.getFirstName() + " " + new_friend.getLastName());
         email.setText(new_friend.getEmail());
-        age.setText( Integer.toString(new_friend.getAge()) + " años");
 
         this.friend = new_friend;
         this.checkUserFriends();

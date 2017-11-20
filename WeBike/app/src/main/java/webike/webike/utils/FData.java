@@ -15,9 +15,11 @@ import java.util.Objects;
 import java.util.logging.Filter;
 
 import webike.webike.logic.AbstractPublication;
+import webike.webike.logic.AbstractUser;
 import webike.webike.logic.Group;
 import webike.webike.logic.Mailbox;
 import webike.webike.logic.Message;
+import webike.webike.logic.OrgUser;
 import webike.webike.logic.PlacePromotion;
 import webike.webike.logic.PlannedRoute;
 import webike.webike.logic.Publicacion;
@@ -29,6 +31,7 @@ public class FData {
 
     private FirebaseDatabase database;
     public final static String PATH_TO_USERS = "/users";
+    public final static String PATH_TO_ORG_USERS = "/org_users";
     public final static String PATH_TO_PUBS  = "/publications";
     public final static String PATH_TO_GROUPS = "/groups";
     public final static String PATH_TO_SPECIAL_PUBS = "/special_publications";
@@ -39,14 +42,15 @@ public class FData {
         this.database = FirebaseDatabase.getInstance();
     }
 
-    public void postUser( User user ){
-        DatabaseReference ref = database.getReference(PATH_TO_USERS + "/" + user.getKey() );
-        ref.setValue(user);
-    }
-
-    public static void postUser( FirebaseDatabase database , User user ){
-        DatabaseReference ref = database.getReference(PATH_TO_USERS + "/" + user.getKey() );
-        ref.setValue(user);
+    public static void postUser( FirebaseDatabase database , AbstractUser user ){
+        if( user instanceof User) {
+            DatabaseReference ref = database.getReference(PATH_TO_USERS + "/" + ((User)user).getKey() );
+            ref.setValue(user);
+        }
+        if( user instanceof OrgUser){
+            DatabaseReference ref = database.getReference(PATH_TO_ORG_USERS + "/" + ((OrgUser)user).getKey() );
+            ref.setValue(user);
+        }
     }
 
     public void postPub( Publicacion p ){
@@ -105,11 +109,30 @@ public class FData {
         ref.setValue( p );
     }
 
+
+    public static void getOrgUserFromId( FirebaseDatabase database , String userId , final SingleValueActions<OrgUser> actions){
+        Log.i("USER ID", "getOrgUserFromId: "+userId);
+        final DatabaseReference ref = database.getReference(FData.PATH_TO_ORG_USERS + "/" + userId );
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                OrgUser myUser = FData.createOrgUser( dataSnapshot );
+                actions.onReceiveSingleValue( myUser , ref );
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                actions.onCancel(databaseError);
+            }
+        });
+    }
+
     public static void getUsers( FirebaseDatabase database , final ListActions<User> actions ){
         final DatabaseReference myRef = database.getReference(FData.PATH_TO_USERS);
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.i("FUUUUUUUUUUUUUUUUUUCK", "onDataChange: "+"ADSJFBVAODVBHAODSJVBAOJDVNOJASDBVOAHBD");
                 ArrayList<User> usuarios = new ArrayList<>();
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     User myUser = FData.createUser( singleSnapshot );
@@ -208,7 +231,7 @@ public class FData {
         });
     }
 
-    public static void getPlannedRoutes( FirebaseDatabase database , final PlannedRoute filter  ,final ListFilteredActions<PlannedRoute,PlannedRoute> actions ){
+    public static<FilterType> void getPlannedRoutes( FirebaseDatabase database , final FilterType filter  ,final ListFilteredActions<PlannedRoute,FilterType> actions ){
         final DatabaseReference ref = database.getReference(FData.PATH_TO_SPECIAL_PUBS);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -224,6 +247,47 @@ public class FData {
                     }
                 }
                 actions.onReceiveList( pubs , ref );
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                actions.onCancel(databaseError);
+            }
+        });
+    }
+
+    public static void getPlacePromotions(FirebaseDatabase database , final ListActions<PlacePromotion> actions){
+        final DatabaseReference ref = database.getReference(FData.PATH_TO_PLACE_PROMOTIONS);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<PlacePromotion> proms = new ArrayList<PlacePromotion>();
+                for( DataSnapshot snap : dataSnapshot.getChildren() ){
+                    proms.add( createPlacePromotion(snap) );
+                }
+                actions.onReceiveList( proms , ref );
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                actions.onCancel(databaseError);
+            }
+        });
+    }
+
+    public static <FilterType> void getPlacePromotions( FirebaseDatabase database , final FilterType filter , final ListFilteredActions<PlacePromotion,FilterType> actions){
+        final DatabaseReference ref = database.getReference(FData.PATH_TO_PLACE_PROMOTIONS);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<PlacePromotion> proms = new ArrayList<PlacePromotion>();
+                for( DataSnapshot single : dataSnapshot.getChildren() ){
+                    PlacePromotion prom = createPlacePromotion(single);
+                    if( actions.searchCriteria(prom , filter) ){
+                        proms.add(prom);
+                    }
+                }
+                actions.onReceiveList( proms , ref );
             }
 
             @Override
@@ -455,21 +519,66 @@ public class FData {
         });
     }
 
-    public static void getPlacePromotions(FirebaseDatabase database , final ListActions<PlacePromotion> actions){
-        final DatabaseReference ref = database.getReference(FData.PATH_TO_PLACE_PROMOTIONS);
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+    public static void getOrgPromotions(final FirebaseDatabase database , String uid , final ListActions<PlacePromotion> actions){
+        getOrgUserFromId(database, uid, new SingleValueActions<OrgUser>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<PlacePromotion> proms = new ArrayList<PlacePromotion>();
-                for( DataSnapshot snap : dataSnapshot.getChildren() ){
-                    proms.add( createPlacePromotion(snap) );
-                }
-                actions.onReceiveList( proms , ref );
+            public void onReceiveSingleValue(OrgUser data, DatabaseReference reference) {
+                getPlacePromotions(database, data, new ListFilteredActions<PlacePromotion, OrgUser>() {
+                    @Override
+                    public boolean searchCriteria(PlacePromotion data, OrgUser filter) {
+                        if( filter.getSpecialPublication() == null ){
+                            return false;
+                        }
+                        return filter.getSpecialPublication().contains( data.getKey() );
+                    }
+
+                    @Override
+                    public void onReceiveList(ArrayList<PlacePromotion> data, DatabaseReference reference) {
+                        actions.onReceiveList(data,reference);
+                    }
+
+                    @Override
+                    public void onCancel(DatabaseError error) {
+                        actions.onCancel(error);
+                    }
+                });
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                actions.onCancel(databaseError);
+            public void onCancel(DatabaseError error) {
+                actions.onCancel(error);
+            }
+        });
+    }
+
+    public static void getOrgPlannedRoutes( final FirebaseDatabase database , String uid , final ListActions<PlannedRoute> actions){
+        getOrgUserFromId(database, uid, new SingleValueActions<OrgUser>() {
+            @Override
+            public void onReceiveSingleValue(OrgUser data, DatabaseReference reference) {
+                getPlannedRoutes(database, data, new ListFilteredActions<PlannedRoute, OrgUser>() {
+                    @Override
+                    public boolean searchCriteria(PlannedRoute data, OrgUser filter) {
+                        if( filter.getSpecialPublication() == null ){
+                            return false;
+                        }
+                        return filter.getSpecialPublication().contains(data.getKey());
+                    }
+
+                    @Override
+                    public void onReceiveList(ArrayList<PlannedRoute> data, DatabaseReference reference) {
+                        actions.onReceiveList(data,reference);
+                    }
+
+                    @Override
+                    public void onCancel(DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancel(DatabaseError error) {
+                actions.onCancel(error);
             }
         });
     }
@@ -506,15 +615,17 @@ public class FData {
 
     public static User createUser( DataSnapshot singleSnapshot ){
         User myUser = new User();
+        Log.i("CREATE USER", String.valueOf(((HashMap<String, Object>)singleSnapshot.getValue())));
         myUser.setEmail((String)((HashMap<String, Object>)singleSnapshot.getValue()).get("email"));
         myUser.setFirstName( (String)((HashMap<String, Object>)singleSnapshot.getValue()).get("firstName") );
         myUser.setLastName( (String)((HashMap<String, Object>)singleSnapshot.getValue()).get("lastName") );
         myUser.setGender( (String)((HashMap<String, Object>)singleSnapshot.getValue()).get("gender") );
         myUser.setKey( (String)((HashMap<String, Object>)singleSnapshot.getValue()).get("key") );
-        myUser.setAge( ((Long)((HashMap<String, Object>)singleSnapshot.getValue()).get("age") ).intValue() );
+        myUser.setAge( ( ((Long)((HashMap<String, Object>)singleSnapshot.getValue()).get("age") ) ).toString());
         myUser.setFriends( (ArrayList<String>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("friends") );
         myUser.setHistory( (ArrayList<Route>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("history") );
         myUser.setGroups( (ArrayList<String>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("groups") );
+        myUser.setBicitaller( (Boolean) ((HashMap<String, Object>)singleSnapshot.getValue()).get("bicitaller"));
         Mailbox box = new Mailbox();
         if (  ((HashMap<String, Object>) singleSnapshot.getValue()).get("mailbox") != null ) {
             HashMap<String,Object> mailShot = (HashMap<String, Object>) ((HashMap<String, Object>) singleSnapshot.getValue()).get("mailbox");
@@ -546,6 +657,7 @@ public class FData {
             }
         }
         myUser.setMailbox(box);
+        Log.i("CREATE USER", "createUser: "+myUser);
         return myUser;
     }
 
@@ -574,6 +686,10 @@ public class FData {
         return msgs;
     }
 
+    public static PlannedRoute createPlannedRoute( DataSnapshot snap ){
+        HashMap<String,Object> hash = (HashMap<String, Object>) snap.getValue();
+        return FData.createPlannedRoute(hash);
+    }
 
     public static PlannedRoute createPlannedRoute( HashMap<String,Object> data ){
         PlannedRoute plannedRoute = new PlannedRoute();
@@ -597,7 +713,8 @@ public class FData {
         PlacePromotion place = new PlacePromotion();
         place.setOrganiza( (String)data.get("organiza") );
         place.setNombre( (String)data.get("nombre") );
-        place.setDescripcion( (String)data.get("descripcion") );
+        place.setDescription( (String)data.get("descripcion") );
+        place.setKey( (String)data.get("key"));
         place.setLatitud((Double)data.get("latitud") );
         place.setLongitud((Double)data.get("longitud") );
         Log.i("PLACE PROMOTION", "Place: "+place);
@@ -609,7 +726,7 @@ public class FData {
         return createRoute( hash );
     }
 
-    public static  Route createRoute( HashMap<String,Object> hash ){
+    public static Route createRoute( HashMap<String,Object> hash ){
         Route route = new Route();
         route.setClima( (String) hash.get("clima") );
         route.setDistancia( (String) hash.get("distancia") );
@@ -635,5 +752,27 @@ public class FData {
         g.setStart( (String) hash.get("start") );
         g.setTime( (Long) hash.get("time") );
         return g;
+    }
+
+    public static OrgUser createOrgUser( DataSnapshot dataSnapshot){
+        HashMap<String,Object> hash = (HashMap<String, Object>) dataSnapshot.getValue();
+        return createOrgUser(hash);
+    }
+
+    public static OrgUser createOrgUser( HashMap<String,Object> hash ){
+        OrgUser user = new OrgUser();
+
+        user.setKey("key");
+        user.setName("name");
+        user.setLocation("here");
+        user.setEmail("no@email.com");
+        user.setSpecialPublication( new ArrayList<String>() );
+
+        user.setKey( (String) hash.get("key") );
+        user.setName( (String) hash.get("name") );
+        user.setLocation( (String) hash.get("location") );
+        user.setEmail( (String) hash.get("email") );
+        user.setSpecialPublication( (ArrayList<String>) hash.get("specialPublication") );
+        return user;
     }
 }
