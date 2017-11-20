@@ -28,7 +28,7 @@ public class User extends AbstractUser implements Serializable{
     public User() {
     }
 
-    public User(String key, String firstName, String lastName, int age, String gender,String email,boolean bicitaller ) {
+    public User(String key, String firstName, String lastName, String age, String gender,String email,boolean bicitaller ) {
         this.key = key;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -126,22 +126,6 @@ public class User extends AbstractUser implements Serializable{
     }
 
     public void setGroups(ArrayList<String> groups) {
-        this.groups = groups;
-    }
-
-    public void setFriends(List<String> friends) {
-        this.friends = friends;
-    }
-
-    public void setHistory(List<Route> history) {
-        this.history = history;
-    }
-
-    public void setHistoryPublications(List<String> historyPublications) {
-        this.historyPublications = historyPublications;
-    }
-
-    public void setGroups(List<String> groups) {
         this.groups = groups;
     }
 
