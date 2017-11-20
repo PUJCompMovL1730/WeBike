@@ -37,10 +37,10 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_weight="0.2"
-                    app:srcCompat="@drawable/inicio" />
+                    app:srcCompat="@drawable/start_512" />
 
                 <TextView
                     android:id="@+id/route_start_list"
@@ -57,10 +57,10 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_weight="0.2"
-                    app:srcCompat="@drawable/fin" />
+                    app:srcCompat="@drawable/finish_512" />
 
                 <TextView
                     android:id="@+id/route_end_list"

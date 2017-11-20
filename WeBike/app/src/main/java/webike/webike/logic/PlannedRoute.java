@@ -15,6 +15,7 @@ public class PlannedRoute extends  SpecialPublication implements Serializable{
     private String fecha;
     private String descripcion;
     private String key;
+    private String url;
 
     public PlannedRoute(){
     }
@@ -84,6 +85,10 @@ public class PlannedRoute extends  SpecialPublication implements Serializable{
     public void setKey(String key) {
         this.key = key;
     }
+
+    public String getUrl() {return url;}
+
+    public void setUrl(String url) {this.url = url;}
 
     @Override
     public String toString() {

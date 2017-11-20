@@ -47,7 +47,6 @@ public class Group implements Serializable {
     public Group() {
 
     }
-    public Group() {}
 
     public String getKey() {
         return key;

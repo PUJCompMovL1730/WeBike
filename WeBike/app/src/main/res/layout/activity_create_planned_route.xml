@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:background="@color/backgroundGray"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
+
         android:paddingEnd="20dp"
         android:paddingStart="20dp">
 
@@ -97,17 +97,38 @@
             android:text="Descripción"
             android:textColor="@color/hint" />
 
-        <Button
-            android:id="@+id/b_promocionar"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@color/WeBikeBlue"
-            android:paddingEnd="30dp"
-            android:paddingStart="30dp"
-            android:text="Promocionar recorrido"
-            android:textColor="@color/WeBikeWhite" />
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/b_mapa"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@color/WeBikeBlue"
+                android:paddingEnd="30dp"
+                android:paddingStart="30dp"
+                android:text="Ver mapa"
+                android:textColor="@color/WeBikeWhite" />
+            <Button
+                android:id="@+id/b_promocionar"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/WeBikeBlue"
+                android:paddingEnd="30dp"
+                android:paddingStart="30dp"
+                android:text="Promocionar"
+                android:textColor="@color/WeBikeWhite" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
