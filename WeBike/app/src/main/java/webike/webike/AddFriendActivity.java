@@ -116,7 +116,6 @@ public class AddFriendActivity extends AppCompatActivity {
     public void addFriendToCurrentUser(){
 
         FData.getUserFromId(mData, mAuth.getCurrentUser().getUid(), new SingleValueActions<User>() {
-
             public void onReceiveSingleValue(User data , DatabaseReference reference) {
                 List<String> friends = data.getFriends();
                 if( friends == null )

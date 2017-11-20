@@ -50,6 +50,8 @@
         <activity android:name=".ubicacion.Map" />
         <activity android:name=".AddFriendActivity" />
         <activity android:name=".ConfigActivity" />
+        <activity android:name=".ViewProfileActivity" />
+        <activity android:name=".ConfigProfileActivity" />
         <activity android:name=".ManualActivity" />
         <activity
             android:name=".WriteMessageActivity"
@@ -69,6 +71,7 @@
         <activity android:name=".SelectUserTypeActivity" />
         <activity android:name=".OrgRegisterActivity" />
         <activity android:name=".OrgEditInfoActivity"></activity>
+        <activity android:name=".AccountDeleteConfirmation"></activity>
     </application>
 
 </manifest>

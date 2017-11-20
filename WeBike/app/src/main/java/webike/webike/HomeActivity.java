@@ -1,3 +1,4 @@
+
 package webike.webike;
 
 import android.app.AlertDialog;
@@ -135,6 +136,11 @@ public class HomeActivity extends AppCompatActivity {
         switch(itemClicked) {
             case R.id.publicaciones_menuItem:
                 intent = new Intent(HomeActivity.this, PublicationsActivity.class);
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity( intent );
+                break;
+            case R.id.profile_menuItem:
+                intent = new Intent(HomeActivity.this, ViewProfileActivity.class);
                 intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
                 startActivity( intent );
                 break;
