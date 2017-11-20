@@ -12,11 +12,14 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import webike.webike.logic.AbstractUser;
 import webike.webike.logic.OrgUser;
@@ -54,23 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i("LOGIN:"," User successfully signed in.");
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                Log.i("Userid", "onSignIn: "+id);
-                FData.findUser(database, id , new SingleValueActions<AbstractUser>(){
-                    @Override
-                    public void onReceiveSingleValue(AbstractUser data, DatabaseReference reference) {
-                        if(data instanceof User){
-                            startActivity(new Intent( LoginActivity.this , HomeActivity.class ));
-                        }
-                        if(data instanceof OrgUser){
-                            startActivity(new Intent( LoginActivity.this , OrgProfileActivity.class ));
-                        }
-                    }
-
-                    @Override
-                    public void onCancel(DatabaseError error) {
-
-                    }
-                });
+                LoginActivity.this.getUser(id);
             }
 
             @Override
@@ -116,21 +103,7 @@ public class LoginActivity extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
             Log.i("Userid", "onStart: "+id);
-            FData.findUser(database, id , new SingleValueActions<AbstractUser>(){
-                @Override
-                public void onReceiveSingleValue(AbstractUser data, DatabaseReference reference) {
-                    if(data instanceof User){
-                        startActivity(new Intent( LoginActivity.this , HomeActivity.class ));
-                    }
-                    if(data instanceof OrgUser){
-                        startActivity(new Intent( LoginActivity.this , OrgProfileActivity.class ));
-                    }
-                }
-                @Override
-                public void onCancel(DatabaseError error) {
-                    Utils.shortToast(LoginActivity.this,"ERROR");
-                }
-            });
+            getUser(id);
         }
     }
 
@@ -143,5 +116,34 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mAuth.onStop();
+    }
+
+    public void getUser( final String id ){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference refToUsers = database.getReference(FData.PATH_TO_USERS);
+        refToUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HashMap<String,Object> hash = (HashMap<String, Object>) dataSnapshot.getValue();
+                ArrayList<String> keys = new ArrayList<String>(hash.keySet());
+                boolean isOrg = true;
+                for( String key : keys ){
+                    if( key.equals(id) ){
+                        isOrg = false;
+                        Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                        startActivity(intent);
+                    }
+                }
+                if( isOrg ) {
+                    Intent intent = new Intent(LoginActivity.this, OrgProfileActivity.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

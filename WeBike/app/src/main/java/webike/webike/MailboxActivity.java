@@ -82,6 +82,7 @@ public class MailboxActivity extends AppCompatActivity {
         this.titleTextView.setText("Inbox");
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.i("CADSJBVANK", "loadInbox: "+"DLVJHBAKDSNVUHAKJDSBVAKNDBVIANBM");
         FData.getUsers(database, new ListActions<User>() {
             @Override
             public void onReceiveList(ArrayList<User> data, DatabaseReference reference) {

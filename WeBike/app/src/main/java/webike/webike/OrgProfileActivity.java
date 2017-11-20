@@ -97,7 +97,7 @@ public class OrgProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.user_menu, menu);
+        getMenuInflater().inflate(R.menu.home_org_menu, menu);
         return true;
     }
     @Override
@@ -107,6 +107,12 @@ public class OrgProfileActivity extends AppCompatActivity {
         switch(itemClicked) {
             case R.id.config_menuItem:
                 intent = new Intent(OrgProfileActivity.this, ConfigActivity.class);
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity( intent );
+                break;
+            case R.id.logout_menuItem:
+                mAuth.signOut();
+                intent = new Intent(OrgProfileActivity.this, LoginActivity.class);
                 intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
                 startActivity( intent );
                 break;

@@ -109,37 +109,9 @@ public class FData {
         ref.setValue( p );
     }
 
-    public static void findUser(final FirebaseDatabase database , final String userId , final SingleValueActions<AbstractUser> actions){
-        final DatabaseReference ref = database.getReference(FData.PATH_TO_USERS);
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                AbstractUser myUser = createUser(dataSnapshot);
-                if( ((User) myUser).getKey() == null ){
-                    getOrgUserFromId(database, userId, new SingleValueActions<OrgUser>() {
-                        @Override
-                        public void onReceiveSingleValue(OrgUser data, DatabaseReference reference) {
-                            actions.onReceiveSingleValue(data,reference);
-                        }
-
-                        @Override
-                        public void onCancel(DatabaseError error) {
-                            actions.onCancel(error);
-                        }
-                    });
-                }else{
-                    actions.onReceiveSingleValue( myUser , ref);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                actions.onCancel(databaseError);
-            }
-        });
-    }
 
     public static void getOrgUserFromId( FirebaseDatabase database , String userId , final SingleValueActions<OrgUser> actions){
+        Log.i("USER ID", "getOrgUserFromId: "+userId);
         final DatabaseReference ref = database.getReference(FData.PATH_TO_ORG_USERS + "/" + userId );
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -160,6 +132,7 @@ public class FData {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.i("FUUUUUUUUUUUUUUUUUUCK", "onDataChange: "+"ADSJFBVAODVBHAODSJVBAOJDVNOJASDBVOAHBD");
                 ArrayList<User> usuarios = new ArrayList<>();
                 for(DataSnapshot singleSnapshot: dataSnapshot.getChildren()){
                     User myUser = FData.createUser( singleSnapshot );
@@ -553,6 +526,9 @@ public class FData {
                 getPlacePromotions(database, data, new ListFilteredActions<PlacePromotion, OrgUser>() {
                     @Override
                     public boolean searchCriteria(PlacePromotion data, OrgUser filter) {
+                        if( filter.getSpecialPublication() == null ){
+                            return false;
+                        }
                         return filter.getSpecialPublication().contains( data.getKey() );
                     }
 
@@ -582,6 +558,9 @@ public class FData {
                 getPlannedRoutes(database, data, new ListFilteredActions<PlannedRoute, OrgUser>() {
                     @Override
                     public boolean searchCriteria(PlannedRoute data, OrgUser filter) {
+                        if( filter.getSpecialPublication() == null ){
+                            return false;
+                        }
                         return filter.getSpecialPublication().contains(data.getKey());
                     }
 
@@ -642,7 +621,7 @@ public class FData {
         myUser.setLastName( (String)((HashMap<String, Object>)singleSnapshot.getValue()).get("lastName") );
         myUser.setGender( (String)((HashMap<String, Object>)singleSnapshot.getValue()).get("gender") );
         myUser.setKey( (String)((HashMap<String, Object>)singleSnapshot.getValue()).get("key") );
-        myUser.setAge( ((String)((HashMap<String, Object>)singleSnapshot.getValue()).get("age") ));
+        myUser.setAge( ( ((Long)((HashMap<String, Object>)singleSnapshot.getValue()).get("age") ) ).toString());
         myUser.setFriends( (ArrayList<String>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("friends") );
         myUser.setHistory( (ArrayList<Route>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("history") );
         myUser.setGroups( (ArrayList<String>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("groups") );
@@ -764,6 +743,13 @@ public class FData {
 
     public static OrgUser createOrgUser( HashMap<String,Object> hash ){
         OrgUser user = new OrgUser();
+
+        user.setKey("key");
+        user.setName("name");
+        user.setLocation("here");
+        user.setEmail("no@email.com");
+        user.setSpecialPublication( new ArrayList<String>() );
+
         user.setKey( (String) hash.get("key") );
         user.setName( (String) hash.get("name") );
         user.setLocation( (String) hash.get("location") );
