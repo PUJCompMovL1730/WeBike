@@ -49,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button b_panic;
     private ImageView b_help;
     private ImageView b_manual;
+    private ImageView b_weather;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
         b_panic = (Button) findViewById(R.id.panic);
         b_help = (ImageView) findViewById(R.id.help);
         b_manual = (ImageView) findViewById(R.id.manual);
+        b_weather = (ImageView) findViewById(R.id.imageButton);
 
         b_panic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
         b_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, Weather.class);
+                Intent intent = new Intent(HomeActivity.this, HelpButtonActivity.class);
                 startActivity(intent);
             }
         });
@@ -83,7 +85,13 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        b_weather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, Weather.class);
+                startActivity(intent);
+            }
+        });
         homeList = (ListView) findViewById(R.id.home_list);
 
         homeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

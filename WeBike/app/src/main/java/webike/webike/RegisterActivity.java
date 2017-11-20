@@ -63,7 +63,6 @@ public class RegisterActivity extends AppCompatActivity {
                 int age = Integer.parseInt(ageEditText.getText().toString());
                 String gender = genderSpinner.getSelectedItem().toString().trim();
                 String email = emailEditText.getText().toString().trim();
-
                 User user = new User( mAuth.getUser().getUid()  ,firstName , lastName , age , gender,email);
 
                 mData.postUser(user);

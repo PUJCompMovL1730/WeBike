@@ -80,6 +80,20 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/clouds_32" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:orientation="horizontal">
@@ -122,6 +136,7 @@
                 android:layout_weight="0.5"
                 android:src="@drawable/notebook_64"
                 android:background="@android:color/transparent"/>
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

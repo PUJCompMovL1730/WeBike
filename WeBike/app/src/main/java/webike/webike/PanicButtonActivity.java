@@ -86,7 +86,7 @@ public class PanicButtonActivity extends AppCompatActivity {
                     friends.add( new Friend( user.getKey() , user.getFirstName() + " " + user.getLastName() , user.getEmail() ) );
                 }
                 sendMessage();
-                Toast.makeText(getBaseContext(),"Mensaje de panico enviado.... que la suerte este de tu lado",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),"Mensaje de panico enviado.",Toast.LENGTH_SHORT).show();
             }
 
             @Override
