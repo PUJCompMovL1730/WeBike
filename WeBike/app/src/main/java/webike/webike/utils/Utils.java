@@ -8,15 +8,15 @@ import android.widget.Toast;
  */
 
 public class Utils {
-    static void shortToast(Activity activity , String text ){
+    public static void shortToast(Activity activity, String text){
         anyToast(activity , text , Toast.LENGTH_SHORT);
     }
 
-    static void longToast(Activity activity , String text){
+    public void longToast(Activity activity , String text){
         anyToast(activity , text , Toast.LENGTH_LONG);
     }
 
-    static void anyToast(Activity activity , String text , int duration){
+    public static void anyToast(Activity activity, String text, int duration){
         Toast.makeText(activity.getBaseContext() , text , duration).show();
     }
 }

@@ -55,7 +55,10 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".RouteActivity" />
         <activity android:name=".RoutesActivity" />
-        <activity android:name=".MailboxActivity" android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".MailboxActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".TipActivity"></activity>
     </application>
 
 </manifest>

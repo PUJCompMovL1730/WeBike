@@ -48,4 +48,37 @@
         <item>Otro</item>
     </string-array>
     <string name="title_activity_maps">Map</string>
+
+    <string-array name="manual_titles_array">
+        <item>Las vías</item>
+        <item>La vestimenta</item>
+        <item>Los viajes en grupo</item>
+        <item>Seguridad</item>
+        <item>Señales de transito</item>
+        <item>Sobrepasar</item>
+        <item>El casco</item>
+        <item>En horas nocturnas</item>
+    </string-array>
+
+    <string-array name="manual_array">
+        <item>Transita por la derecha de las vías a distancia no mayor de un metro de la acera u orilla y nunca utilices las vías exclusivas para servicio público colectivo.</item>
+        <item>Viste chalecos o chaquetas reflectivas de identificación visibles.</item>
+        <item>Los conductores que transiten en grupo lo harán uno detrás de otro.</item>
+        <item>No debes sujetarte de otro vehículo o viajar cerca de otro carruaje de mayor tamaño que te oculte de la vista de los conductores que transiten en sentido contrario.</item>
+        <item>Debes respetar las señales, normas de tránsito y límites de velocidad.</item>
+        <item>Siempre utilza el carril libre a la izquierda del vehículo por sobrepasar.</item>
+        <item>Conductores y acompañantes deberán utilizar casco de seguridad. La no utilización del mismo dará lugar a la inmovilización del vehículo.</item>
+        <item>Cuando circules en horas nocturnas, debes llevar dispositivos en la parte delantera que proyecten luz blanca, y en la parte trasera, que emitan luz roja.</item>
+    </string-array>
+
+
+    <string name="td1">Transita por la derecha de las vías a distancia no mayor de un metro de la acera u orilla y nunca utilices las vías exclusivas para servicio público colectivo.</string>
+    <string name="td2">Viste chalecos o chaquetas reflectivas de identificación visibles.</string>
+    <string name="td3">Los conductores que transiten en grupo lo harán uno detrás de otro.</string>
+    <string name="td4">No debes sujetarte de otro vehículo o viajar cerca de otro carruaje de mayor tamaño que te oculte de la vista de los conductores que transiten en sentido contrario.</string>
+    <string name="td5">Debes respetar las señales, normas de tránsito y límites de velocidad.</string>
+    <string name="td6">Siempre utilza el carril libre a la izquierda del vehículo por sobrepasar.</string>
+    <string name="td7">Conductores y acompañantes deberán utilizar casco de seguridad. La no utilización del mismo dará lugar a la inmovilización del vehículo.</string>
+    <string name="td8">Cuando circules en horas nocturnas, debes llevar dispositivos en la parte delantera que proyecten luz blanca, y en la parte trasera, que emitan luz roja.</string>
+
 </resources>
