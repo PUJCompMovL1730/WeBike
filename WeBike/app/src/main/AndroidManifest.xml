@@ -32,6 +32,7 @@
         <activity android:name=".HelpButtonActivity" />
         <activity android:name=".PanicButtonActivity" />
         <activity android:name=".PlaceActivity" />
+        <activity android:name=".logic.Weather" />
         <activity android:name=".PlannedRouteActivity" />
         <activity
             android:name=".PublicationsActivity"
@@ -55,7 +56,10 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".RouteActivity" />
         <activity android:name=".RoutesActivity" />
-        <activity android:name=".MailboxActivity" android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".MailboxActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".logic.weather"></activity>
     </application>
 
 </manifest>

@@ -28,6 +28,8 @@ import webike.webike.logic.Message;
 import webike.webike.logic.PlacePromotion;
 import webike.webike.logic.PlannedRoute;
 import webike.webike.logic.Publicacion;
+
+import webike.webike.logic.Weather;
 import webike.webike.ubicacion.Map;
 import webike.webike.utils.FData;
 import webike.webike.utils.ListActions;
@@ -70,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
         b_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, HelpButtonActivity.class);
+                Intent intent = new Intent(HomeActivity.this, Weather.class);
                 startActivity(intent);
             }
         });
