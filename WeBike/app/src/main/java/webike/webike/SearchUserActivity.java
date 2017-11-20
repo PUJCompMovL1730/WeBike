@@ -11,12 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import webike.webike.adaptadores.UserArrayAdapter;
 import webike.webike.logic.User;
@@ -24,6 +26,7 @@ import webike.webike.utils.FAuth;
 import webike.webike.utils.FData;
 import webike.webike.utils.ListActions;
 import webike.webike.utils.ListFilteredActions;
+import webike.webike.utils.SingleValueActions;
 
 public class SearchUserActivity extends AppCompatActivity {
 
@@ -57,7 +60,9 @@ public class SearchUserActivity extends AppCompatActivity {
 
         resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                /*if()//TODO check if its friend)
+                isFriend(results.get(i));
+
+               /* if(isFriend(results.get(i)))
                 {
                     Intent myIntent = new Intent(SearchUserActivity.this, InviteGroupActivity.class);
                     Bundle bundle = new Bundle();
@@ -68,13 +73,13 @@ public class SearchUserActivity extends AppCompatActivity {
                 }
                 else
                 {*/
-                Intent myIntent = new Intent(SearchUserActivity.this, AddFriendActivity.class);
+               /* Intent myIntent = new Intent(SearchUserActivity.this, AddFriendActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("user", results.get(i));
                 myIntent.putExtras(bundle);
                 Log.i("INFO_DATABASE", "updateView: " + results.get(i).getEmail());
                 startActivity(myIntent);
-                //}
+                //}*/
             }
         });
     }
@@ -96,7 +101,35 @@ public class SearchUserActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    public void isFriend(final User u) {
+        FData.getUserFromId(database, mAuth.getUser().getUid(), new SingleValueActions<User>() {
+
+            @Override
+            public void onReceiveSingleValue(User data, DatabaseReference reference) {
+                List<String> s = data.getFriends();
+                if (s.contains(u.getKey())) {
+                    Intent myIntent = new Intent(SearchUserActivity.this, AddFriendToGroup.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user", u);
+                    myIntent.putExtras(bundle);
+                    startActivity(myIntent);
+                } else {
+                    Intent myIntent = new Intent(SearchUserActivity.this, AddFriendActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user", u);
+                    myIntent.putExtras(bundle);
+                    Log.i("INFO_DATABASE", "updateView: " + u.getEmail());
+                    startActivity(myIntent);
+                }
+            }
+
+            @Override
+            public void onCancel(DatabaseError error) {
+
+            }
+        });
     }
 
     @Override

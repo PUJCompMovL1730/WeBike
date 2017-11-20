@@ -90,11 +90,17 @@ public class FData {
         dRef.setValue(msg);
     }
 
-    public void postGroup( Group g ){
+    public static void postGroup( FirebaseDatabase database , Group g ){
         DatabaseReference sRef = database.getReference(PATH_TO_GROUPS );
         String srcKey = sRef.push().getKey();
 
         DatabaseReference ref = database.getReference(PATH_TO_GROUPS + "/" + srcKey );
+        ref.setValue(g);
+        g.setKey(srcKey);
+    }
+
+    public static void postGroups( FirebaseDatabase database , Group g ){
+        DatabaseReference ref = database.getReference(PATH_TO_GROUPS + "/" + g.getKey() );
         ref.setValue(g);
     }
 
@@ -519,12 +525,28 @@ public class FData {
         if (  ((HashMap<String, Object>) singleSnapshot.getValue()).get("mailbox") != null ) {
             HashMap<String,Object> mailShot = (HashMap<String, Object>) ((HashMap<String, Object>) singleSnapshot.getValue()).get("mailbox");
             if ( mailShot.get("received") != null ) {
-                box.setReceived(createMessageList((HashMap<String, Object>) mailShot.get("received")));
+                try
+                {
+                    box.setReceived(createMessageList((HashMap<String, Object>) mailShot.get("received")));
+                }
+                catch ( Exception e)
+                {
+                    Log.i("EXCEPTION", "createUser: "+e);
+                    box.setReceived( (ArrayList<Message>) mailShot.get("received"));
+                }
             }else{
                 box.setReceived( new ArrayList<Message>() );
             }
             if ( mailShot.get("sent") != null ) {
-                box.setSent(createMessageList((HashMap<String, Object>) mailShot.get("sent")));
+                try
+                {
+                    box.setSent(createMessageList((HashMap<String, Object>) mailShot.get("sent")));
+                }
+                catch ( Exception e)
+                {
+                    Log.i("EXCEPTION", "createUser: "+e);
+                    box.setReceived( (ArrayList<Message>) mailShot.get("sent"));
+                }
             }else{
                 box.setSent( new ArrayList<Message>() );
             }
@@ -618,6 +640,7 @@ public class FData {
         g.setName( (String) hash.get("name") );
         g.setStart( (String) hash.get("start") );
         g.setTime( (Long) hash.get("time") );
+        g.setRoute((String) hash.get(""));
         return g;
     }
 }

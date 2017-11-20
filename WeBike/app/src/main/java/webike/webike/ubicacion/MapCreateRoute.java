@@ -24,12 +24,18 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 import webike.webike.CreateGroupActivity;
 import webike.webike.HomeActivity;
 import webike.webike.R;
+import webike.webike.logic.PlacePromotion;
+import webike.webike.utils.FData;
+import webike.webike.utils.ListActions;
 import webike.webike.utils.Permisos;
 
 public class MapCreateRoute extends AppCompatActivity implements OnMapReadyCallback, PlaceSelectionListener {
@@ -53,6 +59,25 @@ public class MapCreateRoute extends AppCompatActivity implements OnMapReadyCallb
         cancel = (Button) findViewById(R.id.btn_cancel);
         dist = (TextView) findViewById(R.id.distance_route_map);
         route_name = (EditText) findViewById(R.id.route_name);
+
+        FData.getPlacePromotions(FirebaseDatabase.getInstance(), new ListActions<PlacePromotion>() {
+            @Override
+
+            public void onReceiveList(ArrayList<PlacePromotion> data, DatabaseReference reference) {
+                for(PlacePromotion lugar:data) {
+                    mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(lugar.getLatitud(),lugar.getLongitud()))
+                            .title(lugar.getNombre())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.star_res))
+                            .snippet(lugar.getDescription()));
+                }
+            }
+
+            @Override
+            public void onCancel(DatabaseError error) {
+
+            }
+        });
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_GR);
         mapFragment.getMapAsync(this);
@@ -140,8 +165,27 @@ public class MapCreateRoute extends AppCompatActivity implements OnMapReadyCallb
     private void markerLogic(LatLng latLng)
     {
         if (markerPoints.size() > 1) {
-            markerPoints.clear();
+            markerPoints.remove(markerPoints.size()-1);
+            markerPoints.remove(markerPoints.size()-1);
             mMap.clear();
+            FData.getPlacePromotions(FirebaseDatabase.getInstance(), new ListActions<PlacePromotion>() {
+                @Override
+
+                public void onReceiveList(ArrayList<PlacePromotion> data, DatabaseReference reference) {
+                    for(PlacePromotion lugar:data) {
+                        mMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(lugar.getLatitud(),lugar.getLongitud()))
+                                .title(lugar.getNombre())
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.star_res))
+                                .snippet(lugar.getDescription()));
+                    }
+                }
+
+                @Override
+                public void onCancel(DatabaseError error) {
+
+                }
+            });
         }
         markerPoints.add(latLng);
         MarkerOptions options = new MarkerOptions();
