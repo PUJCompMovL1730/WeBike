@@ -55,6 +55,7 @@ tools:context="webike.webike.AddFriendActivity"
                     android:text="Correo" />
             </LinearLayout>
             <ImageView
+                android:id="@+id/image_biciTaller"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/wrench_512"

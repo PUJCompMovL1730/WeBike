@@ -1,12 +1,17 @@
 package webike.webike;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,9 +42,9 @@ public class ViewProfileActivity extends AppCompatActivity {
     private ListView groupList;
     private TextView username;
     private TextView email;
-    private Button config;
-    private Button group;
+    private ImageButton group;
     private Button route;
+    private ImageView biciTaller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,18 +53,10 @@ public class ViewProfileActivity extends AppCompatActivity {
         friendList = (ListView)findViewById(R.id.list_amigos);
         groupList = (ListView)findViewById(R.id.list_grupos);
         username = (TextView)findViewById(R.id.user_name);
-        config = (Button)findViewById(R.id.user_config);
-        group = (Button)findViewById(R.id.button_group);
+        group = (ImageButton) findViewById(R.id.button_group);
         route = (Button)findViewById(R.id.button_recorr);
         email = (TextView) findViewById(R.id.user_mail);
-
-        config.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ViewProfileActivity.this, ConfigActivity.class);
-                startActivity(intent);
-            }
-        });
+        biciTaller = (ImageView) findViewById(R.id.image_biciTaller);
 
         group.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +118,27 @@ public class ViewProfileActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.user_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemClicked = item.getItemId();
+        Intent intent;
+        switch(itemClicked) {
+            case R.id.config_menuItem:
+                intent = new Intent(ViewProfileActivity.this, ConfigActivity.class);
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity( intent );
+                break;
+            default : // Optional
+                // Statements
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void updateAdap(ArrayList<User> usrs) {
         Log.i("INFO_DATABASE", "updateView: "+ usrs.toString() );
         UserArrayAdapter adapter = new UserArrayAdapter(this, usrs);
@@ -142,8 +160,10 @@ public class ViewProfileActivity extends AppCompatActivity {
             public void onReceiveSingleValue(User data, DatabaseReference reference) {
                 username.setText(data.getFirstName() + " " + data.getLastName());
                 email.setText(data.getEmail());
+                if(!data.isBicitaller()){
+                    biciTaller.setVisibility(View.GONE);
+                }
             }
-
             @Override
             public void onCancel(DatabaseError error) {
 

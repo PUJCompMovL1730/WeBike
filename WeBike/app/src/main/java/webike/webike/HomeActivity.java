@@ -155,13 +155,6 @@ public class HomeActivity extends AppCompatActivity {
                 intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
                 startActivity( intent );
                 break;
-            /*case R.id.config_menuItem:
-                //TODO: cambiar
-                //intent = new Intent(HomeActivity.this, ConfigActivity.class);
-                intent = new Intent(HomeActivity.this, OrgProfileActivity.class);
-                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
-                startActivity( intent );
-                break;*/
             case R.id.inbox_home_menu:
                 intent = new Intent(this,MailboxActivity.class);
                 startActivity(intent);

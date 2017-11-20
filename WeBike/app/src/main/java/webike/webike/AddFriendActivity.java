@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
@@ -34,6 +36,8 @@ public class AddFriendActivity extends AppCompatActivity {
     private TextView email;
     private TextView knowHim;
     private Button addFriend;
+    private ImageView biciTaller;
+
     private User friend;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mData;
@@ -45,6 +49,7 @@ public class AddFriendActivity extends AppCompatActivity {
         username = (TextView) findViewById(R.id.usr_name_inv);
         email = (TextView) findViewById(R.id.email_usr_inv);
         knowHim = (TextView) findViewById(R.id.know_him);
+        biciTaller = (ImageView) findViewById(R.id.image_biciTaller);
         addFriend = (Button) findViewById(R.id.send_inv_btn);
         addFriend.setVisibility(View.GONE);
         Intent tempIntent = getIntent();
@@ -74,6 +79,9 @@ public class AddFriendActivity extends AppCompatActivity {
                 final List<String> friends = (data.getFriends()==null)?new ArrayList<String>(): data.getFriends();
                 if( friends.contains(friend.getKey()) ){
                     //if has
+                    if (!data.isBicitaller()){
+                        biciTaller.setVisibility(View.GONE);
+                    }
 
                     addFriend.setText("Eliminar Amigo");
                     addFriend.setBackgroundColor( getColor(R.color.burnRed) );
