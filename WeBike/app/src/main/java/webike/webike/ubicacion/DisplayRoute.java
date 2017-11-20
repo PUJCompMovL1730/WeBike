@@ -69,11 +69,11 @@ public class DisplayRoute extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        /*Intent tempIntent = getIntent();
+        Intent tempIntent = getIntent();
         Bundle bundle = tempIntent.getExtras();
-        url = (String) bundle.get("routes");*/
+        url = (String) bundle.get("routes");
 
-        url = "https://maps.googleapis.com/maps/api/directions/json?origin=4.648392150367993,-74.05153054744005&destination=4.650766113720292,-74.05103702098131&sensor=false";
+        //url = "https://maps.googleapis.com/maps/api/directions/json?origin=4.648392150367993,-74.05153054744005&destination=4.650766113720292,-74.05103702098131&sensor=false";
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_ds);
         mapFragment.getMapAsync(this);

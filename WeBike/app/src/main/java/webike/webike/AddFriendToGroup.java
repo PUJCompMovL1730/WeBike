@@ -76,7 +76,7 @@ public class AddFriendToGroup extends AppCompatActivity {
         {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int i, long j) {
                 temp_group = results.get(i);
-                Log.i("STATUS: ",temp_group.getKey() + " " + friend.getKey());
+                Log.i("STATUS: ",temp_group.toString());
                 Utils.longToast(AddFriendToGroup.this,"Curso seleccionado!");
                 return true;
             }
@@ -91,16 +91,15 @@ public class AddFriendToGroup extends AppCompatActivity {
                 Log.i("INFO_DATABASE", temp_group.getKey() +" " + temp_group.getRoute());
                 postGroups(mData,temp_group);
 
-                /*if(friend.getGroups().equals(null))
-                {
-                    Log.i("STATUS: ",temp_group.getKey() + " " + friend.getKey());
-                }
-               /* List<String> u = friend.getGroups();
-                u.add(temp_group.getKey());
-                friend.setGroups((ArrayList<String>) u);
+                /*List<String> u = new ArrayList<>();
+                u = friend.getGroups();
+                Log.i("STATUS: ",Boolean.toString(u.equals(null))));
+                String t = temp_group.getKey();
 
-                postUser(mData,friend);*/
+                /*friend.setGroups((ArrayList<String>) u);
 
+                postUser(mData,friend);
+*/
                 Intent intent = new Intent(AddFriendToGroup.this, HomeActivity.class);
                 startActivity(intent);
             }

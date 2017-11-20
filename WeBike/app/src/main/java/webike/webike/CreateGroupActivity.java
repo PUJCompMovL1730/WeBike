@@ -86,12 +86,12 @@ public class CreateGroupActivity extends AppCompatActivity {
         FData.getUserFromId(mData, mAuth.getCurrentUser().getUid(), new SingleValueActions<User>() {
             @Override
             public void onReceiveSingleValue(User data, DatabaseReference reference) {
-                List<String> temp = new ArrayList<String>();
+                List<String> temp = data.getGroups();
                 temp.add(g.getKey());
                 data.setGroups((ArrayList<String>) temp);
                 postUser(mData,data);
 
-                ArrayList<String> temp2 = new ArrayList<String>();
+                List<String> temp2 = g.getAdmins();
                 temp2.add(data.getKey());
                 g.setAdmins(temp2);
                 g.setUsers(temp2);
