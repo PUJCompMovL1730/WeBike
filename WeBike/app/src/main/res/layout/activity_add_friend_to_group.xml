@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="30dp"
+    android:padding="20dp"
     tools:context="webike.webike.AddFriendToGroup">
 
     <LinearLayout
@@ -37,12 +37,6 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:src="@drawable/wrench_32" />
-
                 <TextView
                     android:id="@+id/frd_email_gp"
                     android:layout_width="0dp"
@@ -52,28 +46,24 @@
                     android:gravity="center_vertical"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:src="@drawable/wrench_32" />
+                    android:id="@+id/bicitaller_dos"
+                    android:visibility="gone"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/wrench_512" />
 
-                <TextView
-                    android:id="@+id/age_frn_gp"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.8"
-                    android:text="TextView"
-                    android:gravity="center_vertical"/>
-            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Mis grupos:"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,13 +73,6 @@
         android:paddingTop="5dp"
         android:paddingBottom="10dp">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1"
-            android:text="Mis grupos:"
-            android:textSize="25sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,9 +91,8 @@
         <Button
             android:id="@+id/btn_add_frn_grp"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="0.1"
             android:background="@color/WeBikeBlue"
             android:text="Agregar a grupo"
             android:textColor="@color/WeBikeWhite" />

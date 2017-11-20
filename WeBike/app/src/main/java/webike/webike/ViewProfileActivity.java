@@ -53,18 +53,10 @@ public class ViewProfileActivity extends AppCompatActivity {
         friendList = (ListView)findViewById(R.id.list_amigos);
         groupList = (ListView)findViewById(R.id.list_grupos);
         username = (TextView)findViewById(R.id.user_name);
-        group = (ImageButton) findViewById(R.id.button_group);
+
         route = (Button)findViewById(R.id.button_recorr);
         email = (TextView) findViewById(R.id.user_mail);
         biciTaller = (ImageView) findViewById(R.id.image_biciTaller);
-
-        group.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ViewProfileActivity.this, CreateGroupActivity.class);
-                startActivity(intent);
-            }
-        });
 
         route.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,11 +66,29 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
         });
 
+        this.loadUser();
         this.loadName();
         this.loadFriends();
         this.loadGroups();
     }
 
+    public void loadUser(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FData.getUserFromId(database, uid, new SingleValueActions<User>() {
+            @Override
+            public void onReceiveSingleValue(User data, DatabaseReference reference) {
+                if( data.isBicitaller() ){
+                    biciTaller.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancel(DatabaseError error) {
+
+            }
+        });
+    }
 
     public void loadFriends(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -105,7 +115,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         FData.getUserGroups(database, uid, new ListActions<Group>() {
             @Override
             public void onReceiveList(ArrayList<Group> data, DatabaseReference reference) {
-                if(data.size()==0){
+                if(data.size()!=0){
                     updateAdapGroup(data);
                 }else{
                     Toast.makeText(ViewProfileActivity.this, "usuario sin grupos", Toast.LENGTH_SHORT).show();

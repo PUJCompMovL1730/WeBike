@@ -610,7 +610,9 @@ public class FData {
                 getUsers(database, user, new ListFilteredActions<User, User>() {
                     @Override
                     public boolean searchCriteria(User data, User filter) {
-                        return filter.getFriends().contains(data.getKey());
+                        if( filter.getFriends() != null )
+                            return filter.getFriends().contains(data.getKey());
+                        return false;
                     }
 
                     @Override
@@ -769,7 +771,7 @@ public class FData {
         g.setName( (String) hash.get("name") );
         g.setStart( (String) hash.get("start") );
         g.setTime( (Long) hash.get("time") );
-        g.setRoute((String) hash.get(""));
+        g.setRoute((String) hash.get("route"));
         return g;
     }
 

@@ -108,6 +108,9 @@ public class SearchUserActivity extends AppCompatActivity {
             @Override
             public void onReceiveSingleValue(User data, DatabaseReference reference) {
                 List<String> s = data.getFriends();
+                if( s == null ){
+                    s = new ArrayList<String>();
+                }
                 if (s.contains(u.getKey())) {
                     Intent myIntent = new Intent(SearchUserActivity.this, AddFriendToGroup.class);
                     Bundle bundle = new Bundle();

@@ -49,7 +49,7 @@ public class AddFriendActivity extends AppCompatActivity {
         username = (TextView) findViewById(R.id.usr_name_inv);
         email = (TextView) findViewById(R.id.email_usr_inv);
         knowHim = (TextView) findViewById(R.id.know_him);
-        biciTaller = (ImageView) findViewById(R.id.image_biciTaller);
+        biciTaller = (ImageView) findViewById(R.id.bicitaller_friend);
         addFriend = (Button) findViewById(R.id.send_inv_btn);
         addFriend.setVisibility(View.GONE);
         Intent tempIntent = getIntent();
@@ -61,6 +61,9 @@ public class AddFriendActivity extends AppCompatActivity {
         User new_friend = new User();
         if(bundle != null){
             new_friend = (User) bundle.get("user");
+            if ( new_friend.isBicitaller() ){
+                biciTaller.setVisibility(View.VISIBLE);
+            }
         }
         Log.i("INFO_DATABASE", "updateView: "+ new_friend.getEmail() );
         username.setText(new_friend.getFirstName() + " " + new_friend.getLastName());

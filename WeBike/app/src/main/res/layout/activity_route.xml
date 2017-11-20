@@ -104,60 +104,21 @@ tools:context="webike.webike.RouteActivity">
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/backgroundGray"
-        android:paddingTop="10dp">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/watch"
-            />
-        <TextView
-            android:id="@+id/tv_tiempo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="0s"
-            android:paddingLeft="15dp"
-            android:layout_gravity="center_vertical"/>
-    </LinearLayout>
+        android:paddingTop="10dp"></LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/backgroundGray"
-        android:paddingTop="10dp">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/road_512"
-            />
-        <TextView
-            android:id="@+id/tv_distancia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="0.0 Km"
-            android:paddingLeft="15dp"
-            android:layout_gravity="center_vertical"/>
-    </LinearLayout>
+        android:paddingTop="10dp"></LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/backgroundGray"
-        android:paddingTop="10dp">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/cloud_512"
-            />
-        <TextView
-            android:id="@+id/tv_clima"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Clima"
-            android:paddingLeft="15dp"
-            android:layout_gravity="center_vertical"/>
-    </LinearLayout>
+        android:paddingTop="10dp"></LinearLayout>
 
 </LinearLayout>
 </LinearLayout>

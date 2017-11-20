@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,16 +33,14 @@ public class AddFriendToGroup extends AppCompatActivity {
 
     private TextView username;
     private TextView email;
-    private TextView age;
     private Button addToGroup;
     private ListView list;
     private User friend;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mData;
     private ArrayList<Group> results;
-    private int selection;
     private Group temp_group;
-
+    private ImageView bicitaller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,7 @@ public class AddFriendToGroup extends AppCompatActivity {
         results = new ArrayList<>();
         username = (TextView) findViewById(R.id.usr_name_add_grp);
         email = (TextView) findViewById(R.id.frd_email_gp);
-        age = (TextView) findViewById(R.id.age_frn_gp);
+        bicitaller = (ImageView) findViewById(R.id.bicitaller_dos);
         addToGroup = (Button) findViewById(R.id.btn_add_frn_grp);
         list = (ListView) findViewById(R.id.grp_list_view);
 
@@ -63,14 +62,15 @@ public class AddFriendToGroup extends AppCompatActivity {
         friend = new User();
         if (bundle != null) {
             friend = (User) bundle.get("user");
+            if ( friend.isBicitaller() ){
+                bicitaller.setVisibility(View.VISIBLE);
+            }
         }
         fileListView();
 
         Log.i("INFO_DATABASE", "updateView: " + friend.getEmail());
         username.setText(friend.getFirstName() + " " + friend.getLastName());
         email.setText(friend.getEmail());
-        age.setText( friend.getAge() + " años");
-
 
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         {
