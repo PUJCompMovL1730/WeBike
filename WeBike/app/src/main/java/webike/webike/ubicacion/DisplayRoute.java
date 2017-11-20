@@ -3,8 +3,8 @@ package webike.webike.ubicacion;
 import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +30,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-import webike.webike.CreateGroupActivity;
 import webike.webike.HomeActivity;
 import webike.webike.R;
 import webike.webike.logic.PlacePromotion;
@@ -38,27 +37,18 @@ import webike.webike.utils.FData;
 import webike.webike.utils.ListActions;
 import webike.webike.utils.Permisos;
 
-public class MapCreateRoute extends AppCompatActivity implements OnMapReadyCallback, PlaceSelectionListener {
+public class DisplayRoute extends AppCompatActivity implements OnMapReadyCallback, PlaceSelectionListener {
 
     private Place place;
     private GoogleMap mMap;
     ArrayList markerPoints = new ArrayList();
     private LocacionController locationController;
-    private Button accept;
-    private Button cancel;
-    private TextView dist;
     private String url;
-    private EditText route_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_route);
-
-        accept = (Button) findViewById(R.id.btn_checkout);
-        cancel = (Button) findViewById(R.id.btn_cancel);
-        dist = (TextView) findViewById(R.id.distance_route_map);
-        route_name = (EditText) findViewById(R.id.route_name);
+        setContentView(R.layout.activity_display_route);
 
         FData.getPlacePromotions(FirebaseDatabase.getInstance(), new ListActions<PlacePromotion>() {
             @Override
@@ -79,35 +69,16 @@ public class MapCreateRoute extends AppCompatActivity implements OnMapReadyCallb
             }
         });
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_GR);
+        Intent tempIntent = getIntent();
+        Bundle bundle = tempIntent.getExtras();
+        url = (String) bundle.get("routes");
+
+        //url = "https://maps.googleapis.com/maps/api/directions/json?origin=4.648392150367993,-74.05153054744005&destination=4.650766113720292,-74.05103702098131&sensor=false";
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_ds);
         mapFragment.getMapAsync(this);
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_GR);
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_ds);
         autocompleteFragment.setOnPlaceSelectedListener(this);
-
-        accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String rn = route_name.getText().toString().trim();
-                if(TextUtils.isEmpty(rn))
-                {
-                    Toast.makeText(MapCreateRoute.this, "Faltan datos", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    Intent obj = getIntent().putExtra("result",url);
-                    obj.putExtra("nombre_ruta",rn);
-                    setResult(RESULT_OK, obj);
-                    finish();
-                }
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MapCreateRoute.this, HomeActivity.class));
-            }
-        });
-
     }
 
     @Override
@@ -117,25 +88,11 @@ public class MapCreateRoute extends AppCompatActivity implements OnMapReadyCallb
         //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bogota, 16));
 
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
+        Descarga downloadTask = new Descarga(mMap);
+        downloadTask.execute(url);
 
-                markerLogic(latLng);
-                if (markerPoints.size() >= 2) {
-                    LatLng origin = (LatLng) markerPoints.get(0);
-                    LatLng dest = (LatLng) markerPoints.get(1);
-
-                    String url = getDirectionsUrl(origin, dest);
-                    Descarga downloadTask = new Descarga(mMap);
-                    downloadTask.execute(url);
-                    dist.setText("Distancia: " + Double.toString(distance(origin.latitude,origin.longitude,dest.latitude,dest.longitude))+ " km.");
-                }
-            }
-        });
         locationController = new LocacionController(this){
             public void onMyLocationRecieved(Location location) {
-                double distance = distance(location.getLatitude(), location.getLongitude(), place.getLatLng().latitude, place.getLatLng().longitude);
                 markerLogic(place.getLatLng());
 
                 CameraPosition.Builder cameraPosition = CameraPosition.builder();
@@ -147,10 +104,8 @@ public class MapCreateRoute extends AppCompatActivity implements OnMapReadyCallb
                     LatLng origin = (LatLng) markerPoints.get(0);
                     LatLng dest = (LatLng) markerPoints.get(1);
 
-                    String url = getDirectionsUrl(origin, dest);
                     Descarga downloadTask = new Descarga(mMap);
                     downloadTask.execute(url);
-                    dist.setText("Distancia: " + Double.toString(distance(origin.latitude,origin.longitude,dest.latitude,dest.longitude))+ " km.");
                 }
 
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition.build()), 1500, null);
@@ -159,7 +114,6 @@ public class MapCreateRoute extends AppCompatActivity implements OnMapReadyCallb
         if (Permisos.askPermission(this, Permisos.FINE_LOCATION, "Se requiere el acceso a la localización.")) {
             locationAction();
         }
-
     }
 
     private void markerLogic(LatLng latLng)
@@ -223,24 +177,5 @@ public class MapCreateRoute extends AppCompatActivity implements OnMapReadyCallb
 
     }
 
-    public static double distance(double lat1, double long1, double lat2, double long2) {
-        double latDistance = Math.toRadians(lat1 - lat2);
-        double lngDistance = Math.toRadians(long1 - long2);
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(lat1))  * Math.cos(Math.toRadians(lat2))
-                * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a),  Math.sqrt(1 - a));
-        double result = 6371 * c;
-        return Math.round(result*100.0)/100.0;
-    }
 
-    private String getDirectionsUrl(LatLng origin, LatLng dest) {
-        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-        String sensor = "sensor=false";
-        String parameters = str_origin + "&" + str_dest + "&" + sensor;
-        String output = "json";
-        url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
-        return url;
-    }
 }

@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Juan on 10/28/2017.
  */
 
-public class Group implements Serializable{
+public class Group implements Serializable {
 
     private String key;
     private String name;
@@ -19,11 +19,33 @@ public class Group implements Serializable{
     private List<String> admins;
     private String route;
 
+
     public Group(String name, String start, String finish, String route) {
         this.name = name;
         this.start = start;
+
         this.finish = finish;
         this.route = route;
+        this.users = new ArrayList<String>();
+        this.admins = new ArrayList<String>();
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", start='" + start + '\'' +
+                ", finish='" + finish + '\'' +
+                ", time=" + time +
+                ", users=" + users +
+                ", admins=" + admins +
+                ", route='" + route + '\'' +
+                '}';
+    }
+
+    public Group() {
+
     }
     public Group() {}
 
@@ -71,7 +93,7 @@ public class Group implements Serializable{
         return users;
     }
 
-    public void setUsers(ArrayList<String> users) {
+    public void setUsers(List<String> users) {
         this.users = users;
     }
 
@@ -79,7 +101,15 @@ public class Group implements Serializable{
         return admins;
     }
 
-    public void setAdmins(ArrayList<String> admins) {
+    public void setAdmins(List<String> admins) {
         this.admins = admins;
+    }
+
+    public String getRoute() {
+        return route;
+    }
+
+    public void setRoute(String route) {
+        this.route = route;
     }
 }

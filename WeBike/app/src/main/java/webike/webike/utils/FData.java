@@ -94,11 +94,17 @@ public class FData {
         dRef.setValue(msg);
     }
 
-    public void postGroup( Group g ){
+    public static void postGroup( FirebaseDatabase database , Group g ){
         DatabaseReference sRef = database.getReference(PATH_TO_GROUPS );
         String srcKey = sRef.push().getKey();
 
         DatabaseReference ref = database.getReference(PATH_TO_GROUPS + "/" + srcKey );
+        ref.setValue(g);
+        g.setKey(srcKey);
+    }
+
+    public static void postGroups( FirebaseDatabase database , Group g ){
+        DatabaseReference ref = database.getReference(PATH_TO_GROUPS + "/" + g.getKey() );
         ref.setValue(g);
     }
 
@@ -754,6 +760,7 @@ public class FData {
         g.setName( (String) hash.get("name") );
         g.setStart( (String) hash.get("start") );
         g.setTime( (Long) hash.get("time") );
+        g.setRoute((String) hash.get(""));
         return g;
     }
 

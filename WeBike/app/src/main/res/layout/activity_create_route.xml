@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:ems="8"
                         android:inputType="textPersonName"
-                        android:text="Nombre de la ruta" />
+                        android:hint="Nombre de la ruta"/>
 
                     <TextView
                         android:id="@+id/route_name_map"

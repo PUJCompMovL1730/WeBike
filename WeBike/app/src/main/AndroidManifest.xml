@@ -72,6 +72,8 @@
         <activity android:name=".OrgRegisterActivity" />
         <activity android:name=".OrgEditInfoActivity"></activity>
         <activity android:name=".AccountDeleteConfirmation"></activity>
+        <activity android:name=".MyGroupsActivity" />
+        <activity android:name=".ubicacion.DisplayRoute"></activity>
     </application>
 
 </manifest>
