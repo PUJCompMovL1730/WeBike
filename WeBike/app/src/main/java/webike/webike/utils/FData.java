@@ -115,6 +115,15 @@ public class FData {
         ref.setValue( p );
     }
 
+    public static void postPlannedRoutes(FirebaseDatabase database, PlannedRoute p)
+    {
+        DatabaseReference ref = database.getReference(FData.PATH_TO_PLANNED_ROUTES);
+        String key = ref.push().getKey();
+        ref = database.getReference( FData.PATH_TO_PLANNED_ROUTES + "/" + key);
+        p.setKey(key);
+        ref.setValue( p );
+    }
+
 
     public static void getOrgUserFromId( FirebaseDatabase database , String userId , final SingleValueActions<OrgUser> actions){
         Log.i("USER ID", "getOrgUserFromId: "+userId);
