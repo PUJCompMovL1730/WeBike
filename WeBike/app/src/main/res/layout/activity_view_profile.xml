@@ -48,10 +48,11 @@
 
                     
                     <TextView
-                        android:id="@+id/user_location"
+
+                        android:id="@+id/user_mail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ubicacion"
+                        android:text="Email"
                         android:padding="5dp"/>
 
                 </LinearLayout>

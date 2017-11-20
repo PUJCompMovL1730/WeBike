@@ -500,12 +500,23 @@ public class FData {
         if (  ((HashMap<String, Object>) singleSnapshot.getValue()).get("mailbox") != null ) {
             HashMap<String,Object> mailShot = (HashMap<String, Object>) ((HashMap<String, Object>) singleSnapshot.getValue()).get("mailbox");
             if ( mailShot.get("received") != null ) {
-                box.setReceived(createMessageList((HashMap<String, Object>) mailShot.get("received")));
+                try{
+                    box.setReceived(createMessageList((HashMap<String, Object>) mailShot.get("received")));
+                }catch ( Exception e ){
+                    Log.i("EXCEPTION", "createUser: "+e);
+                    box.setReceived( (ArrayList<Message>) mailShot.get("received") );
+                }
+
             }else{
                 box.setReceived( new ArrayList<Message>() );
             }
             if ( mailShot.get("sent") != null ) {
-                box.setSent(createMessageList((HashMap<String, Object>) mailShot.get("sent")));
+                try {
+                    box.setSent(createMessageList((HashMap<String, Object>) mailShot.get("sent")));
+                }catch ( Exception e ){
+                    Log.i("EXCEPTION", "createUser: "+e);
+                    box.setSent((ArrayList<Message>) mailShot.get("sent"));
+                }
             }else{
                 box.setSent( new ArrayList<Message>() );
             }

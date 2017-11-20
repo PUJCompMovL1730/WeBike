@@ -43,18 +43,18 @@
             android:paddingBottom="15dp"
             android:textSize="20sp"/>
         <Button
+            android:id="@+id/fb_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Conecta con Facebook"
             android:background="#0000ff"
             android:textColor="#ffffff"
             android:layout_margin="5dp"/>
-        <Button
+
+        <com.twitter.sdk.android.core.identity.TwitterLoginButton
+            android:id="@+id/tw_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Conecta con Twitter"
-            android:background="#66B2FF"
-            android:textColor="#ffffff"
             android:layout_margin="5dp"/>
         <TextView
             android:layout_width="match_parent"

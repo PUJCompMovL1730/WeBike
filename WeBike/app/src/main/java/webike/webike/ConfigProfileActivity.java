@@ -8,19 +8,34 @@ import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+
+import webike.webike.logic.User;
+import webike.webike.utils.FAuth;
+import webike.webike.utils.FData;
+import webike.webike.utils.SingleValueActions;
+
+import static webike.webike.utils.FData.postUser;
 
 public class ConfigProfileActivity extends AppCompatActivity {
 
@@ -33,8 +48,8 @@ public class ConfigProfileActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 9;
     private ImageView image;
     private EditText name;
-    private EditText lastName;
-    private EditText age;
+    private EditText last_name;
+    private Spinner gender_spinner;
 
 
     @Override
@@ -45,6 +60,10 @@ public class ConfigProfileActivity extends AppCompatActivity {
         selectImage = (Button)findViewById(R.id.img_button);
         camera = (Button)findViewById(R.id.camera_button);
         image = (ImageView)findViewById(R.id.user_img);
+        name = (EditText)findViewById(R.id.firstName_editText);
+        last_name = (EditText)findViewById(R.id.lastname_editText);
+        gender_spinner = (Spinner)findViewById(R.id.gender_spinner);
+        saveButton = (Button)findViewById(R.id.saveChanges_button);
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             askAnyPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
@@ -57,9 +76,48 @@ public class ConfigProfileActivity extends AppCompatActivity {
             pickCamera();
         }
 
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveChanges();
+            }
+        });
+
+    }
+
+    public void saveChanges(){
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FData.getUserFromId(database, uid, new SingleValueActions<User>() {
+            @Override
+            public void onReceiveSingleValue(User data, DatabaseReference reference) {
+                Log.i("USER","MI PUTO USUARIO:"+data.toString());
+                String firstNAme = name.getText().toString().trim();
+                String lastName = last_name.getText().toString().trim();
+                String gender = gender_spinner.getSelectedItem().toString().trim();
+
+                data.setFirstName(firstNAme);
+                data.setLastName(lastName);
+                data.setGender(gender);
+
+                postUser(database,data);
+
+                Toast.makeText(ConfigProfileActivity.this, "User updated", Toast.LENGTH_SHORT).show();
+                startActivity( new Intent( ConfigProfileActivity.this, ViewProfileActivity.class ) );
+
+            }
+
+            @Override
+            public void onCancel(DatabaseError error) {
+
+            }
+        });
+
+
 
 
     }
+
 
     private void askAnyPermission(String permission, int permissionCode) {
         if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -142,4 +200,6 @@ public class ConfigProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

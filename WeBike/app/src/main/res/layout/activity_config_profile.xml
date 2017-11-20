@@ -74,26 +74,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lay_age"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="vertical"
-        android:layout_below="@+id/lay_lastname"
-        android:layout_margin="10dp">
-
-        <EditText
-            android:id="@+id/age_editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Edad"/>
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/lay_gender"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:orientation="horizontal"
-        android:layout_below="@+id/lay_age"
+        android:layout_below="@+id/lay_lastname"
         android:layout_margin="10dp">
         <TextView
             android:layout_width="wrap_content"

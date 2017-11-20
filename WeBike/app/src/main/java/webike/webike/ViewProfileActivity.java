@@ -22,19 +22,21 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import webike.webike.adaptadores.GroupAdapter;
 import webike.webike.adaptadores.UserArrayAdapter;
+import webike.webike.logic.Group;
 import webike.webike.logic.User;
 import webike.webike.utils.FAuth;
 import webike.webike.utils.FData;
+import webike.webike.utils.ListActions;
+import webike.webike.utils.SingleValueActions;
 
 public class ViewProfileActivity extends AppCompatActivity {
 
     private ListView friendList;
     private ListView groupList;
-    private FirebaseAuth mAuth;
-    private FirebaseDatabase mData;
-    private FirebaseDatabase database;
     private TextView username;
+    private TextView email;
     private Button config;
     private Button group;
     private Button route;
@@ -49,6 +51,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         config = (Button)findViewById(R.id.user_config);
         group = (Button)findViewById(R.id.button_group);
         route = (Button)findViewById(R.id.button_recorr);
+        email = (TextView) findViewById(R.id.user_mail);
 
         config.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,11 +77,77 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
         });
 
-
-
-
+        this.loadName();
+        this.loadFriends();
+        //this.loadGroups();
     }
 
 
+    public void loadFriends(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FData.getFriends(database, uid, new ListActions<User>() {
+            @Override
+            public void onReceiveList(ArrayList<User> data, DatabaseReference reference) {
+                //adapter
+                updateAdap(data);
+            }
+
+            @Override
+            public void onCancel(DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void loadGroups(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FData.getUserGroups(database, uid, new ListActions<Group>() {
+            @Override
+            public void onReceiveList(ArrayList<Group> data, DatabaseReference reference) {
+                if(data.size()==0){
+                    updateAdapGroup(data);
+                }else{
+                    Toast.makeText(ViewProfileActivity.this, "usuario sin grupos", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancel(DatabaseError error) {
+            }
+        });
+    }
+
+    public void updateAdap(ArrayList<User> usrs) {
+        Log.i("INFO_DATABASE", "updateView: "+ usrs.toString() );
+        UserArrayAdapter adapter = new UserArrayAdapter(this, usrs);
+        this.friendList.setAdapter(adapter);
+    }
+
+
+    public void updateAdapGroup(ArrayList<Group> groups){
+        Log.i("INFO_DATABASE", "updateView: "+ groups.toString() );
+        GroupAdapter adapter = new GroupAdapter(this, groups);
+        this.groupList.setAdapter(adapter);
+    }
+
+    public void loadName(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FData.getUserFromId(database, uid, new SingleValueActions<User>() {
+            @Override
+            public void onReceiveSingleValue(User data, DatabaseReference reference) {
+                username.setText(data.getFirstName() + " " + data.getLastName());
+                email.setText(data.getEmail());
+            }
+
+            @Override
+            public void onCancel(DatabaseError error) {
+
+            }
+        });
+
+    }
 
 }
