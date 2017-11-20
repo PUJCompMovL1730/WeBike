@@ -10,12 +10,12 @@ import java.util.List;
  * Created by Juan on 10/28/2017.
  */
 
-public class User implements Serializable{
+public class User extends AbstractUser implements Serializable{
 
     private String key;
     private String firstName;
     private String lastName;
-    private int age;
+    private String age;
     private String gender;
     private String email;
     private Mailbox mailbox;
@@ -75,11 +75,11 @@ public class User implements Serializable{
         this.lastName = lastName;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

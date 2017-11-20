@@ -12,16 +12,18 @@ public class Publicacion extends AbstractPublication implements Serializable{
     private String hora;
     private String descripcion;
     private String nombre;
+    private String key;
 
     public Publicacion() {
     }
 
-    public Publicacion(String nombre ,String origen, String destino, String hora, String descripcion) {
+    public Publicacion(String nombre ,String origen, String destino, String hora, String descripcion, String key) {
         this.origen = origen;
         this.destino = destino;
         this.hora = hora;
         this.descripcion = descripcion;
         this.nombre = nombre;
+        this.key = key;
     }
 
     public String getNombre() {
@@ -62,5 +64,25 @@ public class Publicacion extends AbstractPublication implements Serializable{
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    @Override
+    public String toString() {
+        return "Publicacion{" +
+                "origen='" + origen + '\'' +
+                ", destino='" + destino + '\'' +
+                ", hora='" + hora + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", key='" + key + '\'' +
+                '}';
     }
 }

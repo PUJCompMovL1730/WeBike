@@ -21,7 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+
 import webike.webike.adaptadores.MessageAdapter;
+import webike.webike.adaptadores.adaptador_home_notificacion;
 import webike.webike.adaptadores.adapter_all_publication;
 import webike.webike.logic.AbstractPublication;
 import webike.webike.logic.Message;
@@ -29,6 +31,7 @@ import webike.webike.logic.PlacePromotion;
 import webike.webike.logic.PlannedRoute;
 import webike.webike.logic.Publicacion;
 import webike.webike.ubicacion.Map;
+import webike.webike.ubicacion.MapCreateRoute;
 import webike.webike.utils.FData;
 import webike.webike.utils.ListActions;
 import webike.webike.utils.Utils;
@@ -36,14 +39,9 @@ import webike.webike.utils.Utils;
 public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private FData fData;
     private FirebaseDatabase database;
-    private boolean type = false;
     private ListView homeList;
 
-    private Button msgButton;
-    private Button pubButton;
-    private ArrayList<Message> current_msg;
     private ArrayList<AbstractPublication> current_pub;
     private Button b_panic;
     private ImageView b_help;
@@ -54,7 +52,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mAuth = FirebaseAuth.getInstance();
-        fData = new FData();
         database = FirebaseDatabase.getInstance();
 
         b_panic = (Button) findViewById(R.id.panic);
@@ -145,7 +142,7 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.config_menuItem:
                 //TODO: cambiar
                 //intent = new Intent(HomeActivity.this, ConfigActivity.class);
-                intent = new Intent(HomeActivity.this, RoutesActivity.class);
+                intent = new Intent(HomeActivity.this, OrgProfileActivity.class);
                 intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
                 startActivity( intent );
                 break;
@@ -158,6 +155,10 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.go_to_planroute:
                 startActivity( new Intent(HomeActivity.this, Map.class));
+                break;
+            case R.id.create_group:
+                startActivity( new Intent(HomeActivity.this, CreateGroupActivity.class));
+                break;
             default : // Optional
                 // Statements
         }
@@ -185,28 +186,13 @@ public class HomeActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void loadMsg( String key ){
-
-        FData.getReceivedMessages(database, key, new ListActions<Message>() {
-            @Override
-            public void onReceiveList(ArrayList<Message> data, DatabaseReference reference) {
-                current_msg = data;
-                inflateListWithMsgs( data );
-            }
-
-            @Override
-            public void onCancel( DatabaseError databaseError ) {
-
-            }
-        });
-    }
-
     public void loadPubs(){
         FData.getAllPublications(database, new ListActions<AbstractPublication>() {
             @Override
             public void onReceiveList(ArrayList<AbstractPublication> data, DatabaseReference reference) {
                 current_pub = data;
-                inflateListWithPubs( data );
+                adapter_all_publication adapter = new adapter_all_publication(HomeActivity.this,current_pub);
+                HomeActivity.this.homeList.setAdapter(adapter);
             }
 
             @Override
@@ -214,22 +200,5 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    public void inflateListWithMsgs(ArrayList<Message> msgs ){
-        if( msgs.isEmpty() ){
-            ArrayList<String> info = new ArrayList<>();
-            info.add("---- No hay mensajes ----");
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_list_item_1 ,info);
-            this.homeList.setAdapter(adapter);
-        }else {
-            MessageAdapter adapter = new MessageAdapter(this, msgs);
-            this.homeList.setAdapter(adapter);
-        }
-    }
-
-    public void inflateListWithPubs( ArrayList<AbstractPublication> pubs ){
-        adapter_all_publication adapter = new adapter_all_publication(this,pubs);
-        this.homeList.setAdapter(adapter);
     }
 }

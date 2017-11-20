@@ -11,16 +11,22 @@ public class PlacePromotion extends SpecialPublication implements Serializable{
     private String nombre;
     private String organiza;
     private String lugar;
-    private String descripcion;
+    private String description;
+    private String key;
+    private Double longitud;
+    private Double latitud;
 
     public PlacePromotion() {
     }
 
-    public PlacePromotion(String nombre, String organiza,String descripcion, String lugar) {
-        this.organiza = organiza;
-        this.descripcion = descripcion;
+    public PlacePromotion(String nombre, String organiza, String lugar, Double longitud, Double latitud, String descripcion, String key) {
         this.nombre = nombre;
+        this.organiza = organiza;
         this.lugar = lugar;
+        this.longitud = longitud;
+        this.latitud = latitud;
+        this.description = descripcion;
+        this.key = key;
     }
 
     public String getNombre() {
@@ -39,12 +45,28 @@ public class PlacePromotion extends SpecialPublication implements Serializable{
         this.organiza = organiza;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public Double getLongitud() {
+        return this.longitud;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
+    }
+
+    public Double getLatitud() {
+        return this.latitud;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String descripcion) {
+        this.description = descripcion;
     }
 
     public String getLugar() {
@@ -53,13 +75,24 @@ public class PlacePromotion extends SpecialPublication implements Serializable{
 
     public void setLugar(String lugar) { this.lugar = lugar; }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     @Override
     public String toString() {
         return "PlacePromotion{" +
                 "nombre='" + nombre + '\'' +
                 ", organiza='" + organiza + '\'' +
                 ", lugar='" + lugar + '\'' +
-                ", descripcion='" + descripcion + '\'' +
+                ", description='" + description + '\'' +
+                ", key='" + key + '\'' +
+                ", longitud=" + longitud +
+                ", latitud=" + latitud +
                 '}';
     }
 }

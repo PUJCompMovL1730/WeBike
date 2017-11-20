@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-import webike.webike.adaptadores.adapter_special_publication;
+import webike.webike.adaptadores.SpecialPublicationAdapter;
 import webike.webike.logic.PlacePromotion;
 import webike.webike.logic.PlannedRoute;
 import webike.webike.logic.SpecialPublication;
@@ -115,7 +115,7 @@ public class SpecialPublicationsActivity extends AppCompatActivity {
     }
 
     public void inflateListWithSpecialPublication( ArrayList<SpecialPublication> pubs ){
-        adapter_special_publication adapter = new adapter_special_publication(this,pubs);
+        SpecialPublicationAdapter adapter = new SpecialPublicationAdapter(this,pubs);
         this.specialPublication_list.setAdapter(adapter);
     }
 }

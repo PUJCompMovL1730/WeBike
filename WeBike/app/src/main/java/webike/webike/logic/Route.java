@@ -14,6 +14,8 @@ public class Route implements Serializable{
     private String duracion;
     private String clima;
     private String distancia;
+    private String descripcion;
+    private String url;
 
     public Route(String origen, String destino, String fecha, String duracion, String clima, String distancia) {
         this.origen = origen;

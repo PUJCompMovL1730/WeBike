@@ -60,6 +60,7 @@ public class Descarga extends AsyncTask<String, Void, String> {
             }
 
             data = sb.toString();
+            Log.i("INFO_DATABASE", "updateView: "+ data );
             br.close();
 
         }catch(Exception e){

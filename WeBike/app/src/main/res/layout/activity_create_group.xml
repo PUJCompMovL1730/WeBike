@@ -15,9 +15,9 @@
         android:orientation="horizontal"
         android:padding="20dp">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/users"/>
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/users_512"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,36 +37,51 @@
         android:background="@color/backgroundGray">
 
         <EditText
+            android:id="@+id/new_group_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="12dp"
             android:layout_marginTop="10dp"
             android:background="@color/WeBikeWhite"
             android:hint="Nombre del grupo"/>
 
         <EditText
+            android:id="@+id/new_grp_sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:layout_marginTop="30dp"
+            android:padding="12dp"
+            android:layout_marginTop="20dp"
             android:background="@color/WeBikeWhite"
             android:hint="Punto de partida"/>
 
         <EditText
+            android:id="@+id/new_grp_ep"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:layout_marginTop="30dp"
+            android:padding="12dp"
+            android:layout_marginTop="20dp"
             android:background="@color/WeBikeWhite"
             android:hint="Punto de llegada"/>
 
         <Button
+            android:id="@+id/new_grp_rt"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Crear ruta"
+            android:background="#44ff22"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:textColor="@color/WeBikeWhite"/>
+
+        <Button
+            android:id="@+id/create_group"
             android:layout_width="match_parent"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:text="Grear grupo"
             android:background="@color/WeBikeBlue"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:padding="10dp"
             android:textColor="@color/WeBikeWhite"/>
 

@@ -94,6 +94,7 @@ public class PlannedRoute extends  SpecialPublication implements Serializable{
                 ", destino='" + destino + '\'' +
                 ", fecha='" + fecha + '\'' +
                 ", descripcion='" + descripcion + '\'' +
+                ", key='" + key + '\'' +
                 '}';
     }
 }
