@@ -74,7 +74,8 @@
         <activity android:name=".AccountDeleteConfirmation" />
         <activity android:name=".MyGroupsActivity" />
         <activity android:name=".ubicacion.DisplayRoute" />
-        <activity android:name=".ReadMessageActivity"></activity>
+        <activity android:name=".ReadMessageActivity" />
+        <activity android:name=".MapSelect"></activity>
     </application>
 
 </manifest>

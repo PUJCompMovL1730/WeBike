@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,12 +24,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import webike.webike.adaptadores.SpecialPublicationAdapter;
+import webike.webike.logic.OrgUser;
 import webike.webike.logic.PlacePromotion;
 import webike.webike.logic.PlannedRoute;
 import webike.webike.logic.Route;
 import webike.webike.logic.SpecialPublication;
 import webike.webike.utils.FData;
 import webike.webike.utils.ListActions;
+import webike.webike.utils.SingleValueActions;
 import webike.webike.utils.Utils;
 
 public class OrgProfileActivity extends AppCompatActivity {
@@ -92,7 +95,7 @@ public class OrgProfileActivity extends AppCompatActivity {
 
         loadPlacePromotions();
         loadPlannedRoute();
-
+        loadUser();
     }
 
     @Override
@@ -173,6 +176,21 @@ public class OrgProfileActivity extends AppCompatActivity {
             @Override
             public void onCancel(DatabaseError error) {
                 Utils.shortToast( OrgProfileActivity.this , "Error buscando lugares promocioandaos");
+            }
+        });
+    }
+
+    public void loadUser(){
+        FData.getOrgUserFromId(FirebaseDatabase.getInstance(), FirebaseAuth.getInstance().getCurrentUser().getUid(), new SingleValueActions<OrgUser>() {
+            @Override
+            public void onReceiveSingleValue(OrgUser data, DatabaseReference reference) {
+                TextView username = (TextView) findViewById(R.id.nombre_organizacion);
+                username.setText( data.getName() );
+            }
+
+            @Override
+            public void onCancel(DatabaseError error) {
+
             }
         });
     }

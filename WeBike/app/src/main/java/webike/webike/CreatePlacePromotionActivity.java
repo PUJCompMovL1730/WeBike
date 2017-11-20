@@ -12,6 +12,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import webike.webike.logic.PlacePromotion;
+import webike.webike.utils.FAuth;
+import webike.webike.utils.FData;
+
 public class CreatePlacePromotionActivity extends AppCompatActivity {
 
     FirebaseAuth fbAuth;
@@ -19,7 +23,7 @@ public class CreatePlacePromotionActivity extends AppCompatActivity {
     FirebaseDatabase fbDatabase;
 
     EditText et_nombre;
-    EditText et_dirccion;
+    Button et_dirccion;
     EditText et_descripcion;
     Button b_promocionar;
 
@@ -32,10 +36,28 @@ public class CreatePlacePromotionActivity extends AppCompatActivity {
         fbAuth = FirebaseAuth.getInstance();
 
         et_nombre = (EditText) findViewById(R.id.et_nombre);
-        et_dirccion = (EditText) findViewById(R.id.et_direccion);
+        et_dirccion =  (Button)findViewById(R.id.et_direccion);
         et_descripcion = (EditText) findViewById(R.id.et_descripcion);
-
         b_promocionar = (Button)findViewById(R.id.b_promocionar);
+        Intent holi = getIntent();
+        Bundle bindle = holi.getExtras();
+        if( bindle != null ) {
+            double lati = (Double) getIntent().getExtras().get("lati");
+            double lon = (Double) getIntent().getExtras().get("lon");
+            String nombre= et_nombre.getText().toString().trim();
+            String descripcion = et_descripcion.getText().toString().trim();
+            FData.postPlacePromotion(fbDatabase,new PlacePromotion(nombre,lon,lati,descripcion,"0"));
+            Toast.makeText(getBaseContext(), Double.toString(lati), Toast.LENGTH_SHORT).show();
+        }
+
+        et_dirccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreatePlacePromotionActivity.this, MapSelect.class);
+                startActivity(intent);
+
+            }
+        });
         b_promocionar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +65,7 @@ public class CreatePlacePromotionActivity extends AppCompatActivity {
                     //TODO
                     //writeDatabase();
                     Toast.makeText(getBaseContext(),"Promoción exitosa",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CreatePlacePromotionActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(CreatePlacePromotionActivity.this, OrgProfileActivity.class);
                     intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
                     startActivity( intent );
                 }catch(Exception e){
@@ -52,6 +74,5 @@ public class CreatePlacePromotionActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 }

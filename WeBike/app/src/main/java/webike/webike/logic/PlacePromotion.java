@@ -9,8 +9,6 @@ import java.io.Serializable;
 public class PlacePromotion extends SpecialPublication implements Serializable{
 
     private String nombre;
-    private String organiza;
-    private String lugar;
     private String description;
     private String key;
     private Double longitud;
@@ -19,10 +17,8 @@ public class PlacePromotion extends SpecialPublication implements Serializable{
     public PlacePromotion() {
     }
 
-    public PlacePromotion(String nombre, String organiza, String lugar, Double longitud, Double latitud, String descripcion, String key) {
+    public PlacePromotion(String nombre,Double longitud, Double latitud, String descripcion, String key) {
         this.nombre = nombre;
-        this.organiza = organiza;
-        this.lugar = lugar;
         this.longitud = longitud;
         this.latitud = latitud;
         this.description = descripcion;
@@ -35,14 +31,6 @@ public class PlacePromotion extends SpecialPublication implements Serializable{
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getOrganiza() {
-        return organiza;
-    }
-
-    public void setOrganiza(String organiza) {
-        this.organiza = organiza;
     }
 
     public Double getLongitud() {
@@ -69,12 +57,6 @@ public class PlacePromotion extends SpecialPublication implements Serializable{
         this.description = descripcion;
     }
 
-    public String getLugar() {
-        return lugar;
-    }
-
-    public void setLugar(String lugar) { this.lugar = lugar; }
-
     public String getKey() {
         return key;
     }
@@ -87,8 +69,6 @@ public class PlacePromotion extends SpecialPublication implements Serializable{
     public String toString() {
         return "PlacePromotion{" +
                 "nombre='" + nombre + '\'' +
-                ", organiza='" + organiza + '\'' +
-                ", lugar='" + lugar + '\'' +
                 ", description='" + description + '\'' +
                 ", key='" + key + '\'' +
                 ", longitud=" + longitud +

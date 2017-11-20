@@ -111,6 +111,7 @@ public class FData {
     public static void postPlacePromotion( FirebaseDatabase database , PlacePromotion p ){
         DatabaseReference ref = database.getReference(FData.PATH_TO_PLACE_PROMOTIONS);
         String key = ref.push().getKey();
+        p.setKey(key);
         ref = database.getReference( FData.PATH_TO_PLACE_PROMOTIONS + "/" + key);
         ref.setValue( p );
     }
@@ -729,7 +730,6 @@ public class FData {
 
     public static PlacePromotion createPlacePromotion( HashMap<String,Object> data ){
         PlacePromotion place = new PlacePromotion();
-        place.setOrganiza( (String)data.get("organiza") );
         place.setNombre( (String)data.get("nombre") );
         place.setDescription( (String)data.get("descripcion") );
         place.setKey( (String)data.get("key"));

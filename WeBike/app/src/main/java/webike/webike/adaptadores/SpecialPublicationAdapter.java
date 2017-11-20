@@ -37,7 +37,7 @@ public class SpecialPublicationAdapter extends ArrayAdapter<SpecialPublication> 
                     TextView tv_nombre = (TextView) v.findViewById(R.id.tv_nombre);
                     TextView tv_lugar = (TextView) v.findViewById(R.id.tv_lugar);
                     tv_nombre.setText(((PlacePromotion) r).getNombre());
-                    tv_lugar.setText(((PlacePromotion) r).getLugar());
+
                 }
             }
             if(r instanceof PlannedRoute){
