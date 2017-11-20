@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 import webike.webike.logic.User;
@@ -30,7 +32,6 @@ public class RegisterActivity extends AppCompatActivity {
     Button submitButton;
 
     FAuth mAuth;
-    FData mData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +61,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                 String firstName = firstNameEditText.getText().toString().trim();
                 String lastName = lastNameEditText.getText().toString().trim();
-                int age = Integer.parseInt(ageEditText.getText().toString());
+                String age = (ageEditText.getText().toString());
                 String gender = genderSpinner.getSelectedItem().toString().trim();
                 String email = emailEditText.getText().toString().trim();
 
                 User user = new User( mAuth.getUser().getUid()  ,firstName , lastName , age , gender,email);
 
-                mData.postUser(user);
+                FData.postUser( FirebaseDatabase.getInstance() , user);
 
                 startActivity( new Intent( RegisterActivity.this, HomeActivity.class ) );
             }
@@ -76,8 +77,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         };
-
-        mData = new FData();
 
     }
 

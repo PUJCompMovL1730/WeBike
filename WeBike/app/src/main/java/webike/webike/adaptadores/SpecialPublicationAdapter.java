@@ -16,9 +16,9 @@ import webike.webike.logic.PlacePromotion;
 import webike.webike.logic.PlannedRoute;
 import webike.webike.logic.SpecialPublication;
 
-public class adapter_special_publication extends ArrayAdapter<SpecialPublication> {
+public class SpecialPublicationAdapter extends ArrayAdapter<SpecialPublication> {
 
-    public adapter_special_publication(Context context , ArrayList<SpecialPublication> resource){
+    public SpecialPublicationAdapter(Context context , ArrayList<SpecialPublication> resource){
         super(context , 0 , resource);
     }
 

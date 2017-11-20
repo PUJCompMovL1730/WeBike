@@ -38,14 +38,9 @@ import webike.webike.utils.ListActions;
 public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private FData fData;
     private FirebaseDatabase database;
-    private boolean type = false;
     private ListView homeList;
 
-    private Button msgButton;
-    private Button pubButton;
-    private ArrayList<Message> current_msg;
     private ArrayList<AbstractPublication> current_pub;
     private Button b_panic;
     private ImageView b_help;
@@ -56,7 +51,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mAuth = FirebaseAuth.getInstance();
-        fData = new FData();
         database = FirebaseDatabase.getInstance();
 
         b_panic = (Button) findViewById(R.id.panic);
@@ -191,28 +185,13 @@ public class HomeActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void loadMsg( String key ){
-
-        FData.getReceivedMessages(database, key, new ListActions<Message>() {
-            @Override
-            public void onReceiveList(ArrayList<Message> data, DatabaseReference reference) {
-                current_msg = data;
-                inflateListWithMsgs( data );
-            }
-
-            @Override
-            public void onCancel( DatabaseError databaseError ) {
-
-            }
-        });
-    }
-
     public void loadPubs(){
         FData.getAllPublications(database, new ListActions<AbstractPublication>() {
             @Override
             public void onReceiveList(ArrayList<AbstractPublication> data, DatabaseReference reference) {
                 current_pub = data;
-                inflateListWithPubs( data );
+                adapter_all_publication adapter = new adapter_all_publication(HomeActivity.this,current_pub);
+                HomeActivity.this.homeList.setAdapter(adapter);
             }
 
             @Override
@@ -220,22 +199,5 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    public void inflateListWithMsgs(ArrayList<Message> msgs ){
-        if( msgs.isEmpty() ){
-            ArrayList<String> info = new ArrayList<>();
-            info.add("---- No hay mensajes ----");
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_list_item_1 ,info);
-            this.homeList.setAdapter(adapter);
-        }else {
-            MessageAdapter adapter = new MessageAdapter(this, msgs);
-            this.homeList.setAdapter(adapter);
-        }
-    }
-
-    public void inflateListWithPubs( ArrayList<AbstractPublication> pubs ){
-        adapter_all_publication adapter = new adapter_all_publication(this,pubs);
-        this.homeList.setAdapter(adapter);
     }
 }

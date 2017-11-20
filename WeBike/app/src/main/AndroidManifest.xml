@@ -57,10 +57,15 @@
         <activity android:name=".ubicacion.MapCreateRoute" />
         <activity android:name=".RouteActivity" />
         <activity android:name=".RoutesActivity" />
-        <activity android:name=".AddFriendToGroup"></activity>
+        <activity android:name=".AddFriendToGroup" />
         <activity android:name=".CreatePlacePromotionActivity" />
-        <activity android:name=".CreatePlannedRouteActivity"></activity>
-        <activity android:name=".MailboxActivity" android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".CreatePlannedRouteActivity" />
+        <activity
+            android:name=".MailboxActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".SelectUserTypeActivity" />
+        <activity android:name=".OrgRegisterActivity" />
+        <activity android:name=".OrgEditInfoActivity"></activity>
     </application>
 
 </manifest>

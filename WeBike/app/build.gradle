@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '26.0.1'
     defaultConfig {
         applicationId "webike.webike"
         minSdkVersion 22
@@ -36,5 +36,9 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     testCompile 'junit:junit:4.12'
 }
+
+
+
+
 
 apply plugin: 'com.google.gms.google-services'

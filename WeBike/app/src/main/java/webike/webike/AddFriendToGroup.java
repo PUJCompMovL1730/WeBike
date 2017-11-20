@@ -51,7 +51,7 @@ public class AddFriendToGroup extends AppCompatActivity {
         Log.i("INFO_DATABASE", "updateView: "+ friend.getEmail() );
         username.setText(friend.getFirstName() + " " + friend.getLastName());
         email.setText(friend.getEmail());
-        age.setText( Integer.toString(friend.getAge()) + " años");
+        age.setText( friend.getAge() + " años");
 
         addToGroup.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -11,10 +11,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
+import webike.webike.logic.AbstractUser;
+import webike.webike.logic.OrgUser;
+import webike.webike.logic.User;
 import webike.webike.utils.FAuth;
+import webike.webike.utils.FData;
 import webike.webike.utils.Response;
+import webike.webike.utils.SingleValueActions;
+import webike.webike.utils.Utils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -41,7 +52,25 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSignIn() {
                 Log.i("LOGIN:"," User successfully signed in.");
-                startActivity(new Intent( LoginActivity.this , HomeActivity.class ));
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                Log.i("Userid", "onSignIn: "+id);
+                FData.findUser(database, id , new SingleValueActions<AbstractUser>(){
+                    @Override
+                    public void onReceiveSingleValue(AbstractUser data, DatabaseReference reference) {
+                        if(data instanceof User){
+                            startActivity(new Intent( LoginActivity.this , HomeActivity.class ));
+                        }
+                        if(data instanceof OrgUser){
+                            startActivity(new Intent( LoginActivity.this , OrgProfileActivity.class ));
+                        }
+                    }
+
+                    @Override
+                    public void onCancel(DatabaseError error) {
+
+                    }
+                });
             }
 
             @Override
@@ -74,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity( new Intent( LoginActivity.this , RegisterActivity.class ) );
+                startActivity( new Intent( LoginActivity.this , SelectUserTypeActivity.class ) );
             }
         });
     }
@@ -84,7 +113,24 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         mAuth.onStart();
         if( mAuth.isLoggedIn() ){
-            startActivity(new Intent( LoginActivity.this , HomeActivity.class ));
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            Log.i("Userid", "onStart: "+id);
+            FData.findUser(database, id , new SingleValueActions<AbstractUser>(){
+                @Override
+                public void onReceiveSingleValue(AbstractUser data, DatabaseReference reference) {
+                    if(data instanceof User){
+                        startActivity(new Intent( LoginActivity.this , HomeActivity.class ));
+                    }
+                    if(data instanceof OrgUser){
+                        startActivity(new Intent( LoginActivity.this , OrgProfileActivity.class ));
+                    }
+                }
+                @Override
+                public void onCancel(DatabaseError error) {
+                    Utils.shortToast(LoginActivity.this,"ERROR");
+                }
+            });
         }
     }
 

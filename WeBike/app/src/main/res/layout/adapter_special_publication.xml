@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context="webike.webike.adaptadores.adapter_special_publication">
+    tools:context="webike.webike.adaptadores.SpecialPublicationAdapter">
 
     <LinearLayout
         android:layout_width="match_parent"

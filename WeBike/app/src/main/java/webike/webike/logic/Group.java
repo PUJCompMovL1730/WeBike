@@ -25,6 +25,7 @@ public class Group implements Serializable{
         this.finish = finish;
         this.route = route;
     }
+    public Group() {}
 
     public String getKey() {
         return key;

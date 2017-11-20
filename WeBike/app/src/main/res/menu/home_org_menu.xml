@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/profile_menuItem"
+        android:title="Mi perfil"/>
+    <item
+        android:id="@+id/logout_menuItem"
+        android:title="@string/home_menu_logout_text"/>
+</menu>
