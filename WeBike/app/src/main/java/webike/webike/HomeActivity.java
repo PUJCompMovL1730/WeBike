@@ -1,3 +1,4 @@
+
 package webike.webike;
 
 import android.app.AlertDialog;
@@ -30,10 +31,13 @@ import webike.webike.logic.Message;
 import webike.webike.logic.PlacePromotion;
 import webike.webike.logic.PlannedRoute;
 import webike.webike.logic.Publicacion;
+
+import webike.webike.logic.Weather;
 import webike.webike.ubicacion.Map;
 import webike.webike.ubicacion.MapCreateRoute;
 import webike.webike.utils.FData;
 import webike.webike.utils.ListActions;
+import webike.webike.utils.Utils;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -45,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button b_panic;
     private ImageView b_help;
     private ImageView b_manual;
+    private ImageView b_weather;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
         b_panic = (Button) findViewById(R.id.panic);
         b_help = (ImageView) findViewById(R.id.help);
         b_manual = (ImageView) findViewById(R.id.manual);
+        b_weather = (ImageView) findViewById(R.id.imageButton);
 
         b_panic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +84,13 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        b_weather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, Weather.class);
+                startActivity(intent);
+            }
+        });
         homeList = (ListView) findViewById(R.id.home_list);
 
         homeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -124,6 +136,11 @@ public class HomeActivity extends AppCompatActivity {
         switch(itemClicked) {
             case R.id.publicaciones_menuItem:
                 intent = new Intent(HomeActivity.this, PublicationsActivity.class);
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity( intent );
+                break;
+            case R.id.profile_menuItem:
+                intent = new Intent(HomeActivity.this, ViewProfileActivity.class);
                 intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
                 startActivity( intent );
                 break;

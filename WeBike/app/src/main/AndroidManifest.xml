@@ -32,6 +32,7 @@
         <activity android:name=".HelpButtonActivity" />
         <activity android:name=".PanicButtonActivity" />
         <activity android:name=".PlaceActivity" />
+        <activity android:name=".logic.Weather" />
         <activity android:name=".PlannedRouteActivity" />
         <activity
             android:name=".PublicationsActivity"
@@ -49,6 +50,8 @@
         <activity android:name=".ubicacion.Map" />
         <activity android:name=".AddFriendActivity" />
         <activity android:name=".ConfigActivity" />
+        <activity android:name=".ViewProfileActivity" />
+        <activity android:name=".ConfigProfileActivity" />
         <activity android:name=".ManualActivity" />
         <activity
             android:name=".WriteMessageActivity"
@@ -63,9 +66,12 @@
         <activity
             android:name=".MailboxActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".TipActivity"></activity>
+        <activity android:name=".logic.weather"></activity>
         <activity android:name=".SelectUserTypeActivity" />
         <activity android:name=".OrgRegisterActivity" />
         <activity android:name=".OrgEditInfoActivity"></activity>
+        <activity android:name=".AccountDeleteConfirmation"></activity>
     </application>
 
 </manifest>

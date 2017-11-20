@@ -625,21 +625,39 @@ public class FData {
         myUser.setFriends( (ArrayList<String>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("friends") );
         myUser.setHistory( (ArrayList<Route>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("history") );
         myUser.setGroups( (ArrayList<String>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("groups") );
+        myUser.setBicitaller( (Boolean) ((HashMap<String, Object>)singleSnapshot.getValue()).get("bicitaller"));
         Mailbox box = new Mailbox();
         if (  ((HashMap<String, Object>) singleSnapshot.getValue()).get("mailbox") != null ) {
             HashMap<String,Object> mailShot = (HashMap<String, Object>) ((HashMap<String, Object>) singleSnapshot.getValue()).get("mailbox");
             if ( mailShot.get("received") != null ) {
-                box.setReceived(createMessageList((HashMap<String, Object>) mailShot.get("received")));
+                try
+                {
+                    box.setReceived(createMessageList((HashMap<String, Object>) mailShot.get("received")));
+                }
+                catch ( Exception e)
+                {
+                    Log.i("EXCEPTION", "createUser: "+e);
+                    box.setReceived( (ArrayList<Message>) mailShot.get("received"));
+                }
             }else{
                 box.setReceived( new ArrayList<Message>() );
             }
             if ( mailShot.get("sent") != null ) {
-                box.setSent(createMessageList((HashMap<String, Object>) mailShot.get("sent")));
+                try
+                {
+                    box.setSent(createMessageList((HashMap<String, Object>) mailShot.get("sent")));
+                }
+                catch ( Exception e)
+                {
+                    Log.i("EXCEPTION", "createUser: "+e);
+                    box.setReceived( (ArrayList<Message>) mailShot.get("sent"));
+                }
             }else{
                 box.setSent( new ArrayList<Message>() );
             }
         }
         myUser.setMailbox(box);
+        Log.i("CREATE USER", "createUser: "+myUser);
         return myUser;
     }
 

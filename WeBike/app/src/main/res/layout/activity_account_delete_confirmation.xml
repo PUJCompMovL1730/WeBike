@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="webike.webike.AccountDeleteConfirmation">
+
+    <LinearLayout
+        android:id="@+id/confirm_mail"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:layout_centerInParent="true">
+
+        <EditText
+            android:id="@+id/mail_confirmText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mail_confirmLay"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/confirm_mail"
+        android:layout_margin="10dp">
+
+        <EditText
+            android:id="@+id/confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="password"/>
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/mail_confirmLay"
+        android:layout_margin="10dp">
+
+        <Button
+            android:id="@+id/boton_confirmar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="confirmar"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

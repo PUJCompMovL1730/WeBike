@@ -111,15 +111,11 @@ public class PublicationActivity extends AppCompatActivity {
                 publicacion = dataSnapshot.getValue(Publicacion.class);
                 actualizar(publicacion);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
-
     public void actualizar(){
-
     }*/
 }
