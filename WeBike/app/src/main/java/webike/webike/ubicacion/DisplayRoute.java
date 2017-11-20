@@ -41,7 +41,7 @@ public class DisplayRoute extends AppCompatActivity implements OnMapReadyCallbac
 
     private Place place;
     private GoogleMap mMap;
-    ArrayList markerPoints = new ArrayList();
+    ArrayList markerPoints;
     private LocacionController locationController;
     private String url;
 
@@ -49,7 +49,7 @@ public class DisplayRoute extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_route);
-
+        markerPoints = new ArrayList();
         FData.getPlacePromotions(FirebaseDatabase.getInstance(), new ListActions<PlacePromotion>() {
             @Override
 

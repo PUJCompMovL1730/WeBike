@@ -87,11 +87,17 @@ public class CreateGroupActivity extends AppCompatActivity {
             @Override
             public void onReceiveSingleValue(User data, DatabaseReference reference) {
                 List<String> temp = data.getGroups();
+                if( temp == null ){
+                    temp = new ArrayList<String>();
+                }
                 temp.add(g.getKey());
                 data.setGroups((ArrayList<String>) temp);
                 postUser(mData,data);
 
                 List<String> temp2 = g.getAdmins();
+                if( temp2 == null ){
+                    temp2 = new ArrayList<String>();
+                }
                 temp2.add(data.getKey());
                 g.setAdmins(temp2);
                 g.setUsers(temp2);

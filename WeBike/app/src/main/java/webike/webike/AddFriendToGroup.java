@@ -77,7 +77,7 @@ public class AddFriendToGroup extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int i, long j) {
                 temp_group = results.get(i);
                 Log.i("STATUS: ",temp_group.toString());
-                Utils.longToast(AddFriendToGroup.this,"Curso seleccionado!");
+                Utils.shortToast(AddFriendToGroup.this,"Curso seleccionado!");
                 return true;
             }
         });
@@ -86,20 +86,44 @@ public class AddFriendToGroup extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 List<String> g = temp_group.getUsers();
-                g.add(friend.getKey());
+                if( !g.contains(friend.getKey()))
+                    g.add(friend.getKey());
                 temp_group.setUsers(g);
                 Log.i("INFO_DATABASE", temp_group.getKey() +" " + temp_group.getRoute());
                 postGroups(mData,temp_group);
 
-                /*List<String> u = new ArrayList<>();
-                u = friend.getGroups();
-                Log.i("STATUS: ",Boolean.toString(u.equals(null))));
-                String t = temp_group.getKey();
+                FData.getUsers(FirebaseDatabase.getInstance(), g, new ListFilteredActions<User, List<String>>() {
+                    @Override
+                    public boolean searchCriteria(User data, List<String> filter) {
+                        if( filter != null ){
+                            return filter.contains(data.getKey());
+                        }
+                        return false;
+                    }
 
-                /*friend.setGroups((ArrayList<String>) u);
+                    @Override
+                    public void onReceiveList(ArrayList<User> data, DatabaseReference reference) {
+                        for( User user : data ){
+                            if( user.getGroups() == null ){
+                                user.setGroups( new ArrayList<String>() );
+                                user.getGroups().add(temp_group.getKey());
+                                FData.postUser(FirebaseDatabase.getInstance(), user);
+                            }else {
+                                if( !user.getGroups().contains(temp_group.getKey()) ) {
+                                    user.getGroups().add(temp_group.getKey());
+                                    FData.postUser(FirebaseDatabase.getInstance(), user);
+                                }
+                            }
 
-                postUser(mData,friend);
-*/
+                        }
+                    }
+
+                    @Override
+                    public void onCancel(DatabaseError error) {
+
+                    }
+                });
+
                 Intent intent = new Intent(AddFriendToGroup.this, HomeActivity.class);
                 startActivity(intent);
             }

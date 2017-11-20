@@ -67,7 +67,7 @@ public class MyGroupsActivity extends AppCompatActivity {
             @Override
             public void onReceiveList(ArrayList<Group> data, DatabaseReference reference) {
                 if (data.isEmpty()) {
-                    Toast.makeText(MyGroupsActivity.this, "Grupo creado", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyGroupsActivity.this, "No tienes grupos", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MyGroupsActivity.this, HomeActivity.class);
                 }
                 results = data;
