@@ -65,21 +65,6 @@ public class AddFriendActivity extends AppCompatActivity {
         age.setText( Integer.toString(new_friend.getAge()) + " años");
 
         this.friend = new_friend;
-<<<<<<< HEAD
-        addFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addFriendToCurrentUser( );
-                startActivity(new Intent(AddFriendActivity.this, HomeActivity.class));
-            }
-        });
-    }
-
-    public void addFriendToCurrentUser(){
-
-        FData.getUserFromId(mData, mAuth.getCurrentUser().getUid(), new SingleValueActions<User>() {
-
-=======
         this.checkUserFriends();
 
     }
@@ -134,18 +119,12 @@ public class AddFriendActivity extends AppCompatActivity {
     public void addFriendToCurrentUser(){
 
         FData.getUserFromId(mData, mAuth.getCurrentUser().getUid(), new SingleValueActions<User>() {
-
->>>>>>> origin/juan
             public void onReceiveSingleValue(User data , DatabaseReference reference) {
                 List<String> friends = data.getFriends();
                 if( friends == null )
                     friends = new ArrayList<>();
-<<<<<<< HEAD
-                friends.add( AddFriendActivity.this.friend.getKey() );
-=======
                 if( !friends.contains(friend.getKey()) )
                     friends.add( AddFriendActivity.this.friend.getKey() );
->>>>>>> origin/juan
 
                 data.setFriends(new ArrayList<>(friends));
 
@@ -162,8 +141,4 @@ public class AddFriendActivity extends AppCompatActivity {
         });
     }
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/juan

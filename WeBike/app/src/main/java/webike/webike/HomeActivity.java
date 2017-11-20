@@ -132,7 +132,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity( intent );
                 break;
             case R.id.profile_menuItem:
-                Intent intent = new Intent(HomeActivity.this, ViewProfileActivity.class);
+                intent = new Intent(HomeActivity.this, ViewProfileActivity.class);
                 intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
                 startActivity( intent );
                 break;
@@ -207,20 +207,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void loadPubs(){
-<<<<<<< HEAD
-
-        FData.getPublications(database, new ListActions<Publicacion>() {
-            @Override
-            public void onReceiveList(ArrayList<Publicacion> data, DatabaseReference reference) {
-                current_pub = data;
-                infalteListWithPubs( data );
-=======
         FData.getAllPublications(database, new ListActions<AbstractPublication>() {
             @Override
             public void onReceiveList(ArrayList<AbstractPublication> data, DatabaseReference reference) {
                 current_pub = data;
                 inflateListWithPubs( data );
->>>>>>> origin/juan
             }
 
             @Override

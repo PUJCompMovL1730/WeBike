@@ -126,9 +126,9 @@ public class User implements Serializable{
     public void setGroups(ArrayList<String> groups) {
         this.groups = groups;
     }
-<<<<<<< HEAD
-}
-=======
+
+
+
 
     @Override
     public String toString() {
@@ -147,4 +147,4 @@ public class User implements Serializable{
                 '}';
     }
 }
->>>>>>> origin/juan
+

@@ -36,6 +36,8 @@ public class ViewProfileActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private TextView username;
     private Button config;
+    private Button group;
+    private Button route;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         groupList = (ListView)findViewById(R.id.list_grupos);
         username = (TextView)findViewById(R.id.user_name);
         config = (Button)findViewById(R.id.user_config);
+        group = (Button)findViewById(R.id.button_group);
+        route = (Button)findViewById(R.id.button_recorr);
 
         config.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +57,24 @@ public class ViewProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewProfileActivity.this, CreateGroupActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        route.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewProfileActivity.this, RoutesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
 
     }
