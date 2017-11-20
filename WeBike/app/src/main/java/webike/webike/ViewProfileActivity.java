@@ -78,8 +78,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         });
 
         this.loadName();
-        //this.loadFriends();
-        //this.loadGroups();
+        this.loadFriends();
+        this.loadGroups();
     }
 
 
@@ -152,4 +152,8 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity( new Intent(this,HomeActivity.class));
+    }
 }

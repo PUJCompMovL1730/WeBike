@@ -478,6 +478,9 @@ public class FData {
                 getAllGroups(database, user, new ListFilteredActions<Group, User>() {
                     @Override
                     public boolean searchCriteria(Group data, User filter) {
+                        if( filter.getGroups() == null ){
+                            return false;
+                        }
                         return filter.getGroups().contains( data.getKey() );
                     }
 
@@ -621,7 +624,7 @@ public class FData {
         myUser.setLastName( (String)((HashMap<String, Object>)singleSnapshot.getValue()).get("lastName") );
         myUser.setGender( (String)((HashMap<String, Object>)singleSnapshot.getValue()).get("gender") );
         myUser.setKey( (String)((HashMap<String, Object>)singleSnapshot.getValue()).get("key") );
-        myUser.setAge( ( ((Long)((HashMap<String, Object>)singleSnapshot.getValue()).get("age") ) ).toString());
+        myUser.setAge( ( ((String)((HashMap<String, Object>)singleSnapshot.getValue()).get("age") ) ).toString());
         myUser.setFriends( (ArrayList<String>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("friends") );
         myUser.setHistory( (ArrayList<Route>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("history") );
         myUser.setGroups( (ArrayList<String>) ((HashMap<String, Object>)singleSnapshot.getValue()).get("groups") );

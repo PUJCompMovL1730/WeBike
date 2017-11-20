@@ -53,6 +53,11 @@ public class MailboxActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this,HomeActivity.class));
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.inbox_menu, menu);
         return true;

@@ -116,7 +116,7 @@ public class WriteMessageActivity extends AppCompatActivity {
             Message msg = new Message(message, subject, src, dst);
             FData.postMessage(database, msg);
             Toast.makeText(this, "Mensaje enviado exitosamente", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, Mailbox.class));
+            startActivity(new Intent(this, MailboxActivity.class));
         }
     }
 

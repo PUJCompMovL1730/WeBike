@@ -10,9 +10,6 @@
         android:id="@+id/publicaciones_especiales_menuItem"
         android:title="@string/home_menu_special_publications_text"/>
     <item
-        android:id="@+id/config_menuItem"
-        android:title="@string/home_menu_config_text"/>
-    <item
         android:id="@+id/search_user_home_menu"
         android:title="@string/home_menu_search_user"/>
     <item

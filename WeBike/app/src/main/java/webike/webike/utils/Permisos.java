@@ -40,7 +40,7 @@ public class Permisos {
         String permission = permissions.get(permissionCode);
         if(!Permisos.checkSelfPermission(context, permissionCode)) {
             if(ActivityCompat.shouldShowRequestPermissionRationale(context, permission)) {
-                Toast.makeText(context, explanation, Toast.LENGTH_LONG).show();
+
             }
             ActivityCompat.requestPermissions(context, new String[]{permission}, permissionCode);
             return false;
