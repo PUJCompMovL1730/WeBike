@@ -47,8 +47,8 @@ public class OrgProfileActivity extends AppCompatActivity {
 
     private ArrayList<String> current_placePromotion;
     private ArrayList<String> current_plannedRoute;
-    private ArrayList<PlacePromotion> promotions;
-    private ArrayList<PlannedRoute> routes;
+    private ArrayList<SpecialPublication> promotions;
+    private ArrayList<SpecialPublication> routes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +84,11 @@ public class OrgProfileActivity extends AppCompatActivity {
         placePromotion_list = (ListView) findViewById(R.id.lv_lugares_promocionados);
         placePromotion_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent = new Intent(OrgProfileActivity.this, PlacePromotion.class);
+                Intent myIntent = new Intent(OrgProfileActivity.this, PlaceActivity.class);
                 Bundle bundle = new Bundle();
-                PlacePromotion placePromotion = promotions.get(position);
+                PlacePromotion placePromotion = (PlacePromotion) promotions.get(position);
                 bundle.putSerializable("pub",placePromotion);
+                bundle.putChar("user",'o');
                 myIntent.putExtras(bundle);
                 startActivity(myIntent);
             }
@@ -153,6 +154,7 @@ public class OrgProfileActivity extends AppCompatActivity {
             public void onReceiveList(ArrayList<PlannedRoute> data, DatabaseReference reference) {
                 ArrayList<SpecialPublication> arr = new ArrayList<SpecialPublication>(data);
                 SpecialPublicationAdapter adapter = new SpecialPublicationAdapter( OrgProfileActivity.this , arr);
+                routes = arr;
                 plannedRoute_list.setAdapter(adapter);
             }
 
@@ -170,6 +172,7 @@ public class OrgProfileActivity extends AppCompatActivity {
             public void onReceiveList(ArrayList<PlacePromotion> data, DatabaseReference reference) {
                 ArrayList<SpecialPublication> arr = new ArrayList<SpecialPublication>(data);
                 SpecialPublicationAdapter adapter = new SpecialPublicationAdapter( OrgProfileActivity.this , arr);
+                promotions = arr;
                 placePromotion_list.setAdapter(adapter);
             }
 

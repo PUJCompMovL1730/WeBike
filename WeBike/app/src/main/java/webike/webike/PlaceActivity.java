@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+import webike.webike.logic.OrgUser;
 import webike.webike.logic.PlacePromotion;
 import webike.webike.logic.SpecialPublication;
 import webike.webike.logic.User;
@@ -55,6 +56,9 @@ public class PlaceActivity extends AppCompatActivity {
         placePromotion = new PlacePromotion();
         if(bundle != null){
             placePromotion = (PlacePromotion) bundle.get("pub");
+            if( bundle.getChar("user") == 'o' ){
+                b_participar.setVisibility(View.GONE);
+            }
         }
 
         tv_nombre.setText(placePromotion.getNombre());

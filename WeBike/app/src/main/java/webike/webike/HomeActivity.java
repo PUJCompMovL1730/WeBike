@@ -109,6 +109,7 @@ public class HomeActivity extends AppCompatActivity {
                     myIntent = new Intent(HomeActivity.this, PlaceActivity.class);
                     PlacePromotion placePromotion = (PlacePromotion) current_pub.get(position);
                     bundle.putSerializable("pub",placePromotion);
+                    bundle.putChar("user",'u');
                     myIntent.putExtras(bundle);
                     startActivity(myIntent);
                 }

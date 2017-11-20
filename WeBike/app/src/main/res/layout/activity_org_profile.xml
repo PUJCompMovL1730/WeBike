@@ -39,12 +39,6 @@
                     android:text="Nombre Usuario"
                     android:textSize="20sp"/>
             </LinearLayout>
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/wrench_512"
-                />
         </LinearLayout>
     </LinearLayout>
 

@@ -67,7 +67,6 @@
             android:name=".MailboxActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".TipActivity" />
-        <activity android:name=".logic.weather" />
         <activity android:name=".SelectUserTypeActivity" />
         <activity android:name=".OrgRegisterActivity" />
         <activity android:name=".OrgEditInfoActivity" />
