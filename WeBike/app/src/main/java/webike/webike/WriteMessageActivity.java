@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import webike.webike.logic.Mailbox;
 import webike.webike.logic.Message;
 import webike.webike.logic.User;
 import webike.webike.utils.FAuth;
@@ -115,7 +116,7 @@ public class WriteMessageActivity extends AppCompatActivity {
             Message msg = new Message(message, subject, src, dst);
             FData.postMessage(database, msg);
             Toast.makeText(this, "Mensaje enviado exitosamente", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, HomeActivity.class));
+            startActivity(new Intent(this, Mailbox.class));
         }
     }
 
