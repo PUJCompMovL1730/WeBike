@@ -75,6 +75,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                     g = new Group(gn, sp, ep, routeUrl);
                     Log.i("data: " , g.toString());
                     FData.postGroup( mData , g);
+                    g.setRoute(routeUrl);
                     newGroup();
                 }
             }
@@ -93,6 +94,8 @@ public class CreateGroupActivity extends AppCompatActivity {
                 ArrayList<String> temp2 = new ArrayList<String>();
                 temp2.add(data.getKey());
                 g.setAdmins(temp2);
+                g.setUsers(temp2);
+                Log.i("STATUS: ", g.toString());
                 postGroups(mData,g);
 
                 Intent intent = new Intent(CreateGroupActivity.this, HomeActivity.class);

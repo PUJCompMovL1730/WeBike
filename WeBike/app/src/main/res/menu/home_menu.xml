@@ -22,6 +22,9 @@
         android:id="@+id/create_group"
         android:title="@string/create_group"/>
     <item
+        android:id="@+id/my_groups"
+        android:title="@string/my_groups"/>
+    <item
         android:id="@+id/logout_menuItem"
         android:title="@string/home_menu_logout_text"/>
 </menu>

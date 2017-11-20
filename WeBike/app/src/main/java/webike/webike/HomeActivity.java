@@ -164,6 +164,9 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.create_group:
                 startActivity( new Intent(HomeActivity.this, CreateGroupActivity.class));
                 break;
+            case R.id.my_groups:
+                startActivity( new Intent(HomeActivity.this, MyGroupsActivity.class));
+                break;
             default : // Optional
                 // Statements
         }

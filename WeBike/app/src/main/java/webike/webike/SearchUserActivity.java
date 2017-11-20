@@ -37,7 +37,6 @@ public class SearchUserActivity extends AppCompatActivity {
     private ArrayList<User> results;
     private FAuth mAuth;
     private FirebaseDatabase database;
-    DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

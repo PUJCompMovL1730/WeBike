@@ -26,6 +26,8 @@ public class Group implements Serializable {
 
         this.finish = finish;
         this.route = route;
+        this.users = new ArrayList<String>();
+        this.admins = new ArrayList<String>();
     }
 
     @Override

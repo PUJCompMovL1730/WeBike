@@ -17,12 +17,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import webike.webike.adaptadores.GroupArrayAdapter;
 import webike.webike.adaptadores.UserArrayAdapter;
 import webike.webike.logic.Group;
 import webike.webike.logic.User;
 import webike.webike.utils.*;
+
+import static webike.webike.utils.FData.postGroups;
+import static webike.webike.utils.FData.postUser;
 
 public class AddFriendToGroup extends AppCompatActivity {
 
@@ -43,7 +47,7 @@ public class AddFriendToGroup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend_to_group);
-
+        results = new ArrayList<>();
         username = (TextView) findViewById(R.id.usr_name_add_grp);
         email = (TextView) findViewById(R.id.frd_email_gp);
         age = (TextView) findViewById(R.id.age_frn_gp);
@@ -56,7 +60,7 @@ public class AddFriendToGroup extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance();
 
-        User friend = new User();
+        friend = new User();
         if (bundle != null) {
             friend = (User) bundle.get("user");
         }
@@ -67,17 +71,38 @@ public class AddFriendToGroup extends AppCompatActivity {
         email.setText(friend.getEmail());
         age.setText( Integer.toString(friend.getAge()) + " años");
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-              temp_group = results.get(i);
+
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int i, long j) {
+                temp_group = results.get(i);
+                Log.i("STATUS: ",temp_group.getKey() + " " + friend.getKey());
+                Utils.longToast(AddFriendToGroup.this,"Curso seleccionado!");
+                return true;
             }
         });
 
         addToGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                List<String> g = temp_group.getUsers();
+                g.add(friend.getKey());
+                temp_group.setUsers(g);
+                Log.i("INFO_DATABASE", temp_group.getKey() +" " + temp_group.getRoute());
+                postGroups(mData,temp_group);
+
+                /*if(friend.getGroups().equals(null))
+                {
+                    Log.i("STATUS: ",temp_group.getKey() + " " + friend.getKey());
+                }
+               /* List<String> u = friend.getGroups();
+                u.add(temp_group.getKey());
+                friend.setGroups((ArrayList<String>) u);
+
+                postUser(mData,friend);*/
+
+                Intent intent = new Intent(AddFriendToGroup.this, HomeActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -93,6 +118,7 @@ public class AddFriendToGroup extends AppCompatActivity {
                     Toast.makeText(AddFriendToGroup.this, "Grupo creado", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(AddFriendToGroup.this, HomeActivity.class);
                 }
+                results = data;
                 updateView(data);
             }
 
