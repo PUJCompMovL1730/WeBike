@@ -1,12 +1,16 @@
 package webike.webike;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
@@ -20,6 +24,7 @@ public class ConfigActivity extends AppCompatActivity {
 
     private Button profile;
     private TwitterLoginButton twitter;
+    private Button delete;
     //private Button fb;
 
     @Override
@@ -27,6 +32,8 @@ public class ConfigActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
         profile = (Button) findViewById(R.id.profile);
+        delete = (Button)findViewById(R.id.delete_profile);
+
         Twitter.initialize(this);
         twitter = (TwitterLoginButton) findViewById(R.id.tw_button);
         twitter.setCallback(new Callback<TwitterSession>() {
@@ -52,6 +59,15 @@ public class ConfigActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent( ConfigActivity.this , ConfigProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent( ConfigActivity.this, AccountDeleteConfirmation.class);
                 startActivity(intent);
             }
         });

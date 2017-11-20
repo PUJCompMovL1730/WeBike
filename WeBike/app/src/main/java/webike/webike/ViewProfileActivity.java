@@ -78,7 +78,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         });
 
         this.loadName();
-        this.loadFriends();
+        //this.loadFriends();
         //this.loadGroups();
     }
 
@@ -90,7 +90,9 @@ public class ViewProfileActivity extends AppCompatActivity {
             @Override
             public void onReceiveList(ArrayList<User> data, DatabaseReference reference) {
                 //adapter
-                updateAdap(data);
+                if(data!=null){
+                    updateAdap(data);
+                }
             }
 
             @Override

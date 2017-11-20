@@ -2,16 +2,22 @@ package webike.webike.utils;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+
+import webike.webike.LoginActivity;
 
 public abstract class FAuth {
     private FirebaseAuth firebaseAuth;
@@ -95,6 +101,24 @@ public abstract class FAuth {
                     Log.i("SIGNUP_FAIL", "onComplete: " + task.getException().getMessage() );
                     onFailedSignUp();
                 }
+            }
+        });
+    }
+
+    public static void deleteCurrentUser(String email , String password , final RemoveUserInterface remove){
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        AuthCredential credential = EmailAuthProvider.getCredential( email , password);
+        user.reauthenticate( credential ).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if( task.isSuccessful() ){
+                            remove.onSuccesfulRemoval();
+                        }
+                    }
+                });
             }
         });
     }
